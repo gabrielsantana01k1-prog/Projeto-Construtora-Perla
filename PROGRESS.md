@@ -16,6 +16,7 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - Identidade visual: o usuário **já tem logo e cores oficiais** da marca (ainda não enviados).
 - Dados de contato: o usuário vai informar os dados reais (ainda não enviados).
 - **Padrão de design obrigatório definido pelo usuário**: "Checklist $10K" (8 pontos — ver `CLAUDE.md`, seção "Padrão de design obrigatório"). Toda entrega de UI precisa ser validada contra essa lista antes de ser considerada concluída. Isso é regra permanente, não uma preferência pontual.
+- **Skill `frontend-design` instalado** (origem: `anthropics/skills`, pasta `skills/frontend-design`). Salvo em `.claude/skills/frontend-design/` dentro deste repositório para ficar disponível em qualquer sessão futura. Reforça a diretriz do "Checklist $10K": direção estética deliberada, tipografia com propósito, nada de layout genérico/templated.
 
 ## Pendências (bloqueando início do desenvolvimento visual/conteúdo)
 
