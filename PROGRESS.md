@@ -1,6 +1,109 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-25 (corte da propaganda final do vídeo do HERO + ajuste de velocidade). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-25 (preparação de continuidade — documentação e verificação, sem novas alterações de código). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+# ESTADO ATUAL DO PROJETO
+
+## Projeto
+Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, sem build step). Repositório: `gabrielsantana01k1-prog/Projeto-Construtora-Perla`.
+
+## Branch atual
+`main` (repositório ainda não publicado — único branch existente).
+
+## Último commit
+`79ab683` — "Corta propaganda do final do vídeo do HERO e reduz velocidade de reprodução".
+⚠️ Há uma alteração **feita depois desse commit e ainda não commitada** (remoção do parallax do HERO) — ver "Problemas conhecidos" abaixo antes de continuar.
+
+## O que já foi concluído
+- `index.html` adotado como página real do site (protótipo do usuário), single-page com âncoras `#metodo`/`#servicos`/`#obras`/`#quem-somos`.
+- Briefing de marca completo (`docs/briefing/briefing-2026-09-25.html`) — fonte da verdade de conteúdo/dados institucionais.
+- Fotos reais integradas (marquee, serviços, quem-somos) — JPEG+WebP otimizados, `~1.3MB` total.
+- Depoimentos reais atualizados (Mateus Garcia, cliente de Lourdes) — nome/foto aguardando autorização escrita.
+- Fita de obras (marquee) recriada em CSS puro (sem lib), pausa no hover, reduced-motion respeitado.
+- Microinterações sob medida em todas as seções abaixo do hero (steps, doors, works, values, quotes).
+- Refinamento final em 8 rodadas: Rodadas 1, 2 e 3 concluídas (ver seção própria abaixo).
+- Vídeo real do HERO integrado, com duas correções subsequentes (corte da propaganda + remoção do parallax) — ver seções "Alterações realizadas no HERO" e "Vídeo atual".
+
+## Alterações realizadas no HERO
+1. **Vídeo definitivo integrado** (produção EGD Filmes) — `autoplay`/`muted`/`loop`/`playsinline`, sem controles, overlay de legibilidade sobre o vídeo, poster extraído do frame em 0,3s.
+2. **Corte da propaganda final** — arquivo original tinha 23,4s e terminava numa tela de logo/propaganda ("EGD Filmes/CK"); cortado por remuxagem *stream copy* (sem recompressão) para 18,4s, mantendo só a filmagem real da obra.
+3. **Velocidade reduzida** — `playbackRate = 0.72` via JS (dentro da faixa 0,65–0,80 pedida pelo usuário), validado empiricamente (razão medida currentTime/tempo real = 0,7200).
+4. **Parallax removido** — a implementação original deslocava o vídeo ao rolar (`transform:translate3d` + `height:120%` de folga). Usuário reportou o vídeo borrado; diagnóstico: um vídeo vertical (576×1024) já precisa de ampliação forte pra cobrir uma seção larga via `object-fit:cover`, e o parallax ampliava ainda mais em cima disso. Removido o bloco JS inteiro (~30 linhas) e a folga extra de CSS — vídeo agora estático, enquadramento padrão.
+
+## Vídeo atual
+- **arquivo utilizado**: `assets/video/hero.mp4` (3.076.593 bytes, H.264, 576×1024, sem áudio) + poster `assets/video/hero-poster.jpg`.
+- **autoplay**: sim.
+- **muted**: sim (atributo `muted`/`defaultMuted` + reforçado via JS).
+- **loop**: sim — validado que reinicia sem frame preto/flash/propaganda.
+- **playbackRate**: `0.72`.
+- **corte aplicado no final**: sim — 23,4s → 18,4s, propaganda/logo removidos fisicamente do arquivo (não é CSS/JS escondendo, é o arquivo mesmo cortado).
+- **overlay/gradiente**: sim — `.hero-video-overlay`, gradiente escuro (tons de `--onix`) mais forte no topo/rodapé, mais claro no meio, garante contraste do texto sobre qualquer cena.
+- **comportamento mobile**: mesmo arquivo, mesmo enquadramento (`object-fit:cover;object-position:center 32%`, sem parallax); testado em 430/390/375/360px sem overflow horizontal.
+
+## Rodadas de design já concluídas
+Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuário antes da próxima:
+- **Rodada 1 — Direção Visual + Tipografia**: concluída, commit `136aedf`.
+- **Rodada 2 — Sistema de Cores + Hierarquia/Whitespace**: concluída, commit `c020a7f`.
+- **Rodada 3 — Imagens + Motion Design**: concluída, commit `79ab683`.
+- **Rodada 4 — Mobile + Qualidade técnica invisível**: **não iniciada**, aguardando aprovação do usuário para começar.
+- Rodada 5 (auditoria final completa): ainda não iniciada.
+
+## Arquivos principais
+- `index.html` — página única do site (HTML+CSS+JS embutidos).
+- `assets/video/hero.mp4`, `assets/video/hero-poster.jpg` — vídeo e poster do HERO.
+- `assets/img/{marquee,servicos,equipe}/` — fotos reais (JPEG+WebP).
+- `design-system/construtora-perla/MASTER.md` — identidade de marca/design system, paleta, tipografia, "Checklist $10K".
+- `docs/briefing/briefing-2026-09-25.html` — briefing de marca completo (fonte da verdade de conteúdo/dados).
+- `CLAUDE.md` — regras permanentes do projeto (compliance, branches, escopo).
+- `PROGRESS.md` — este arquivo.
+
+## Decisões que NÃO devem ser revertidas
+- Paleta fechada: onix + pérola + ouro champanhe (+ papel isolado na seção "37%"). Vinho (`#8C303C`) fica só no Instagram, nunca no site.
+- Nunca inventar CREA/CAU, WhatsApp ou qualquer dado de compliance — manter `[confirmar]` até o usuário fornecer o dado real.
+- Nomes/fotos de clientes só entram com termo de autorização **escrito** — "público no Instagram" não conta como autorização.
+- Jéssica (@jessicafaina) — nome não pode ser usado até confirmar que não é parente da Stephanie.
+- Nome de criança (filho de Vinícius e Ana) nunca vai para o site.
+- @laranesteruk e @mairacardi não são clientes da Perla — nunca usar como prova social.
+- Escopo atual do site: só a home (uma página). Portfólio completo, FAQ e página de Clínicas ficam para uma etapa futura.
+- Vídeo do HERO usado exatamente como enviado pela produtora, sem substituir — a única edição autorizada é o corte da propaganda final.
+- Site estático puro, sem framework/build step — hospedagem cPanel (mesmo modelo do projeto Arobot/Sr. Gordinezz), a decidir na hora de publicar.
+- Enquanto o site não estiver publicado/em uso real, pode-se trabalhar direto em `main` (regra do próprio `CLAUDE.md` deste projeto) — mas commit/push só depois de aprovação do usuário para cada mudança.
+
+## Pendências
+- Termo de autorização assinado (LGPD) de cada cliente citado — nenhum existe ainda por escrito (Mateus Garcia, cliente de Lourdes, demais do levantamento).
+- Identificar quem é a cliente do depoimento de Lourdes.
+- Confirmar/descartar se Jéssica (@jessicafaina) é parente da Stephanie.
+- Frase/vídeo real de depoimento do Dr. Bruno Fernandes Galdino.
+- CREA (Stephanie Faina) e CAU (Mariana Guimarães) — usuário vai enviar depois; bloqueia publicação em produção, não bloqueia desenvolvimento.
+- Logo vetorial (SVG/AI, símbolo de leque/pérola) — site usa só o wordmark tipográfico "PERLA construtora".
+- Nitidez do vídeo do HERO em telas largas segue limitada pela resolução de origem (576×1024, vertical/reels); só se resolve com material em resolução maior ou formato 16:9 da produtora.
+- `.bar-legend` com `font-size:15px` hardcoded em vez do token `--fs-support` — limpeza menor registrada na Rodada 2, ainda não feita.
+- Decisão de domínio/hospedagem final ainda não tomada (cPanel é o modelo, falta definir o domínio).
+- **Commit/push da remoção do parallax do HERO** — ver "Problemas conhecidos".
+
+## PRÓXIMA TAREFA EXATA
+Nenhuma nova tarefa foi iniciada nesta etapa — sessão encerrada em modo documentação/verificação apenas. Ao retomar, nesta ordem:
+1. Rodar `git status` e `git diff --cached` no repositório Perla para confirmar se a remoção do parallax do HERO ainda está pendente de commit, ou se já foi commitada/enviada antes do fim desta sessão.
+2. Se ainda pendente: perguntar ao usuário se pode commitar e dar push para `origin/main` (a pergunta já foi feita nesta sessão e ficou sem resposta antes do pedido de encerramento).
+3. Só depois disso, retomar o fluxo normal do refinamento final: perguntar ao usuário se aprova iniciar a **Rodada 4 (Mobile + Qualidade técnica invisível)**.
+
+## Problemas conhecidos
+- **Commit pendente**: alterações **staged, não commitadas e não enviadas ao GitHub** — remoção do parallax do vídeo do HERO. Arquivos: `index.html` (CSS do `.hero-video` simplificado, bloco JS do parallax removido, ~30 linhas) e `PROGRESS.md` (registro da mudança). Diff completo revisado e confirmado limpo (só HERO, nenhuma seção abaixo tocada) antes deste registro.
+- Chromium de teste do Playwright (ambiente de nuvem) não decodifica H.264 — validação visual do vídeo em si (não do layout) exige uma cópia temporária em WebM, descartada após o teste, nunca commitada. O arquivo do site continua em H.264 (compatibilidade universal com navegadores reais).
+- Vídeo do HERO não foi testado em navegador real (Chrome/Safari/Edge) nesta sessão — só validado via Playwright (layout/atributos) e via cópia WebM temporária (decodificação/loop/velocidade), pela limitação de ambiente acima.
+- Foto das sócias (`equipe/socias-retrato.jpg`) renderiza levemente abaixo do ideal de nitidez em telas retina/2x — sem solução sem uma versão de maior resolução do arquivo original (vieram do Instagram).
+
+## Informações que ainda dependem do cliente
+- Termo de autorização assinado de cada cliente citado (nome/foto/depoimento).
+- Confirmação se Jéssica (@jessicafaina) é parente da Stephanie.
+- Identidade da cliente do depoimento de Lourdes.
+- Frase/vídeo de depoimento real do Dr. Bruno Fernandes Galdino.
+- Números de registro profissional: CREA (Stephanie Faina) e CAU (Mariana Guimarães).
+- Arquivo vetorial do logo (SVG/AI) com o símbolo de leque/pérola.
+- Eventual vídeo do HERO em resolução maior ou formato horizontal/16:9, caso queiram corrigir de vez a nitidez em telas largas.
+- Decisão de domínio de publicação final (hospedagem já definida como cPanel).
+
+---
 
 ## Refinamento final em 8 rodadas (em andamento)
 
@@ -52,6 +155,17 @@ Usuário confirmou que a observação acima **era** o problema: pediu para corta
 - **HTML/CSS do HERO**: nada alterado além do `<script>` (mesma tag `<video autoplay muted loop playsinline ...>`, mesmo overlay/gradiente, mesmo parallax, mesmo `object-position`). `git diff` conferido: só o bloco de script (+4/-1 linhas) e o binário do vídeo.
 - **Validado**: HTML com tags balanceadas (67 `div`/7 `section`/2 `script`, abertura=fechamento), os 2 blocos `<script>` extraídos e checados com `node --check` (sem erro de sintaxe). Screenshot completo do HERO em 1440px e 390px (poster/primeiro frame, já que o Chromium de teste não decodifica H.264) — texto legível, overlay preservado, CTA e headline intactos, nenhuma seção abaixo do HERO tocada. Console sem erro real (só o de sempre, `ERR_CERT_AUTHORITY_INVALID` do proxy TLS do sandbox ao buscar Google Fonts, artefato de ambiente já documentado nas rodadas anteriores).
 - **Não testado em navegador real** (Chrome/Safari/Edge) nesta sessão — o ambiente de nuvem só tem o Chromium de teste do Playwright, que não decodifica H.264. A validação de decodificação/loop/velocidade foi feita com uma cópia temporária em WebM (descartada, não commitada); o arquivo final entregue ao site continua em H.264 (compatibilidade universal), como estava antes.
+
+### Remoção do parallax do vídeo do HERO — corrigir borrão (25/09)
+
+Usuário gravou a tela e reportou que o vídeo do HERO estava borrado/embaçado. Pediu para remover o efeito parallax (suspeita de que ele estava degradando a qualidade), manter o corte da propaganda já feito, manter a velocidade lenta, e tentar um "formato original" mais simples.
+
+- **Causa provável do borrão**: o vídeo é vertical (576×1024, formato reels) sendo exibido numa seção HERO larga (retangular/paisagem) — `object-fit:cover` já precisa ampliar bastante essa imagem pra cobrir a largura da tela. O parallax anterior usava `height:120%` (folga vertical pra deslocar sem revelar borda) + `transform:translate3d`, o que ampliava a imagem ainda mais em cima de uma fonte que já estava no limite da resolução pro tamanho exibido. Diagnóstico do usuário confirmado como plausível — não corrigido no vídeo em si (sem material de origem em resolução maior), mas removida a ampliação extra que o parallax exigia.
+- **Removido**: bloco JS inteiro do parallax (`IntersectionObserver` + listener de scroll + `transform` dinâmico, ~30 linhas) e a regra CSS que dava folga pra ele (`height:120%`, `transform:translate3d(-50%,-50%,0)`, `will-change:transform`).
+- **Substituído por**: enquadramento padrão, sem escala extra — `.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%}`. Vídeo agora fica estático (sem deslocamento ao rolar), só a ampliação mínima que o `cover` já exige.
+- **Preservado**: corte da propaganda (vídeo continua em 18,4s, sem o trecho final), `playbackRate:0.72`, mute reforçado, autoplay/loop/playsinline, overlay/gradiente de legibilidade, headline/tipografia/CTA, responsividade.
+- **Validado**: HTML com tags balanceadas, os 2 blocos `<script>` (agora sem o do parallax) checados com `node --check`. Playwright confirmou via `getComputedStyle`: `transform:none` antes e depois de rolar a página (nenhum resquício do parallax), `playbackRate:0.72` mantido, `muted/loop/autoplay` intactos. Screenshot em 1440px e 390px (poster/primeiro frame — mesma limitação de sempre, o Chromium de teste não decodifica H.264): layout, overlay e legibilidade do texto preservados, nenhuma seção abaixo do HERO tocada.
+- **Pendência real, fora do escopo desta correção**: a nitidez do vídeo em telas largas continua limitada pela resolução de origem (576×1024, vertical) esticada numa seção larga — isso é inerente ao material enviado, não ao código. Se a produtora (EGD Filmes) tiver uma versão em resolução maior ou em formato horizontal/16:9, o resultado ficaria nítido mesmo em telas grandes.
 
 ## Situação atual
 
