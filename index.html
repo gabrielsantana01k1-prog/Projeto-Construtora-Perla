@@ -519,12 +519,15 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
 </footer>
 
 <script>
-// Vídeo do HERO: reforça mute (defesa extra além do atributo) e toca, sem travar se o navegador bloquear autoplay.
+// Vídeo do HERO: reforça mute (defesa extra além do atributo), reduz a velocidade (0.72x, capa institucional
+// não deve competir com o texto) e toca, sem travar se o navegador bloquear autoplay.
 (function () {
   var v = document.querySelector('.hero-video');
   if (!v) return;
   v.muted = true;
   v.defaultMuted = true;
+  v.playbackRate = 0.72;
+  v.addEventListener('loadedmetadata', function () { v.playbackRate = 0.72; });
   var p = v.play();
   if (p && typeof p.catch === 'function') p.catch(function () {});
 })();

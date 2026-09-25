@@ -1,6 +1,6 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-25 (rodada de refinamento final, etapa 3/8). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-25 (corte da propaganda final do vídeo do HERO + ajuste de velocidade). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 ## Refinamento final em 8 rodadas (em andamento)
 
@@ -38,6 +38,20 @@ Usuário enviou o vídeo definitivo do hero (`WhatsApp_Video_2026-09-25_at_18.44
 - **JS**: dois blocos isolados, adicionados antes do script de revelação já existente (que não foi tocado). (1) reforço de mute + chamada de `.play()` com fallback silencioso se o navegador bloquear autoplay. (2) parallax: `IntersectionObserver` liga/desliga um listener de scroll só enquanto o hero está perto da viewport (desliga fora dela, por performance), desloca o vídeo em até 42px via `transform` (GPU-friendly), throttled por `requestAnimationFrame`. Sob `prefers-reduced-motion:reduce` a função inteira retorna cedo — vídeo continua tocando normal, só fica parado no lugar (sem o deslocamento).
 - **Validado**: HTML parseado sem erro; `git diff` conferido linha a linha — só 3 blocos alterados (CSS do hero, markup do header, um `<script>` novo isolado), nenhuma linha fora do hero tocada. Testado com Playwright/Chromium em 1440px (desktop) e 430/390/375/360px (mobile): atributos `autoplay/muted/loop/playsInline` presentes e `true` em todos, `controls:false`, `paused:false` em todos os tamanhos. Com uma cópia temporária usando WebM (só pra contornar a limitação de codec do navegador de teste): `readyState:4`, dimensões corretas (576×1024), `currentTime` avançando de verdade (2,3s → 4,5s), parallax confirmado via `transform` mudando com o scroll, transição pro próximo bloco (fita de marquee) permanece idêntica e sem overflow.
 - **Observação, não bloqueante**: o vídeo carrega uma marca d'água "EGD Filmes/CK" visível num canto em alguns trechos e termina com um card de logo dessa produtora — usado exatamente como enviado, por instrução explícita do usuário ("não substitua"). Só registrando pra ciência, caso isso não seja a intenção pro corte final de produção.
+
+### Ajuste do vídeo do HERO — corte da propaganda final + velocidade (25/09)
+
+Usuário confirmou que a observação acima **era** o problema: pediu para cortar fisicamente a propaganda do final e deixar a reprodução mais lenta. Pedido restrito ao vídeo do HERO, proibido mexer em qualquer seção abaixo.
+
+- **Análise do arquivo**: decodificado frame a frame com PyAV (561 frames, ~24fps, 23,398s). Localizado o exato ponto de transição por amostragem de pixel nos frames candidatos (não só inspeção visual): a filmagem real da obra termina no frame `t=18,3517s` (cena de telhado/vista aérea, 100% limpa); a partir de `t=18,3933s` já aparece a tela clara com a animação do logo/propaganda ("EGD Filmes/CK"), que se estende até o fim (23,398s).
+- **Corte realizado**: remuxagem por **stream copy** (sem decodificar/recodificar o vídeo — `packet.stream=...; container.mux(...)` via PyAV), mantendo todos os pacotes com `pts < 18,39s` e descartando o restante. Zero recompressão: o bitstream H.264 dos frames mantidos é byte-idêntico ao original, mesma resolução (576×1024) e mesmo bitrate de origem.
+- **Duração**: 23,4s → 18,4s (removidos ~5,0s de propaganda/logo do final).
+- **Arquivo**: `assets/video/hero.mp4`, 3.163.305 → 3.076.593 bytes (~3,16MB → ~3,08MB, redução proporcional aos ~5s removidos).
+- **Velocidade**: adicionado `v.playbackRate = 0.72` no script de reforço do HERO (reforçado também em `loadedmetadata`, mesmo padrão defensivo já usado pro mute), dentro da faixa pedida (0,65–0,80). Validado empiricamente com Playwright medindo o avanço real de `currentTime` vs. tempo real decorrido: razão medida 0,7200 — confirma que o navegador está de fato tocando a 72% da velocidade original, não é só o atributo setado sem efeito.
+- **Loop**: validado (via cópia temporária transcodificada para WebM/VP9 só para contornar a limitação do Chromium de teste do Playwright, que não decodifica H.264 — documentado desde a Rodada 3; a cópia WebM não foi ao repositório) que o loop reinicia exatamente em `currentTime≈0` assim que chega a `18,35s`, sem frame preto, sem flash e sem nenhum quadro da propaganda — confirmado por captura de tela no exato instante da virada do loop.
+- **HTML/CSS do HERO**: nada alterado além do `<script>` (mesma tag `<video autoplay muted loop playsinline ...>`, mesmo overlay/gradiente, mesmo parallax, mesmo `object-position`). `git diff` conferido: só o bloco de script (+4/-1 linhas) e o binário do vídeo.
+- **Validado**: HTML com tags balanceadas (67 `div`/7 `section`/2 `script`, abertura=fechamento), os 2 blocos `<script>` extraídos e checados com `node --check` (sem erro de sintaxe). Screenshot completo do HERO em 1440px e 390px (poster/primeiro frame, já que o Chromium de teste não decodifica H.264) — texto legível, overlay preservado, CTA e headline intactos, nenhuma seção abaixo do HERO tocada. Console sem erro real (só o de sempre, `ERR_CERT_AUTHORITY_INVALID` do proxy TLS do sandbox ao buscar Google Fonts, artefato de ambiente já documentado nas rodadas anteriores).
+- **Não testado em navegador real** (Chrome/Safari/Edge) nesta sessão — o ambiente de nuvem só tem o Chromium de teste do Playwright, que não decodifica H.264. A validação de decodificação/loop/velocidade foi feita com uma cópia temporária em WebM (descartada, não commitada); o arquivo final entregue ao site continua em H.264 (compatibilidade universal), como estava antes.
 
 ## Situação atual
 
