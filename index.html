@@ -31,6 +31,7 @@
   --linha-2:rgba(239,231,214,.18);
   /* Seção clara (única): papel pérola da fase editorial */
   --papel:#F4EEE6; --tinta:#231A17; --tinta-2:#5C4F46; --linha-p:rgba(35,26,23,.14);
+  --ouro-paper:#8F7442; /* acento ouro no tom papel — mesma função do --ouro na seção clara, era repetido 3x como hex solto */
 
   --display:"Newsreader", "Iowan Old Style", Georgia, serif;
   --num:"Cormorant Garamond", "Iowan Old Style", Georgia, serif;
@@ -67,7 +68,7 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance;letter-spacing:-.015em}
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(14,13,12,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--linha)}
 .nav .shell{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
 .wordmark{display:grid;line-height:1;gap:3px}
-.wordmark b{font-weight:500;font-size:22px;letter-spacing:.14em;background:linear-gradient(180deg,#F3ECD4,#C2A56E 75%,#9C8A5E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wordmark b{font-weight:500;font-size:22px;letter-spacing:.14em;background:linear-gradient(180deg,#F3ECD4,var(--ouro) 75%,var(--ouro-deep));-webkit-background-clip:text;background-clip:text;color:transparent}
 .wordmark span{font-size:10px;letter-spacing:.42em;color:var(--perola-3);text-transform:lowercase}
 .nav ul{display:flex;gap:34px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--perola-2)}
 .nav ul a:hover{color:var(--perola)}
@@ -129,17 +130,17 @@ section{padding-block:clamp(88px,11vw,160px)}
 .paper .sec-head .tag{border-color:var(--linha-p)}
 .paper .label{color:var(--tinta)}
 .paper .label.dim,.paper .sec-head p{color:var(--tinta-2)}
-.paper .it{color:#8F7442}
+.paper .it{color:var(--ouro-paper)}
 .paper h2{color:var(--tinta)}
-.paper .dot{color:#8F7442}
+.paper .dot{color:var(--ouro-paper)}
 .split{display:grid;gap:18px}
 .bar{display:grid;grid-template-columns:37fr 63fr;height:clamp(96px,12vw,150px);border:1px solid var(--linha-p)}
 .bar div{display:flex;flex-direction:column;justify-content:space-between;padding:16px 18px}
-.bar .a{background:#2A221E;color:#EFE7D6}
+.bar .a{background:#2A221E;color:var(--perola)}
 .bar .b{background:transparent}
 .bar b{font-family:var(--num);font-style:italic;font-weight:400;font-size:clamp(40px,5vw,64px);line-height:.9}
 .bar .a b{color:#D8BD86}
-.bar .b b{color:#8F7442}
+.bar .b b{color:var(--ouro-paper)}
 .bar small{font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 .bar-legend{display:grid;grid-template-columns:37fr 63fr;gap:0;font-size:15px;color:var(--tinta-2)}
 .bar-legend p{padding-right:18px;max-width:40ch}
@@ -226,7 +227,7 @@ section{padding-block:clamp(88px,11vw,160px)}
 @media (max-width:900px){.quotes{grid-template-columns:1fr}}
 
 /* ============ CTA + FOOTER ============ */
-.final{text-align:left;border-top:1px solid var(--linha)}
+.final{text-align:left;border-top:1px solid var(--linha);padding-top:clamp(110px,13vw,180px)}
 .final h2{font-size:clamp(40px,6.4vw,92px);line-height:1;max-width:14ch}
 .final p{color:var(--perola-2);max-width:48ch;margin-top:28px}
 .final .ctas{display:flex;flex-wrap:wrap;gap:28px;align-items:center;margin-top:44px}
