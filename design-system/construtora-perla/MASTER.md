@@ -8,47 +8,45 @@
 
 **Project:** Construtora Perla
 **Generated:** 2026-09-25 16:44:14
+**Atualizado (identidade real):** 2026-09-25
 **Category:** Luxury/Premium Brand
 **Design Dials:** Variance 5/10 (Balanced / Modern) | Motion 4/10 (Standard) | Density 3/10 (Spacious)
+
+> ⚠️ **STATUS: paleta/tipografia abaixo foram SUBSTITUÍDAS pela identidade real da marca**, extraída do briefing oficial (`docs/briefing/briefing-2026-09-25.html`, seção 07) e já implementada em `index.html`. A geração automática original (Cinzel/Josefin Sans, preto genérico + dourado) foi só um placeholder provisório — não usar mais. Esta é a "Direção definida · 25/09" da própria Perla.
 
 ---
 
 ## Global Rules
 
-### Color Palette
+### Color Palette (real, extraída do logo/marca — não é mais provisória)
 
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#1C1917` | `--color-primary` |
-| On Primary | `#FFFFFF` | `--color-on-primary` |
-| Secondary | `#44403C` | `--color-secondary` |
-| On Secondary | `#FFFFFF` | `--color-on-secondary` |
-| Accent/CTA | `#A16207` | `--color-accent` |
-| On Accent/CTA | `#FFFFFF` | `--color-on-accent` |
-| Background | `#FAFAF9` | `--color-background` |
-| Foreground | `#0C0A09` | `--color-foreground` |
-| Card | `#FFFFFF` | `--color-card` |
-| Card Foreground | `#0C0A09` | `--color-card-foreground` |
-| Muted | `#E8ECF0` | `--color-muted` |
-| Muted Foreground | `#475569` | `--color-muted-foreground` |
-| Border | `#D6D3D1` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| On Destructive | `#FFFFFF` | `--color-on-destructive` |
-| Ring | `#1C1917` | `--color-ring` |
+| Role | Hex | CSS Variable | Uso |
+|------|-----|--------------|-----|
+| Fundo (onix) | `#0E0D0C` | `--onix` | Fundo principal — mármore do logo |
+| Superfície elevada | `#141210` | `--onix-2` | Cards, seções elevadas |
+| Tinta principal | `#EFE7D6` | `--perola` | Texto principal — highlight do ouro do logo |
+| Texto secundário | `#B3A994` | `--perola-2` | Parágrafos, texto de apoio |
+| Legendas/metadados | `#7A7263` | `--perola-3` | Labels, legendas |
+| **Acento único** | `#C2A56E` | `--ouro` | Ouro champanhe chapado — único acento do site |
+| Acento hover | `#9C8A5E` | `--ouro-deep` | Hover/filetes fortes |
+| Papel (única seção clara) | `#F4EEE6` | `--papel` | Só na seção "O custo" (dado dos 37%) |
+| Tinta sobre papel | `#231A17` | `--tinta` | Texto na seção clara |
 
-**Color Notes:** Premium black + gold accent [Accent adjusted from #CA8A04]
+**Regra de marca:** 1 fundo, 1 tinta, 1 acento — nada além disso. O gradiente metálico (`#F0EAD0 → #9C8A5E`, usado no wordmark do logo) fica **restrito ao logo/wordmark**, não se espalha pela UI. O vinho (`#8C303C`, fase 2 do Instagram) **não entra no site** — fica reservado ao conteúdo editorial do Instagram, por decisão já tomada no briefing.
 
-### Typography
+### Typography (real)
 
-- **Heading Font:** Cinzel
-- **Body Font:** Josefin Sans
-- **Mood:** real estate, luxury, elegant, sophisticated, property, premium
-- **Google Fonts:** [Cinzel + Josefin Sans](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap)
+- **Display/títulos e corpo:** Newsreader (serifada, itálico disponível)
+- **Números e destaques:** Cormorant Garamond itálico (ex: "37%", numerais de etapas, pontos finais em destaque)
+- **Mood:** editorial, alto contraste, elegante, alinhado aos posts de 2026 da marca
+- **Google Fonts:** `Cormorant+Garamond:ital,wght@1,400;1,500` + `Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400`
 
 **CSS Import:**
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap');
 ```
+
+**Símbolo da marca:** leque/concha de cinco pétalas facetadas sobre uma pérola — usar em ícones, divisores e favicon quando o arquivo vetorial for enviado.
 
 ### Spacing Variables
 
@@ -77,105 +75,23 @@
 
 ## Component Specs
 
-### Buttons
+### Component Specs
 
-```css
-/* Primary Button */
-.btn-primary {
-  background: #A16207;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #1C1917;
-  border: 2px solid #1C1917;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-```
-
-### Cards
-
-```css
-.card {
-  background: #FAFAF9;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-```
-
-### Inputs
-
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
-
-.input:focus {
-  border-color: #1C1917;
-  outline: none;
-  box-shadow: 0 0 0 3px #1C191720;
-}
-```
-
-### Modals
-
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-}
-```
+> ⚠️ Os blocos CSS genéricos que estavam aqui (botões/cards/inputs/modais com a paleta placeholder `#A16207`/`#1C1917`/`#FAFAF9`) foram **removidos** por estarem desatualizados. Os componentes reais (`.btn`, `.btn.solid`, `.door`, `.photo`, `.works li`, `.quotes figure`, etc.) já estão implementados e documentados diretamente em `/index.html` (bloco `<style>`), usando os tokens `--onix`/`--perola`/`--ouro` acima. Consulte o CSS de `index.html` como fonte da verdade de componentes — não este arquivo.
 
 ---
 
 ## Style Guidelines
 
-**Style:** Refined Editorial Minimalism (curado manualmente — ver nota abaixo)
+**Style:** Editorial premium escuro (identidade real da marca, ver briefing seção 07 "Direção definida · 25/09")
 
-**Keywords:** generous whitespace, confident serif headlines (Cinzel), restrained gold accent used sparingly, solid fills over blur, deliberate hierarchy, photography-led (obras/empreendimentos reais)
+**Keywords:** 1 fundo (onix) + 1 tinta (pérola) + 1 acento único (ouro champanhe chapado), textura sutil de mármore, tipografia serifada de alto contraste, itálico para números/destaques, seção clara única e intencional (dado dos 37%)
 
-**Best For:** Sites institucionais/imobiliários de alto padrão que precisam carregar rápido em qualquer aparelho — não apps/chrome de sistema
+**Best For:** Construtora/arquitetura de alto padrão em BH — precisa carregar rápido em qualquer aparelho
 
-**Key Effects:** Scroll-reveal sutil (fade + translateY curto), hover states discretos, sem `backdrop-filter`/blur pesado fora do necessário
+**Key Effects:** Scroll-reveal sutil respeitando `prefers-reduced-motion` (classe `.rise`, já implementada em `index.html`), textura de mármore via gradientes CSS puros (sem imagens pesadas), hover discreto em cards/links, sem `backdrop-filter` pesado (só um uso leve — blur 10px — na nav sticky)
 
-> **Nota de curadoria:** a busca automática recomendou "Liquid Glass" (efeitos de vidro/blur, pensado para chrome de sistema Apple). Foi substituído manualmente porque (1) esse estilo tem custo de performance moderado a alto em blur/animação — conflita com o requisito explícito do cliente de "animações elegantes que carreguem bem em qualquer dispositivo" — e (2) não é o uso pretendido (site de marketing institucional, não app). Paleta, tipografia e motion (stagger list) da busca automática foram mantidos por fazerem sentido para o projeto.
+> **Histórico:** a busca automática do skill `ui-ux-pro-max` sugeriu originalmente "Liquid Glass" (efeitos de vidro/blur) e depois foi curada manualmente para "Refined Editorial Minimalism" com paleta preto+dourado+pérola genérica. Essa curadoria foi **substituída pela identidade real da marca** trazida pelo usuário (briefing + protótipo já prontos), que já resolve o mesmo objetivo (performance, elegância, sem blur pesado) com cores/fontes oficiais da Perla.
 
 ### Page Pattern
 

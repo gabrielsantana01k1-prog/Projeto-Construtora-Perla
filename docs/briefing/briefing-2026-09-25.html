@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Perla Construtora · Briefing do Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --perola:#F9F4F0; --areia:#DFCFC2; --taupe:#CBBBA1; --cafe:#6B4A2C;
+  --grafite:#2C1E1E; --grafite-2:#5C4F46; --vinho:#8C303C; --onix:#0E0D0C;
+  --ouro-1:#F0EAD0; --ouro-2:#E0D0B0; --ouro-3:#B8A06E; --ouro-4:#9C8A5E;
+  --bg:var(--perola); --ink:var(--grafite); --muted:#6f625a; --line:#e3d8cd; --card:#fffdfb;
+  --serif:"Playfair Display", Georgia, "Times New Roman", serif;
+  --sans:"Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;text-wrap:balance;margin:0;color:var(--ink)}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.15}
+h3{font-size:19px;line-height:1.3}
+p{margin:0;max-width:68ch}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cafe);font-weight:600}
+em.v{font-style:normal;color:var(--vinho)}
+/* hero */
+.hero{background:var(--onix);color:var(--ouro-1);margin-inline:-20px;padding:56px 20px 48px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+ radial-gradient(1200px 300px at 80% 10%, rgba(240,234,208,.06), transparent 60%),
+ linear-gradient(115deg, transparent 40%, rgba(255,255,255,.04) 41%, transparent 43%),
+ linear-gradient(70deg, transparent 62%, rgba(255,255,255,.035) 63%, transparent 64%);pointer-events:none}
+.hero-in{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;align-items:center;position:relative}
+.logo{width:120px}
+.hero h1{color:var(--ouro-1);font-size:clamp(34px,5vw,54px);line-height:1.05}
+.hero h1 span{background:linear-gradient(180deg,var(--ouro-1),var(--ouro-3) 70%,var(--ouro-4));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#cfc6b4;margin-top:14px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;font-size:12px;letter-spacing:.06em;color:var(--ouro-2)}
+.hero .meta b{color:var(--ouro-1);font-weight:600}
+@media (max-width:640px){.hero-in{grid-template-columns:1fr}.logo{width:84px}}
+/* sections */
+section{padding-top:56px;display:grid;gap:20px}
+.sec-head{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:22px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px;display:grid;gap:8px;align-content:start}
+.card h3 .tag{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--vinho);display:block;margin-bottom:4px;font-weight:600}
+.card p,.card li{font-size:14px;color:#3d302c}
+ul{margin:0;padding-left:18px;display:grid;gap:4px}
+dl{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;margin:0}
+dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:2px}
+dd{margin:0}
+.quote{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.35;color:var(--cafe)}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.quotes div{border-left:2px solid var(--ouro-3);padding:4px 0 4px 14px;font-family:var(--serif);font-size:18px;line-height:1.35}
+/* palette */
+.phase{display:grid;gap:12px}
+.phase-label{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:baseline}
+.phase-label small{color:var(--muted);font-size:12px}
+.sw-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.sw{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--card)}
+.sw i{display:block;height:74px}
+.sw div{padding:8px 10px;display:grid;gap:1px}
+.sw b{font-size:13px;font-weight:600}
+.sw code{font-size:12px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+.sw span{font-size:11.5px;color:var(--muted);line-height:1.35}
+.grad{height:74px;background:linear-gradient(90deg,#F0EAD0,#E0D0B0 35%,#B8A06E 70%,#9C8A5E)}
+.type-demo{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.type-demo .card .big{font-family:var(--serif);font-size:34px;line-height:1.1}
+.type-demo .card .big.sans{font-family:var(--sans);font-weight:600;font-size:26px}
+/* table */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;background:#f6efe8}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.alto{background:#f3dfe1;color:var(--vinho)}.medio{background:#f1e7d3;color:#7a5a1e}.baixo{background:#e6ece3;color:#3f5a3a}
+/* sitemap */
+.map{display:grid;gap:10px;counter-reset:s}
+.map li{list-style:none;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.map li::before{counter-increment:s;content:counter(s);font-family:var(--serif);font-size:22px;color:var(--ouro-4);line-height:1}
+.map{padding:0}
+.map b{display:block;font-weight:600}
+.map span{font-size:14px;color:#4a3c36}
+.foot{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--muted)}
+a{color:var(--vinho)}
+</style>
+</head>
+<body>
+
+
+<header class="hero">
+  <div class="hero-in">
+        <div>
+      <div class="eyebrow" style="color:var(--ouro-3)">Briefing de marca e conteúdo · levantamento do Instagram em 25/09/2026</div>
+      <h1><span>Perla Construtora</span></h1>
+      <p>Tudo o que está público sobre a Perla, organizado para virar site: posicionamento, serviços, cases, prova social, paleta e pontos que precisam ser confirmados com a Stephanie e a Mariana antes de publicar.</p>
+      <div class="meta"><span><b>254</b> posts</span><span><b>2.054</b> seguidores</span><span><b>6</b> destaques</span><span>@perlaconstrutora · Savassi, BH</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <div class="sec-head"><span class="eyebrow">01 · Leitura geral</span><h2>O que a Perla vende, na prática</h2></div>
+  <p class="quote">“Construímos a casa definitiva da sua família, sem o caos da obra. Arquitetura + Engenharia + Viabilidade, um só responsável.”</p>
+  <p>A Perla não se vende como construtora de obra pesada. Ela vende <strong>previsibilidade</strong>: uma arquiteta e uma engenheira que resolvem projeto, custo e execução juntas, com o cliente acompanhando tudo pelo app. O conteúdo de 2026 amadureceu bastante: saiu de frases genéricas (“transformando sonhos”) para argumentos com número (“37% do orçamento vai pro que você nunca escolhe”) e histórias de clientes reais. O site deve seguir essa segunda linha.</p>
+  <div class="grid3">
+    <div class="card"><h3><span class="tag">Promessa central</span>Obra sem caos</h3><p>Custo, prazo e resultado garantidos. Cliente delega e recebe a chave.</p></div>
+    <div class="card"><h3><span class="tag">Diferencial real</span>EVF antes da obra</h3><p>Estudo de Viabilidade Financeira mostra quanto custa antes de começar, com cenários e curva ABC.</p></div>
+    <div class="card"><h3><span class="tag">Prova de confiança</span>Sem RT, sem 10%</h3><p>Não aceitam comissão de fornecedor; trabalham com preço de custo e transparência total.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">02 · Dados institucionais</span><h2>Quem são e onde estão</h2></div>
+  <div class="grid2">
+    <div class="card">
+      <dl>
+        <dt>Razão social</dt><dd>Perla Construtora LTDA</dd>
+        <dt>CNPJ</dt><dd>55.156.540/0001-50</dd>
+        <dt>Abertura</dt><dd>16/05/2024 · ME · capital R$ 30 mil</dd>
+        <dt>CNAE principal</dt><dd>71.11-1/00 Serviços de arquitetura (+ construção, elétrica, hidráulica, pintura, engenharia)</dd>
+        <dt>Endereço</dt><dd>Rua Santa Rita Durão, 444, Savassi, BH/MG, 30140-111</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3><span class="tag">Sócias</span>Duas mulheres, mães e cristãs</h3>
+      <p><strong>Stephanie Faina</strong> (@stephanie_faina) · engenheira civil, especialista em gestão de obras.<br>
+      <strong>Mariana Guimarães</strong> (@marianaguimaraes.arquitetura) · arquiteta e advogada; foco em estética, funcionalidade e segurança jurídica.</p>
+      <p>Aparecem com frequência nos posts: @jessicafaina e @victor.gabv (provável equipe). Abriram vaga de estágio em arquitetura via Google Forms.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3><span class="tag">Canais públicos</span>Links encontrados na bio (PDF no Google Drive)</h3>
+    <ul>
+      <li><strong>WhatsApp:</strong> wa.me/553199203886 (3 botões: “Quero fazer minha obra com vocês”, “Transforme meu ambiente sem obra”, “Preciso de um projeto”)</li>
+      <li><strong>YouTube:</strong> youtube.com/@perlaconstrutora · <strong>TikTok:</strong> @perlaconstrutora · <strong>Pinterest:</strong> pin.it/21KNbOGkU</li>
+      <li><strong>Link da bio:</strong> bit.ly/Perlaconstrutora_ → PDF no Drive (fundo mármore preto, logo dourado). O site substitui isso.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">03 · Serviços</span><h2>Portfólio de serviços declarado</h2></div>
+  <div class="grid3">
+    <div class="card"><h3><span class="tag">Carro-chefe</span>Gestão de Obra</h3><p>Planejamento, cronograma físico-financeiro atualizado semanalmente, controle financeiro, gestão de equipes, relatórios semanais, obra com garantia, app BNO “Dia a Dia” com fotos diárias, compras e medições.</p></div>
+    <div class="card"><h3><span class="tag">Diferencial</span>EVF · Estudo de Viabilidade Financeira</h3><p>Orçamento real por etapa, curva ABC, simulação de cenários no app. Mostra que a “parte cinza” (demolição, elétrica, hidráulica, regularização) chegou a 37% em orçamentos reais.</p></div>
+    <div class="card"><h3><span class="tag">Projeto</span>Arquitetura & Interiores</h3><p>Levantamento arquitetônico, projeto executivo, imagens 3D, aprovação em Prefeitura e Vigilância Sanitária, regularização de edificações.</p></div>
+    <div class="card"><h3><span class="tag">Entrada</span>Perla Transforma</h3><p>“Transforme seu ambiente sem obra”: ambientação e decoração sem quebra-quebra.</p></div>
+    <div class="card"><h3><span class="tag">Entrada</span>Consultoria para reformas rápidas</h3><p>Levantamento, layout estratégico, imagens 3D, indicação de acabamentos e decoração. Foco em valorizar o imóvel com agilidade.</p></div>
+    <div class="card"><h3><span class="tag">Nicho</span>Clínicas e consultórios</h3><p>Formato exclusivo para médicos e dentistas: projeto, aprovação sanitária, obra e marcenaria. Já são 5+ clínicas entregues (abr/2026).</p></div>
+  </div>
+  <p>Também aparecem no feed: <strong>house flipping</strong> (reforma para valorizar venda/aluguel), <strong>vistoria cautelar</strong>, <strong>steel frame</strong>, arquitetura verde/paisagismo e plantas preservadas.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">04 · Público</span><h2>Para quem o site fala</h2></div>
+  <div class="grid3">
+    <div class="card"><h3>Famílias em reforma ou construção</h3><p>Dito por elas: “em grande parte, famílias com filhos pequenos, em que o casal trabalha o dia todo”. Medo de perder o controle do orçamento e do tempo.</p></div>
+    <div class="card"><h3>Profissionais de saúde</h3><p>Médicos e dentistas que precisam de clínica aprovada na Vigilância e funcionando rápido. Argumento: cada dia de atraso custa faturamento.</p></div>
+    <div class="card"><h3>Investidores</h3><p>House flipping e reforma para renda. Público menor no feed, mas com ticket de decisão racional (encaixa bem com o EVF).</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">05 · Cases</span><h2>Obras e projetos citados publicamente</h2><p>Material pronto para a página de portfólio. Todos precisam de fotos em alta e autorização do cliente.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Case</th><th>Tipo</th><th>O que destacar</th></tr></thead>
+    <tbody>
+      <tr><td>Clínica Dr. Mateus Garcia</td><td>Clínica odontológica</td><td>Projeto, aprovação na Vigilância, obra, marcenaria, entrega de chaves. Tem depoimento em print (“alvará deferido, a fiscal elogiou o projeto”).</td></tr>
+      <tr><td>5ª clínica médica (abr/2026) e clínica de estética</td><td>Comercial / saúde</td><td>Posicionamento, ticket médio, prazo curto.</td></tr>
+      <tr><td>Centro de Referência do Queijo Artesanal</td><td>Institucional</td><td>Obra com propósito cultural mineiro. Ótimo case de credibilidade.</td></tr>
+      <tr><td>Casa no Vale dos Cristais</td><td>Residencial alto padrão</td><td>Execução de toda a obra interna.</td></tr>
+      <tr><td>Casa na Lagoa dos Ingleses</td><td>Residencial alto padrão</td><td>Construção com vista para a lagoa, área gourmet.</td></tr>
+      <tr><td>Apto Jéssica & Beto, 110 m²</td><td>Reforma completa</td><td>Compra em abril, mudança em 30/07: projeto de interiores + EVF + execução.</td></tr>
+      <tr><td>Apto da Márcia, Santo Antônio</td><td>Reforma</td><td>Área privativa com jabuticabeira; case de briefing afetivo.</td></tr>
+      <tr><td>Rua Andaluzita, Savassi</td><td>Reforma para valorizar</td><td>“Metodologia Perla”: consultoria de arquitetura + execução.</td></tr>
+      <tr><td>Cobertura Rafael Bedran</td><td>Reforma de imóvel de 1991</td><td>Infiltrações e layout engessado resolvidos.</td></tr>
+      <tr><td>Apartamento Afetivo</td><td>Reforma residencial</td><td>Série de conteúdo sobre projeto centrado no cliente.</td></tr>
+      <tr><td>Aptos de house flipping</td><td>Investimento</td><td>Comprar bem, reformar com estratégia, vender ou alugar melhor.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">06 · Prova social e autoridade</span><h2>O que já existe para gerar confiança</h2></div>
+  <div class="grid2">
+    <div class="card"><h3>Depoimentos (post fixado)</h3><ul>
+      <li>“Organização, clareza e execução impecável em cada detalhe.”</li>
+      <li>“Delegamos tudo e recebemos a obra pronta e impecável.”</li>
+      <li>“O padrão da obra refletiu exatamente o que queríamos.”</li>
+      <li>Destaque “Feedbacks” no Instagram com mais prints.</li>
+    </ul></div>
+    <div class="card"><h3>Selos e parcerias</h3><ul>
+      <li>Mentoria Bora na Obra (Rafa e Alex Brasileiro); abriram o evento na sede da Hotmart; MBA Experience.</li>
+      <li>Parceria com Mevi Piedras (pedras naturais).</li>
+      <li>Evento Portobello; painel com microfone (set/2026); marcação da FUMEC.</li>
+      <li>“100% de aprovação nos órgãos competentes” (confirmar antes de usar).</li>
+    </ul></div>
+  </div>
+  <div class="quotes">
+    <div>Seu sonho. Nossa entrega.</div>
+    <div>Delegue a obra. Receba o resultado.</div>
+    <div>Do sonho projetado até a chave na mão.</div>
+    <div>Padrão Perla. Obras que…</div>
+    <div>A obra cobra o que o projeto não resolveu.</div>
+    <div>Você não tem medo de investir. Tem medo de perder o controle.</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">07 · Identidade visual</span><h2>Paleta extraída dos arquivos da marca</h2><p>Cores medidas por pixel no logo (PDF da bio) e nos carrosséis. O perfil tem duas fases visuais; o site deve unir as duas sem parecer duas marcas.</p></div>
+
+  <div class="phase">
+    <div class="phase-label"><h3>Fase 1 · Logo e 2025: mármore preto + ouro champanhe</h3><small>logo, destaques, PDF da bio, “Quem somos”</small></div>
+    <div class="sw-row">
+      <div class="sw"><i style="background:#0E0D0C"></i><div><b>Ônix</b><code>#0E0D0C</code><span>fundo do logo e mármore</span></div></div>
+      <div class="sw"><div class="grad"></div><div><b>Ouro champanhe</b><code>#F0EAD0 → #9C8A5E</code><span>gradiente metálico do logo</span></div></div>
+      <div class="sw"><i style="background:#B8A06E"></i><div><b>Ouro médio</b><code>#B8A06E</code><span>versão chapada do dourado</span></div></div>
+      <div class="sw"><i style="background:#6B4A2C"></i><div><b>Café</b><code>#6B4A2C</code><span>faixas do “Quem somos”</span></div></div>
+      <div class="sw"><i style="background:#CBBBA1"></i><div><b>Taupe</b><code>#CBBBA1</code><span>fundo dos carrosséis de serviço</span></div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-label"><h3>Fase 2 · Setembro/2026: editorial claro + vinho</h3><small>“Mais de um terço…”, “Os outros 65%”</small></div>
+    <div class="sw-row">
+      <div class="sw"><i style="background:#F9F4F0"></i><div><b>Pérola</b><code>#F9F4F0</code><span>fundo principal</span></div></div>
+      <div class="sw"><i style="background:#DFCFC2"></i><div><b>Areia</b><code>#DFCFC2</code><span>cards e blocos</span></div></div>
+      <div class="sw"><i style="background:#5C4F46"></i><div><b>Grafite quente</b><code>#5C4F46</code><span>card escuro</span></div></div>
+      <div class="sw"><i style="background:#2C1E1E"></i><div><b>Tinta</b><code>#2C1E1E</code><span>texto e títulos</span></div></div>
+      <div class="sw"><i style="background:#8C303C"></i><div><b>Vinho</b><code>#8C303C</code><span>palavra-chave em destaque</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag">Direção definida · 25/09</span>Padrão premium escuro</h3>
+    <p>Base Ônix (#0E0D0C) com tinta Pérola (#EFE7D6) e um único acento: ouro champanhe chapado (#C2A56E) em numerais itálicos, pontos finais e filetes. O gradiente metálico fica só no logo. Uma única seção clara em papel pérola (#F4EEE6) para o dado dos 37%, dando respiro. O vinho sai do site e fica para o Instagram editorial. Tipografia: Newsreader nos títulos e textos, Cormorant Garamond itálico nos números e palavras de destaque.</p>
+  </div>
+
+  <div class="type-demo">
+    <div class="card"><span class="eyebrow">Títulos</span><div class="big">Obra sem <em class="v">caos</em>.</div><p>Serifa de alto contraste, como nos posts de 2026. Sugestão Google Fonts: Playfair Display (esta página usa ela).</p></div>
+    <div class="card"><span class="eyebrow">Apoio e interface</span><div class="big sans">Seu sonho. Nossa entrega.</div><p>Sans geométrica usada nos carrosséis. Sugestão: Montserrat ou Poppins. O logo usa uma sans condensada própria; peça o arquivo vetorial.</p></div>
+  </div>
+  <p>Símbolo: leque/concha de cinco pétalas facetadas sobre uma pérola. Bom elemento para ícones, divisores e favicon. Fotografia: interiores em tons quentes (madeira, mármore, iluminação embutida) e as sócias em retrato, sempre com roupas neutras (bege, preto, off-white).</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">08 · Proposta de estrutura</span><h2>Mapa do site</h2><p>Ordem da home pensada como jornada de decisão: dor, método, prova, contato.</p></div>
+  <ol class="map">
+    <li><div><b>Hero em mármore</b><span>Promessa da bio + foto das sócias + CTA “Agende sua conversa” (WhatsApp). Selo: arquitetura + engenharia + viabilidade.</span></div></li>
+    <li><div><b>A dor</b><span>Orçamento que estoura, obra que atrasa, cliente que vira mestre de obras. Usar o dado dos 37% da parte cinza.</span></div></li>
+    <li><div><b>Método Perla</b><span>Projeto → EVF → Gestão e execução → Entrega. Mostrar o app BNO com print real e o relatório semanal.</span></div></li>
+    <li><div><b>Serviços com três portas</b><span>Os mesmos três botões do PDF: Obra completa, Transformar sem obra, Só projeto. Página própria para Clínicas.</span></div></li>
+    <li><div><b>Portfólio</b><span>Cases com antes/depois, metragem, prazo e escopo. Filtro Residencial / Saúde / Investimento.</span></div></li>
+    <li><div><b>Quem somos</b><span>Stephanie e Mariana, formação, registros profissionais, valores (sem RT, preço de custo).</span></div></li>
+    <li><div><b>Depoimentos + parceiros</b><span>Prints reais com autorização, logos Mevi Piedras, Bora na Obra, Portobello.</span></div></li>
+    <li><div><b>Conteúdo / FAQ</b><span>Reaproveitar os reels educativos: vistoria cautelar, projeto executivo, compatibilização, steel frame.</span></div></li>
+    <li><div><b>Contato</b><span>WhatsApp, formulário curto (tipo de obra, bairro, prazo, faixa de investimento), endereço na Savassi, vaga de estágio.</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">09 · Riscos e pendências</span><h2>O que confirmar antes de publicar</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Ponto</th><th>Por quê</th><th>Peso</th></tr></thead>
+    <tbody>
+      <tr><td>Número do WhatsApp</td><td>O link é wa.me/553199203886: só 8 dígitos após o DDD 31. Pode ser um número antigo sem o 9. Testar antes de usar em todos os CTAs.</td><td><span class="pill alto">Alto</span></td></tr>
+      <tr><td>Registros CAU e CREA</td><td>Publicidade de arquitetura e engenharia deve trazer nome e registro dos responsáveis. Pedir os números para o rodapé e o “Quem somos”.</td><td><span class="pill alto">Alto</span></td></tr>
+      <tr><td>Autorização de clientes</td><td>Nomes, fotos e prints de conversa (Dr. Mateus Garcia, Jéssica e Beto, Márcia, Rafael Bedran) exigem autorização por escrito (LGPD).</td><td><span class="pill alto">Alto</span></td></tr>
+      <tr><td>Promessas absolutas</td><td>“Custo, prazo e resultado garantidos” e “100% de aprovação” viram passivo se um cliente questionar. Ajustar a redação ou explicar o que está no contrato.</td><td><span class="pill medio">Médio</span></td></tr>
+      <tr><td>Duas identidades visuais</td><td>Preto/dourado (2025) e claro/vinho (2026) convivem no perfil. Definir com elas qual é a direção oficial.</td><td><span class="pill medio">Médio</span></td></tr>
+      <tr><td>Arquivos originais</td><td>Logo em vetor (SVG/AI), fotos em alta resolução e vídeos das obras. O Instagram entrega imagens comprimidas.</td><td><span class="pill medio">Médio</span></td></tr>
+      <tr><td>Fé no posicionamento</td><td>“Mães e cristãs” é parte declarada da marca. Decidir se vai no hero ou só no “Quem somos”.</td><td><span class="pill baixo">Baixo</span></td></tr>
+      <tr><td>Engajamento baixo</td><td>Posts recentes com 3 a 44 curtidas para 2.054 seguidores. O site precisa ser o motor de conversão (SEO local + tráfego), não um espelho do Instagram.</td><td><span class="pill baixo">Contexto</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<p class="foot">Fontes: perfil público @perlaconstrutora (bio, 6 destaques, ~227 legendas de posts de jan/2025 a set/2026), PDF da bio no Google Drive e consulta de CNPJ na Econodata. Cores medidas por amostragem de pixels.</p>
+</main>
+
+</body>
+</html>

@@ -27,6 +27,13 @@ Toda decisão de design/desenvolvimento deste site (layout, CSS, tipografia, ima
 7. Mobile desenhado, não encolhido — o layout mobile é pensado como versão própria, não apenas um "shrink" do desktop.
 8. O detalhe caro e invisível — acabamento em detalhes que o usuário não percebe conscientemente mas sente (alinhamento pixel-perfect, transições de estado, consistência de bordas/raios/sombras).
 
+## Compliance e dados sensíveis (regra permanente)
+
+- **Nunca inventar/preencher**: números de registro profissional (CREA/CAU), números de WhatsApp/telefone, CNPJ, ou qualquer dado de compliance/legal. Se não confirmado pelo usuário, manter como `[confirmar]` no código — nunca um valor plausível "de exemplo" disfarçado de real.
+- **Nomes/fotos/depoimentos de clientes reais** (cases, prints, testemunhos) só entram no site publicado com autorização explícita e por escrito confirmada pelo usuário (LGPD). Até lá, tratar como pendência bloqueadora, não como conteúdo pronto.
+- **Promessas absolutas** ("garantido", "100% de aprovação", etc.) exigem revisão do usuário antes de qualquer publicação — risco jurídico.
+- Qualquer risco desse tipo identificado deve ser registrado no `PROGRESS.md` numa tabela de riscos, não só mencionado de passagem.
+
 ## Branches
 
 - `main` = versão publicada/produção do site.
