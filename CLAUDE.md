@@ -30,9 +30,10 @@ Toda decisão de design/desenvolvimento deste site (layout, CSS, tipografia, ima
 ## Compliance e dados sensíveis (regra permanente)
 
 - **Nunca inventar/preencher**: números de registro profissional (CREA/CAU), números de WhatsApp/telefone, CNPJ, ou qualquer dado de compliance/legal. Se não confirmado pelo usuário, manter como `[confirmar]` no código — nunca um valor plausível "de exemplo" disfarçado de real.
-- **Nomes/fotos/depoimentos de clientes reais** (cases, prints, testemunhos) só entram no site publicado com autorização explícita e por escrito confirmada pelo usuário (LGPD). Até lá, tratar como pendência bloqueadora, não como conteúdo pronto.
+- **Nomes/fotos/depoimentos de clientes reais** (cases, prints, testemunhos) só entram no site publicado com autorização **escrita** (termo assinado), não apenas confirmação verbal do usuário. **Estar público no Instagram não é autorização para uso comercial no site** — não tratar "é público" como sinônimo de "posso usar aqui". Enquanto não houver termo assinado: usar o conteúdo (texto do depoimento) sem o nome — atribuir por profissão/cidade e marcar explicitamente no código (comentário HTML) e no `PROGRESS.md` que nome/foto estão pendentes.
+- **Cuidado redobrado com quem aparece nos posts**: verificar se a pessoa citada não é (a) parente de alguém da equipe (case de família mina credibilidade e não deve virar prova social sem deixar isso claro), (b) menor de idade (nunca citar nome de criança/filho de cliente), (c) alguém citado em contexto negativo/de reclamação sobre **outra empresa**, não cliente da Perla. Confirmar o contexto completo antes de usar qualquer nome, não só que ele apareceu no perfil.
 - **Promessas absolutas** ("garantido", "100% de aprovação", etc.) exigem revisão do usuário antes de qualquer publicação — risco jurídico.
-- Qualquer risco desse tipo identificado deve ser registrado no `PROGRESS.md` numa tabela de riscos, não só mencionado de passagem.
+- Qualquer risco desse tipo identificado deve ser registrado no `PROGRESS.md` numa tabela de riscos, não só mencionado de passagem. Se uma pendência já registrada como resolvida se mostrar incompleta ou equivocada (ex: "autorizado" que na prática é "autorização verbal genérica, termo escrito ainda não existe"), corrigir o registro imediatamente — não deixar o `PROGRESS.md` desatualizado/otimista demais.
 
 ## Branches
 
