@@ -11,8 +11,17 @@ Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, 
 `main` (repositório ainda não publicado — único branch existente).
 
 ## Último commit
-`79ab683` — "Corta propaganda do final do vídeo do HERO e reduz velocidade de reprodução".
-⚠️ Há uma alteração **feita depois desse commit e ainda não commitada** (remoção do parallax do HERO) — ver "Problemas conhecidos" abaixo antes de continuar.
+`8aaf618` — "Remove parallax do hero e documenta estado atual". Commit e push já realizados, working tree clean.
+
+## ÚLTIMO ESTADO CONFIRMADO
+
+- Commit: `8aaf618`.
+- Remoção do parallax do HERO concluída.
+- Push concluído.
+- Working tree clean.
+- Vídeo permanece com autoplay, muted, loop e playbackRate 0.72.
+- Propaganda final já removida.
+- Nenhuma seção abaixo do HERO foi alterada.
 
 ## O que já foi concluído
 - `index.html` adotado como página real do site (protótipo do usuário), single-page com âncoras `#metodo`/`#servicos`/`#obras`/`#quem-somos`.
@@ -79,16 +88,12 @@ Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuár
 - Nitidez do vídeo do HERO em telas largas segue limitada pela resolução de origem (576×1024, vertical/reels); só se resolve com material em resolução maior ou formato 16:9 da produtora.
 - `.bar-legend` com `font-size:15px` hardcoded em vez do token `--fs-support` — limpeza menor registrada na Rodada 2, ainda não feita.
 - Decisão de domínio/hospedagem final ainda não tomada (cPanel é o modelo, falta definir o domínio).
-- **Commit/push da remoção do parallax do HERO** — ver "Problemas conhecidos".
 
 ## PRÓXIMA TAREFA EXATA
-Nenhuma nova tarefa foi iniciada nesta etapa — sessão encerrada em modo documentação/verificação apenas. Ao retomar, nesta ordem:
-1. Rodar `git status` e `git diff --cached` no repositório Perla para confirmar se a remoção do parallax do HERO ainda está pendente de commit, ou se já foi commitada/enviada antes do fim desta sessão.
-2. Se ainda pendente: perguntar ao usuário se pode commitar e dar push para `origin/main` (a pergunta já foi feita nesta sessão e ficou sem resposta antes do pedido de encerramento).
-3. Só depois disso, retomar o fluxo normal do refinamento final: perguntar ao usuário se aprova iniciar a **Rodada 4 (Mobile + Qualidade técnica invisível)**.
+1. Rodada 4 — Mobile + Qualidade técnica invisível.
+2. Após aprovação da Rodada 4, executar Rodada 5 — QA final de produção.
 
 ## Problemas conhecidos
-- **Commit pendente**: alterações **staged, não commitadas e não enviadas ao GitHub** — remoção do parallax do vídeo do HERO. Arquivos: `index.html` (CSS do `.hero-video` simplificado, bloco JS do parallax removido, ~30 linhas) e `PROGRESS.md` (registro da mudança). Diff completo revisado e confirmado limpo (só HERO, nenhuma seção abaixo tocada) antes deste registro.
 - Chromium de teste do Playwright (ambiente de nuvem) não decodifica H.264 — validação visual do vídeo em si (não do layout) exige uma cópia temporária em WebM, descartada após o teste, nunca commitada. O arquivo do site continua em H.264 (compatibilidade universal com navegadores reais).
 - Vídeo do HERO não foi testado em navegador real (Chrome/Safari/Edge) nesta sessão — só validado via Playwright (layout/atributos) e via cópia WebM temporária (decodificação/loop/velocidade), pela limitação de ambiente acima.
 - Foto das sócias (`equipe/socias-retrato.jpg`) renderiza levemente abaixo do ideal de nitidez em telas retina/2x — sem solução sem uma versão de maior resolução do arquivo original (vieram do Instagram).
@@ -109,7 +114,7 @@ Nenhuma nova tarefa foi iniciada nesta etapa — sessão encerrada em modo docum
 
 Usuário pediu uma inspeção final estruturada em 8 rodadas sequenciais, cada uma parando para aprovação antes da próxima: (1) Direção visual + Tipografia, (2) Sistema de cores + Hierarquia/Whitespace, (3) Imagens + Motion design, (4) Mobile + Qualidade técnica invisível, depois (5) auditoria final completa. Regra fixa em todas: sem redesign, sem remover funcionalidade, só corrigir problemas reais.
 
-**Rodada 3 — Imagens + Motion Design: CONCLUÍDA em 25/09 (commit pendente nesta mesma etapa).**
+**Rodada 3 — Imagens + Motion Design: CONCLUÍDA em 25/09, commit `79ab683`.**
 - **Imagens**: auditoria completa das 10 fotos reais (`assets/img/{marquee,servicos,equipe}/`) — função narrativa, qualidade, resolução, proporção, recorte (`object-fit:cover`), peso, formato, comportamento responsivo. Calculado matematicamente o quanto cada crop remove (ex: fotos paisagem no marquee retangular 3:4 perdem 42–58% da largura; foto retrato do projeto 3D no card 4:3 perde 44% da altura) e depois **verificado visualmente com Playwright/Chromium** (zoom nas seções `.marquee-strip`, `.doors`, `.duo-photo`) — em todos os casos o crop centralizado preserva o assunto principal (fachada, sala, arco/piscina, as duas sócias) sem cortar elemento importante. **Nenhuma imagem trocada ou recortada de novo** — já estavam adequadas, com intenção real (obra real, projeto 3D, clínica, sócias), sem cara de banco de imagens.
 - **Performance de imagens**: já estava bem resolvida antes desta rodada — `<picture>`+`<source type="webp">` com fallback JPEG em todas as 10 fotos, `width`/`height` explícitos (sem CLS), `loading="lazy"` em todas (correto: confirmado via screenshot que a primeira dobra em 1440px e 390px é 100% tipografia, sem nenhuma imagem — logo nenhuma é candidata a LCP, e a fita de marquee/fotos de serviços/sócias ficam abaixo da dobra em ambos os tamanhos). Peso total de imagens realmente baixado pelo navegador (webp, únicas, sem contar duplicatas do loop do marquee): ~436KB para as 10 fotos — adequado para um site institucional premium. **Não foi necessário** adicionar `srcset`/`sizes` (arquivos já pequenos o bastante para os tamanhos de render medidos: 210px marquee, 345px card de serviço, 1016px foto das sócias) nem pipeline de otimização adicional — teria ganho marginal para a complexidade que introduziria.
 - **Achado registrado, não corrigido nesta rodada**: a foto das sócias (`equipe/socias-retrato.jpg`, 1080×972) renderiza a até 1016px CSS em telas largas — em tela retina/2x isso pediria ~2032px de origem, então a imagem fica levemente abaixo do ideal de nitidez em monitores de alta densidade. Não há como resolver sem uma versão de maior resolução do arquivo original (as fotos vieram do Instagram, resolução limitada). Pendência real, não uma tarefa esquecida.
