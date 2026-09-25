@@ -9,6 +9,24 @@ Site institucional estático (HTML/CSS/JS) da Construtora Perla, com:
 - Captação de leads (formulário de contato, WhatsApp, simulação de financiamento).
 - Institucional/portfólio (história, obras entregues, diferenciais, equipe).
 
+## Padrão de design obrigatório — "Checklist $10K"
+
+Toda decisão de design/desenvolvimento deste site (layout, CSS, tipografia, imagens, animações) **tem que se encaixar nestes 8 pontos**. Nenhuma tela, componente ou trecho de CSS/JS deve fugir disso. Antes de considerar qualquer entrega de UI concluída, validar contra esta lista:
+
+**Taste (aparência/gosto)**
+1. Ponto de vista, não template — layout com identidade própria, nunca cara de template genérico.
+2. Tipografia que trabalha — hierarquia tipográfica funcional (serifada de destaque + sem serifa de apoio, por exemplo), não só "bonito".
+3. Sistema de cores contido — paleta restrita e consistente (cores da marca + neutros), sem poluição visual.
+4. Hierarquia que respira — espaçamento generoso, uso deliberado de espaço em branco/negativo entre seções e elementos.
+
+**Substance (conteúdo/imagem)**
+5. Imagens com intenção — nenhuma foto genérica de banco de imagens sem propósito; toda imagem/empreendimento tem que reforçar a mensagem (qualidade, obra real, status).
+
+**Felt Quality (percepção de qualidade)**
+6. Movimento sutil — microanimações/transições discretas (hover, scroll, fade), nunca exageradas ou "piscantes".
+7. Mobile desenhado, não encolhido — o layout mobile é pensado como versão própria, não apenas um "shrink" do desktop.
+8. O detalhe caro e invisível — acabamento em detalhes que o usuário não percebe conscientemente mas sente (alinhamento pixel-perfect, transições de estado, consistência de bordas/raios/sombras).
+
 ## Branches
 
 - `main` = versão publicada/produção do site.

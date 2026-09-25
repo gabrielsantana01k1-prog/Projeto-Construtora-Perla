@@ -15,6 +15,7 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - Objetivo do site (múltiplo): **vitrine de empreendimentos** + **captação de leads** + **institucional/portfólio**.
 - Identidade visual: o usuário **já tem logo e cores oficiais** da marca (ainda não enviados).
 - Dados de contato: o usuário vai informar os dados reais (ainda não enviados).
+- **Padrão de design obrigatório definido pelo usuário**: "Checklist $10K" (8 pontos — ver `CLAUDE.md`, seção "Padrão de design obrigatório"). Toda entrega de UI precisa ser validada contra essa lista antes de ser considerada concluída. Isso é regra permanente, não uma preferência pontual.
 
 ## Pendências (bloqueando início do desenvolvimento visual/conteúdo)
 
