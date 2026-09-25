@@ -10,6 +10,7 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - Protótipo original (idêntico ao `index.html` atual) também preservado em `docs/briefing/home-prototipo-2026-09-25.html` para histórico.
 - Screenshots do Instagram (grid + perfil) salvos em `docs/briefing/instagram-*-2026-09-25.{webp,png}` como referência visual.
 - Fluxo de trabalho: desenvolvimento nesta sessão (container na nuvem), commit/push a cada etapa. Usuário sincroniza pasta local via `git clone`/`git pull`.
+- **Fotos reais integradas ao site** (25/09, zip `perla-fotos-instagram.zip` enviado pelo usuário, com índice `LEIA-ME_indice.csv` muito bem documentado — pastas por categoria: sócias, clínicas, residencial, projetos-3d, queijo-artesanal, entregas-bastidores). Processadas com Pillow (recorte de texto sobreposto, resize, JPEG+WebP otimizados) e salvas em `assets/img/{marquee,servicos,equipe}/`. Total ~1.3MB. Ver detalhes na seção "Fotos reais" abaixo.
 
 ## Dados institucionais (reais, do briefing — fonte da verdade)
 
@@ -47,8 +48,27 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 | 2 | **Registros CAU (Mariana) e CREA (Stephanie) ausentes.** Publicidade de arquitetura/engenharia no Brasil exige nome + registro do responsável técnico visível. | **NÃO bloqueante para continuar** — usuário confirmou em 25/09 que vai enviar o CREA depois. `index.html` mantém `[confirmar]` nos lugares certos — **nunca inventar um número aqui**, mesmo sob pressão pra "terminar logo". Site não deve ser publicado em produção com isso pendente. |
 | 3 | **Autorização de clientes (LGPD) — CORRIGIDO em 25/09.** A confirmação inicial ("os clientes autorizou") era otimista demais. Levantamento detalhado do usuário mostrou: **nenhum termo escrito existe ainda** para nenhum caso. "Público no Instagram" ≠ autorização comercial. | Ver tabela completa de depoimentos/cases abaixo. Até existir termo assinado, nomes/fotos ficam fora do site — texto do depoimento pode ser usado, atribuição fica genérica (profissão/cidade) com nota "aguardando autorização". Ação recomendada pelo usuário: termo de 1 página, assinado por WhatsApp, por cliente. |
 | 4 | **Promessas absolutas** ("resultado garantido", "100% de aprovação") viram passivo jurídico se questionadas. | Revisar redação com o usuário antes de publicar cópias finais — `index.html` atual já é mais comedido, mas vale checar textos futuros. |
-| 5 | **Arquivos originais faltando:** logo em vetor (SVG/AI), fotos em alta resolução, vídeos das obras. Instagram só entrega imagens comprimidas. | Pedir arquivos originais ao usuário — hoje `index.html` usa blocos `.photo` como placeholder ("Foto · obra entregue" etc). |
+| 5 | **PARCIALMENTE RESOLVIDO em 25/09.** Fotos reais de obras/clínicas/sócias chegaram (zip do Instagram) e já estão no site. **Ainda falta**: logo em vetor (SVG/AI) — o site ainda usa só o wordmark tipográfico "PERLA construtora" em texto, sem o símbolo de leque/pérola. Vídeos das obras também não foram enviados. | Pedir o arquivo vetorial do logo ao usuário quando possível. |
 | 6 | Posicionamento "mães e cristãs" é declarado pela marca mas não está no `index.html` atual. | Perguntar ao usuário se deve entrar no hero ou só na seção "Quem somos". |
+
+## Fotos reais — integração (25/09)
+
+Usuário enviou `perla-fotos-instagram.zip` (117 fotos em 6 pastas categorizadas + `LEIA-ME_indice.csv` com observações por foto — material excepcionalmente bem organizado, incluindo avisos de que fotos tinham texto sobreposto, quais eram renders 3D vs. reais, e quais precisavam de autorização de cliente).
+
+**Processamento**: Pillow instalado via pip (não havia no ambiente). Fotos selecionadas foram recortadas (remoção de texto/legendas sobrepostas do Instagram, ex: "HOUSE FLIPPING Antes e Depois", indicador "6/10" de carrossel), redimensionadas e exportadas em JPEG otimizado + WebP (fallback via `<picture>`), com `width`/`height` explícitos pra evitar layout shift. Testado visualmente com Playwright/Chromium (screenshot desktop + mobile) antes de finalizar — os primeiros recortes de texto ficaram curtos demais e precisaram ser refeitos (ver abaixo).
+
+**Onde entrou cada foto:**
+- **Fita de marquee** (logo após o hero, 6 fotos únicas): casa alto padrão (fachada), house flipping antes/depois (interior, texto recortado), recepção de clínica, clínica de oncologia infantil (texto recortado), Centro de Referência do Queijo Artesanal (indicador de carrossel recortado), projeto 3D (sala de estar/jantar).
+- **3 cards de "Serviços"**: "Quero fazer minha obra" → corredor em obra (obra real, andaimento visível); "Transformar sem obra" → house flipping antes/depois; "Preciso de um projeto" → render 3D (terraço com arco e piscina, vista noturna de BH).
+- **"Quem somos"**: uma única foto real das duas sócias juntas (recortada pra remover o texto "O que nossos clientes dizem..." que estava sobreposto no post original). **Decisão importante**: não temos retrato solo de cada sócia, e não há como confirmar por uma foto sozinha quem é Stephanie e quem é Mariana — por segurança, a seção foi reestruturada pra usar uma foto única e compartilhada (sem crop atribuído a nome individual), em vez de arriscar trocar a identidade das duas. Isso é uma mudança de estrutura da seção (removi o placeholder de foto individual de cada `.person`), não só uma troca de imagem.
+
+**O que foi deliberadamente excluído** (critérios já registrados em `CLAUDE.md`):
+- 3 fotos de "sócias com cliente na entrega" (pasta `06-entregas-e-bastidores`) — rosto de cliente identificável, sem autorização confirmada.
+- 1 foto de "apartamento e terraço" com uma pessoa (provável cliente) sentada e com rosto visível — mesma razão.
+- Fotos de `03-residencial-obras-reais` marcadas no índice como "conferir se DEPOIS é render 3D" — ambíguas, não usadas até confirmação.
+- Fotos com marca/nome de clínica específica visível (ex: letreiro "MGM Estética") — evitadas por ora, mesmo sem mostrar rosto, pra não amarrar a um nome de clínica sem autorização.
+
+**Sobrou material não usado** (disponível pra uma próxima etapa): fotos de "bastidores de obra" e "eventos Bora na Obra/BNO" (pasta 06), mais fotos de clínica odontológica do Mateus Garcia sem pessoas, e ~20 renders 3D adicionais na pasta `04-projetos-3d`.
 
 ## Levantamento detalhado de depoimentos/cases (usuário, 25/09 — revisou o destaque "Feedbacks" inteiro)
 
@@ -106,13 +126,19 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 
 ## Próximo passo exato
 
-1. Ainda aguardando do usuário: (a) termo de autorização assinado por cliente (Mateus, cliente de Lourdes, e os demais do levantamento), (b) identificar quem é a cliente de Lourdes, (c) confirmar/descartar Jéssica como possível parente, (d) frase/vídeo real do Dr. Bruno, (e) CREA/CAU, (f) fotos reais em alta resolução, (g) logo vetorial, (h) decisão sobre posicionamento "mães e cristãs" (risco #6).
+1. Ainda aguardando do usuário: (a) termo de autorização assinado por cliente (Mateus, cliente de Lourdes, e os demais do levantamento), (b) identificar quem é a cliente de Lourdes, (c) confirmar/descartar Jéssica como possível parente, (d) frase/vídeo real do Dr. Bruno, (e) CREA/CAU, (f) logo vetorial (SVG/AI do símbolo de leque/pérola), (g) decisão sobre posicionamento "mães e cristãs" (risco #6). **Fotos reais já resolvidas** (ver seção "Fotos reais — integração" acima) — não é mais pendência.
 2. Assim que houver termo assinado de Mateus e/ou da cliente de Lourdes, substituir a atribuição genérica pelo nome real na seção "Clientes" do `index.html`.
-3. Quando as fotos chegarem, substituir os blocos `.photo` placeholder em `index.html`.
+3. Quando o logo vetorial chegar, trocar o wordmark tipográfico da nav/footer pelo símbolo real.
 4. Quando CREA/CAU chegarem, preencher os `[confirmar]` correspondentes.
 5. Rodar checklist de pré-entrega completo (`ui-ux-pro-max` `references/pro-rules.md`) antes de considerar a home "pronta".
 6. Só depois disso: decidir domínio/hospedagem (cPanel) e publicar.
 7. Commitar e dar push a cada etapa concluída, atualizando este arquivo.
+
+## Verificação feita nesta etapa (fotos)
+
+- HTML validado (parse limpo).
+- Testado visualmente com Playwright/Chromium local: screenshots desktop (1440px) e mobile (390px) do hero, marquee, serviços e quem-somos — todas as fotos carregando e recortadas corretamente, sem texto residual do Instagram, sem quebra de layout, responsivo confirmado nas duas larguras.
+- Todos os caminhos de imagem referenciados no `index.html` conferidos contra os arquivos realmente salvos em `assets/img/` (nenhum link quebrado).
 
 ## Notas
 

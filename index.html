@@ -102,10 +102,11 @@ section{padding-block:clamp(88px,11vw,160px)}
 .sec-head p{color:var(--perola-2);max-width:46ch}
 @media (max-width:820px){.sec-head{grid-template-columns:1fr}}
 
-/* Placeholders de foto — trocar por fotos reais */
+/* Foto real dentro de .photo: preenche o quadro, legenda sobreposta com gradiente de leitura */
 .photo{position:relative;background:linear-gradient(160deg,#1c1916,#0f0e0d 70%);border:1px solid var(--linha);overflow:hidden;display:flex;align-items:flex-end;padding:18px}
-.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 46%,rgba(239,231,214,.04) 46.5%,transparent 47.5%)}
-.photo span{position:relative;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--perola-3)}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55) 100%);pointer-events:none}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.photo span{position:relative;z-index:1;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--perola)}
 
 /* Fita de obras: rolagem contínua em CSS puro (sem lib), pausa no hover, some sob prefers-reduced-motion */
 .marquee-strip{border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);overflow:hidden;padding-block:clamp(22px,3vw,34px)}
@@ -182,9 +183,10 @@ section{padding-block:clamp(88px,11vw,160px)}
 @media (max-width:820px){.works li{grid-template-columns:48px 1fr;row-gap:6px}.works .t,.works .d{grid-column:2}.works .go{display:none}}
 
 /* ============ SÓCIAS ============ */
+.duo-photo{margin-bottom:clamp(32px,5vw,56px);border:1px solid var(--linha);overflow:hidden}
+.duo-photo img{width:100%;height:auto;display:block;aspect-ratio:1080/972;object-fit:cover}
 .duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,64px)}
-.person{display:grid;gap:22px}
-.person .photo{aspect-ratio:4/5;max-width:100%}
+.person{display:grid;gap:14px;align-content:start;border-top:1px solid var(--linha);padding-top:22px}
 .person h3{font-size:clamp(28px,3vw,40px);line-height:1}
 .person .role{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ouro)}
 .person p{color:var(--perola-2);font-size:15.5px;max-width:44ch}
@@ -264,18 +266,18 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
 
 <div class="marquee-strip marble" aria-hidden="true">
   <div class="marquee-track">
-    <div class="photo"><span>Foto · Lagoa dos Ingleses</span></div>
-    <div class="photo"><span>Foto · Vale dos Cristais</span></div>
-    <div class="photo"><span>Foto · Clínica odontológica</span></div>
-    <div class="photo"><span>Foto · Queijo Artesanal</span></div>
-    <div class="photo"><span>Foto · Reforma residencial</span></div>
-    <div class="photo"><span>Foto · Rua Andaluzita</span></div>
-    <div class="photo"><span>Foto · Lagoa dos Ingleses</span></div>
-    <div class="photo"><span>Foto · Vale dos Cristais</span></div>
-    <div class="photo"><span>Foto · Clínica odontológica</span></div>
-    <div class="photo"><span>Foto · Queijo Artesanal</span></div>
-    <div class="photo"><span>Foto · Reforma residencial</span></div>
-    <div class="photo"><span>Foto · Rua Andaluzita</span></div>
+    <picture class="photo"><source srcset="assets/img/marquee/casa-alto-padrao.webp" type="image/webp"><img src="assets/img/marquee/casa-alto-padrao.jpg" alt="" loading="lazy" width="900" height="601"><span>Casa alto padrão</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/house-flipping-antes-depois.webp" type="image/webp"><img src="assets/img/marquee/house-flipping-antes-depois.jpg" alt="" loading="lazy" width="900" height="518"><span>House flipping</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/clinica-recepcao.webp" type="image/webp"><img src="assets/img/marquee/clinica-recepcao.jpg" alt="" loading="lazy" width="900" height="1122"><span>Clínica · BH</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/clinica-oncologia-infantil.webp" type="image/webp"><img src="assets/img/marquee/clinica-oncologia-infantil.jpg" alt="" loading="lazy" width="900" height="630"><span>Oncologia infantil</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/queijo-artesanal.webp" type="image/webp"><img src="assets/img/marquee/queijo-artesanal.jpg" alt="" loading="lazy" width="865" height="983"><span>Queijo Artesanal</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/projeto-3d-living.webp" type="image/webp"><img src="assets/img/marquee/projeto-3d-living.jpg" alt="" loading="lazy" width="900" height="506"><span>Projeto 3D</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/casa-alto-padrao.webp" type="image/webp"><img src="assets/img/marquee/casa-alto-padrao.jpg" alt="" loading="lazy" width="900" height="601"><span>Casa alto padrão</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/house-flipping-antes-depois.webp" type="image/webp"><img src="assets/img/marquee/house-flipping-antes-depois.jpg" alt="" loading="lazy" width="900" height="518"><span>House flipping</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/clinica-recepcao.webp" type="image/webp"><img src="assets/img/marquee/clinica-recepcao.jpg" alt="" loading="lazy" width="900" height="1122"><span>Clínica · BH</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/clinica-oncologia-infantil.webp" type="image/webp"><img src="assets/img/marquee/clinica-oncologia-infantil.jpg" alt="" loading="lazy" width="900" height="630"><span>Oncologia infantil</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/queijo-artesanal.webp" type="image/webp"><img src="assets/img/marquee/queijo-artesanal.jpg" alt="" loading="lazy" width="865" height="983"><span>Queijo Artesanal</span></picture>
+    <picture class="photo"><source srcset="assets/img/marquee/projeto-3d-living.webp" type="image/webp"><img src="assets/img/marquee/projeto-3d-living.jpg" alt="" loading="lazy" width="900" height="506"><span>Projeto 3D</span></picture>
   </div>
 </div>
 
@@ -333,17 +335,26 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
     </div>
     <div class="doors">
       <a class="door" href="https://wa.me/5531999203886" target="_blank" rel="noopener">
-        <div class="photo"><span>Foto · obra entregue</span></div>
+        <picture class="photo">
+          <source srcset="assets/img/servicos/obra-em-andamento.webp" type="image/webp">
+          <img src="assets/img/servicos/obra-em-andamento.jpg" alt="Obra em andamento, corredor em acabamento" loading="lazy" width="1069" height="714">
+        </picture>
         <div><p class="for">Para quem vai construir ou reformar</p><h3 style="margin-top:12px">Quero fazer minha obra com vocês</h3></div>
         <p>Projeto, EVF, gestão e execução completas. Um contrato, uma responsável técnica, zero intermediários.</p>
       </a>
       <a class="door" href="https://wa.me/5531999203886" target="_blank" rel="noopener">
-        <div class="photo"><span>Foto · ambiente transformado</span></div>
+        <picture class="photo">
+          <source srcset="assets/img/servicos/house-flipping-antes-depois.webp" type="image/webp">
+          <img src="assets/img/servicos/house-flipping-antes-depois.jpg" alt="Sala de apartamento reformado, antes e depois" loading="lazy" width="1080" height="621">
+        </picture>
         <div><p class="for">Perla Transforma</p><h3 style="margin-top:12px">Transformar meu ambiente sem obra</h3></div>
         <p>Consultoria de layout, acabamentos e decoração para valorizar o imóvel com agilidade e sem quebra-quebra.</p>
       </a>
       <a class="door" href="https://wa.me/5531999203886" target="_blank" rel="noopener">
-        <div class="photo"><span>Foto · prancha de projeto</span></div>
+        <picture class="photo">
+          <source srcset="assets/img/servicos/projeto-3d-arco-piscina.webp" type="image/webp">
+          <img src="assets/img/servicos/projeto-3d-arco-piscina.jpg" alt="Projeto 3D de terraço com arco e piscina" loading="lazy" width="960" height="1280">
+        </picture>
         <div><p class="for">Arquitetura &amp; Interiores</p><h3 style="margin-top:12px">Preciso de um projeto</h3></div>
         <p>Projeto arquitetônico e de interiores com imagens 3D, aprovação na Prefeitura e regularização.</p>
       </a>
@@ -385,16 +396,21 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
       </div>
       <p>Mães, empresárias e cristãs. Fundaram a Perla para que o cliente não tivesse que escolher entre projeto bonito e obra bem conduzida.</p>
     </div>
+    <figure class="duo-photo">
+      <picture>
+        <source srcset="assets/img/equipe/socias-retrato.webp" type="image/webp">
+        <img src="assets/img/equipe/socias-retrato.jpg" alt="Stephanie Faina e Mariana Guimarães, sócias da Perla Construtora" loading="lazy" width="1080" height="972">
+      </picture>
+    </figure>
+    <!-- Foto única das duas sócias juntas: não temos retrato solo de cada uma, e não dá pra confirmar por foto sozinha quem é Stephanie e quem é Mariana — por segurança, nenhum crop foi atribuído a um nome individual. -->
     <div class="duo">
       <article class="person">
-        <div class="photo"><span>Retrato · Stephanie Faina</span></div>
         <p class="role">Engenharia &amp; gestão de obras</p>
         <h3>Stephanie Faina</h3>
         <p>Engenheira civil especialista em gestão de obras. Cuida de cronograma, equipe e custo para que o projeto seja executado exatamente como foi desenhado.</p>
         <p class="reg">CREA-MG nº [confirmar]</p>
       </article>
       <article class="person">
-        <div class="photo"><span>Retrato · Mariana Guimarães</span></div>
         <p class="role">Arquitetura &amp; interiores</p>
         <h3>Mariana Guimarães</h3>
         <p>Arquiteta e advogada. Une estética, funcionalidade e segurança jurídica, das aprovações na Prefeitura e na Vigilância ao último detalhe de marcenaria.</p>
