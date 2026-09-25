@@ -44,8 +44,8 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 | # | Risco | Ação necessária |
 |---|-------|------------------|
 | ~~1~~ | ~~WhatsApp incompleto~~ | **RESOLVIDO em 25/09**: número correto confirmado pelo usuário — `31 9 9920-3886` (celular de Stephanie Faina), 9 dígitos. Atualizado em todos os 8 links `wa.me/` + texto visível do `index.html` para `wa.me/5531999203886`. |
-| 2 | **Registros CAU (Mariana) e CREA (Stephanie) ausentes.** Publicidade de arquitetura/engenharia no Brasil exige nome + registro do responsável técnico visível. | Pedir os números reais às sócias. `index.html` já tem `[confirmar]` nos lugares certos — **nunca inventar um número aqui.** |
-| 3 | **Autorização de clientes (LGPD)** para nomes/fotos/prints usados nos cases (Dr. Mateus Garcia, Jéssica e Beto, Márcia, Rafael Bedran). | Confirmar com o usuário se já há autorização por escrito antes de publicar esses nomes. |
+| 2 | **Registros CAU (Mariana) e CREA (Stephanie) ausentes.** Publicidade de arquitetura/engenharia no Brasil exige nome + registro do responsável técnico visível. | **NÃO bloqueante para continuar** — usuário confirmou em 25/09 que vai enviar o CREA depois. `index.html` mantém `[confirmar]` nos lugares certos — **nunca inventar um número aqui**, mesmo sob pressão pra "terminar logo". Site não deve ser publicado em produção com isso pendente. |
+| ~~3~~ | ~~Autorização de clientes (LGPD)~~ | **RESOLVIDO em 25/09**: usuário confirmou que os clientes autorizaram uso de nome/foto/depoimento (Dr. Mateus Garcia, Jéssica e Beto, Márcia, Rafael Bedran). Liberado usar nomes reais nos cases/depoimentos quando o conteúdo for expandido. |
 | 4 | **Promessas absolutas** ("resultado garantido", "100% de aprovação") viram passivo jurídico se questionadas. | Revisar redação com o usuário antes de publicar cópias finais — `index.html` atual já é mais comedido, mas vale checar textos futuros. |
 | 5 | **Arquivos originais faltando:** logo em vetor (SVG/AI), fotos em alta resolução, vídeos das obras. Instagram só entrega imagens comprimidas. | Pedir arquivos originais ao usuário — hoje `index.html` usa blocos `.photo` como placeholder ("Foto · obra entregue" etc). |
 | 6 | Posicionamento "mães e cristãs" é declarado pela marca mas não está no `index.html` atual. | Perguntar ao usuário se deve entrar no hero ou só na seção "Quem somos". |
@@ -61,25 +61,29 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - Skills instalados neste repositório (permanentes, versionados em `.claude/skills/`): `frontend-design` (anthropics/skills) e `ui-ux-pro-max` (nextlevelbuilder/ui-ux-pro-max-skill — instalado por cópia direta de arquivos estáticos, não via npm, que foi bloqueado pelo classificador de segurança do ambiente).
 - "Checklist $10K" (8 pontos, ver `CLAUDE.md`) é regra permanente de qualidade de design para todo o projeto.
 
-## Decisões desta rodada (respondidas pelo usuário em 25/09)
+## Decisões acumuladas (25/09)
 
-- **WhatsApp**: usuário vai confirmar o número correto com as sócias antes de eu considerar isso definitivo. **Não usar o `553199203886` como certo até então.**
-- **CREA/CAU + autorização LGPD dos clientes**: usuário vai levantar com Stephanie/Mariana. Até chegar: manter `[confirmar]` no CREA/CAU e **não publicar nomes próprios de clientes** nos cases (usar só tipo de obra/bairro, sem nome da pessoa) enquanto não houver autorização confirmada.
+- **WhatsApp**: ✅ confirmado — `31 9 9920-3886` (Stephanie Faina). Corrigido em todo `index.html`.
+- **Autorização LGPD dos clientes**: ✅ confirmada pelo usuário. Nomes reais liberados para uso em cases/depoimentos.
+- **CREA/CAU**: ⏳ pendente, usuário vai enviar depois. **Não bloqueia continuar o desenvolvimento**, mas bloqueia publicação em produção — manter `[confirmar]` até chegar.
 - **Escopo**: só a home por enquanto (uma página, como o protótipo). Portfólio completo, FAQ e página de Clínicas ficam para uma etapa futura, só depois da home aprovada.
 
-## Feito nesta rodada (sem depender das pendências acima)
+## Feito até agora (sem depender das pendências restantes)
 
-- `index.html`: adicionado `<title>` otimizado para SEO local ("Arquitetura, Engenharia e Reformas em Belo Horizonte"), `meta description`, `theme-color` (#0E0D0C) e tags Open Graph básicas (title/description/type/locale/site_name). `og:image`/`og:url` ficam pendentes até haver logo/foto em alta e domínio de publicação definidos.
+- `index.html`: SEO local (title, meta description, theme-color, Open Graph básico). `og:image`/`og:url` pendentes até logo/foto/domínio.
+- WhatsApp corrigido nos 8 links + texto visível.
+- **Correção de contraste (achado nesta revisão, WCAG AA)**: `--perola-3` (legendas, rodapé, linha de CREA/CAU) tinha só 4.08:1 de contraste sobre `--onix` — abaixo do mínimo de 4.5:1 pra texto pequeno. Ajustado de `#7A7263` para `#89806F` (4.98:1), mudança sutil, mantém a hierarquia visual.
 - HTML validado (parse limpo, sem erros).
 
 ## Próximo passo exato
 
-1. Aguardar do usuário: (a) WhatsApp correto, (b) CREA/CAU, (c) confirmação de autorização LGPD dos clientes citados, (d) fotos reais em alta resolução, (e) logo vetorial.
-2. Enquanto isso, se o usuário quiser, revisar nomes de clientes nos cases do `index.html` (hoje ainda não usa nomes próprios — confirmar se isso é intencional ou se falta ajustar).
+1. Ainda aguardando do usuário: (a) CREA/CAU, (b) fotos reais em alta resolução, (c) logo vetorial, (d) decisão sobre posicionamento "mães e cristãs" (risco #6).
+2. Com autorização de clientes já confirmada, avaliar com o usuário se quer nomes reais nos cases da seção "Obras" (hoje só usa localização/tipo, sem nome de cliente) — não fiz essa mudança sozinho por ainda não ter sido pedida.
 3. Quando as fotos chegarem, substituir os blocos `.photo` placeholder em `index.html`.
-4. Quando WhatsApp/CREA/CAU chegarem, atualizar os `[confirmar]` e todos os links `wa.me/...` no `index.html`.
-5. Só depois disso: decidir domínio/hospedagem (cPanel) e publicar.
-6. Commitar e dar push a cada etapa concluída, atualizando este arquivo.
+4. Quando CREA/CAU chegarem, preencher os `[confirmar]` correspondentes.
+5. Rodar checklist de pré-entrega completo (`ui-ux-pro-max` `references/pro-rules.md`) antes de considerar a home "pronta".
+6. Só depois disso: decidir domínio/hospedagem (cPanel) e publicar.
+7. Commitar e dar push a cada etapa concluída, atualizando este arquivo.
 
 ## Notas
 
