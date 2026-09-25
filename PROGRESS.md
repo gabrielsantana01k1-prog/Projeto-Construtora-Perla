@@ -61,13 +61,24 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - Skills instalados neste repositório (permanentes, versionados em `.claude/skills/`): `frontend-design` (anthropics/skills) e `ui-ux-pro-max` (nextlevelbuilder/ui-ux-pro-max-skill — instalado por cópia direta de arquivos estáticos, não via npm, que foi bloqueado pelo classificador de segurança do ambiente).
 - "Checklist $10K" (8 pontos, ver `CLAUDE.md`) é regra permanente de qualidade de design para todo o projeto.
 
+## Decisões desta rodada (respondidas pelo usuário em 25/09)
+
+- **WhatsApp**: usuário vai confirmar o número correto com as sócias antes de eu considerar isso definitivo. **Não usar o `553199203886` como certo até então.**
+- **CREA/CAU + autorização LGPD dos clientes**: usuário vai levantar com Stephanie/Mariana. Até chegar: manter `[confirmar]` no CREA/CAU e **não publicar nomes próprios de clientes** nos cases (usar só tipo de obra/bairro, sem nome da pessoa) enquanto não houver autorização confirmada.
+- **Escopo**: só a home por enquanto (uma página, como o protótipo). Portfólio completo, FAQ e página de Clínicas ficam para uma etapa futura, só depois da home aprovada.
+
+## Feito nesta rodada (sem depender das pendências acima)
+
+- `index.html`: adicionado `<title>` otimizado para SEO local ("Arquitetura, Engenharia e Reformas em Belo Horizonte"), `meta description`, `theme-color` (#0E0D0C) e tags Open Graph básicas (title/description/type/locale/site_name). `og:image`/`og:url` ficam pendentes até haver logo/foto em alta e domínio de publicação definidos.
+- HTML validado (parse limpo, sem erros).
+
 ## Próximo passo exato
 
-1. Perguntar ao usuário sobre os 6 riscos/pendências da tabela acima — pelo menos os itens 1-3 (Alto) bloqueiam publicação.
-2. Perguntar se o site é single-page (como o protótipo atual) ou se precisa de páginas adicionais (o sitemap do briefing menciona página própria de Portfólio, FAQ e página exclusiva para Clínicas — o protótipo atual só cobre a home em uma página).
-3. Assim que houver fotos reais, substituir os blocos `.photo` placeholder em `index.html`.
-4. Preencher `[confirmar]` de CREA/CAU assim que os números chegarem.
-5. Revisar/testar o link do WhatsApp antes de qualquer divulgação.
+1. Aguardar do usuário: (a) WhatsApp correto, (b) CREA/CAU, (c) confirmação de autorização LGPD dos clientes citados, (d) fotos reais em alta resolução, (e) logo vetorial.
+2. Enquanto isso, se o usuário quiser, revisar nomes de clientes nos cases do `index.html` (hoje ainda não usa nomes próprios — confirmar se isso é intencional ou se falta ajustar).
+3. Quando as fotos chegarem, substituir os blocos `.photo` placeholder em `index.html`.
+4. Quando WhatsApp/CREA/CAU chegarem, atualizar os `[confirmar]` e todos os links `wa.me/...` no `index.html`.
+5. Só depois disso: decidir domínio/hospedagem (cPanel) e publicar.
 6. Commitar e dar push a cada etapa concluída, atualizando este arquivo.
 
 ## Notas
