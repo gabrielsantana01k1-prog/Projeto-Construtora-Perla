@@ -18,7 +18,7 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - **CNAE principal:** 71.11-1/00 (arquitetura + construção/elétrica/hidráulica/pintura/engenharia)
 - **Endereço:** Rua Santa Rita Durão, 444, Savassi, Belo Horizonte/MG, 30140-111
 - **Sócias:** Stephanie Faina (engenheira civil, gestão de obras, @stephanie_faina) e Mariana Guimarães (arquiteta e advogada, @marianaguimaraes.arquitetura)
-- **WhatsApp usado no site:** `wa.me/553199203886` — ⚠️ **ver risco #1 abaixo, não confiar cegamente**
+- **WhatsApp usado no site:** `wa.me/5531999203886` (31 9 9920-3886, celular de Stephanie Faina) — ✅ confirmado pelo usuário em 25/09.
 - **Instagram:** @perlaconstrutora (254 posts, 2.054 seguidores) · YouTube: youtube.com/@perlaconstrutora · TikTok: @perlaconstrutora · Pinterest: pin.it/21KNbOGkU
 
 ## Identidade de marca (real, já definida pela Perla — não é mais provisória)
@@ -43,7 +43,7 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 
 | # | Risco | Ação necessária |
 |---|-------|------------------|
-| 1 | **WhatsApp `wa.me/553199203886`** tem só 8 dígitos após o DDD 31 — celular brasileiro válido tem 9. Pode ser número antigo/incompleto. Todos os CTAs do site apontam pra ele. | **Testar o número antes de publicar.** Se estiver errado, todo lead se perde. |
+| ~~1~~ | ~~WhatsApp incompleto~~ | **RESOLVIDO em 25/09**: número correto confirmado pelo usuário — `31 9 9920-3886` (celular de Stephanie Faina), 9 dígitos. Atualizado em todos os 8 links `wa.me/` + texto visível do `index.html` para `wa.me/5531999203886`. |
 | 2 | **Registros CAU (Mariana) e CREA (Stephanie) ausentes.** Publicidade de arquitetura/engenharia no Brasil exige nome + registro do responsável técnico visível. | Pedir os números reais às sócias. `index.html` já tem `[confirmar]` nos lugares certos — **nunca inventar um número aqui.** |
 | 3 | **Autorização de clientes (LGPD)** para nomes/fotos/prints usados nos cases (Dr. Mateus Garcia, Jéssica e Beto, Márcia, Rafael Bedran). | Confirmar com o usuário se já há autorização por escrito antes de publicar esses nomes. |
 | 4 | **Promessas absolutas** ("resultado garantido", "100% de aprovação") viram passivo jurídico se questionadas. | Revisar redação com o usuário antes de publicar cópias finais — `index.html` atual já é mais comedido, mas vale checar textos futuros. |
