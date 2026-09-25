@@ -11,6 +11,15 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 - Screenshots do Instagram (grid + perfil) salvos em `docs/briefing/instagram-*-2026-09-25.{webp,png}` como referência visual.
 - Fluxo de trabalho: desenvolvimento nesta sessão (container na nuvem), commit/push a cada etapa. Usuário sincroniza pasta local via `git clone`/`git pull`.
 - **Fotos reais integradas ao site** (25/09, zip `perla-fotos-instagram.zip` enviado pelo usuário, com índice `LEIA-ME_indice.csv` muito bem documentado — pastas por categoria: sócias, clínicas, residencial, projetos-3d, queijo-artesanal, entregas-bastidores). Processadas com Pillow (recorte de texto sobreposto, resize, JPEG+WebP otimizados) e salvas em `assets/img/{marquee,servicos,equipe}/`. Total ~1.3MB. Ver detalhes na seção "Fotos reais" abaixo.
+- **Microinterações sob medida nas seções abaixo do hero** (25/09, pedido do usuário: "seções inferiores pareciam genéricas", sem deixar mais pesado). Implementado:
+  - Sistema de revelação ao rolar (`data-reveal`/`data-reveal-group`, IntersectionObserver vanilla ~15 linhas no fim do `<body>`), fade+translate leve, dispara uma vez só, cai fora inteiramente sob `prefers-reduced-motion:reduce` e tem fallback `<noscript>` pra nunca deixar conteúdo invisível sem JS.
+  - Barra do "custo" (37%/63%): variante horizontal do reveal (`data-reveal-group="x"`, os dois lados entram deslizando da esquerda) — tratamento único pra essa seção, não repetido em outra.
+  - Método: sublinhado dourado desenha sob o título ao passar o mouse no `.step`, numeral clareia e desloca 3px.
+  - Serviços: seta "→" (reaproveitando a classe `.arr` já usada nos botões) aparece deslizando ao lado do título do card no hover; foto faz leve zoom (scale 1.045); card "Clínicas" ganha borda dourada no hover.
+  - Obras: numeral e seta da lista reagem ao hover (cor + deslocamento), reforçando o padrão que já existia.
+  - Quem somos: sublinhado dourado desenha sob cada valor ("Sem RT" etc.) no hover.
+  - Clientes: aspas do depoimento sobem 3px e a borda superior do card dourada no hover.
+  - Tudo só `transform`/`opacity`/`color`/`border-color` (GPU-friendly, sem repaint pesado), testado com Playwright/Chromium (scroll + hover, antes/depois de assentar) em desktop.
 
 ## Dados institucionais (reais, do briefing — fonte da verdade)
 
