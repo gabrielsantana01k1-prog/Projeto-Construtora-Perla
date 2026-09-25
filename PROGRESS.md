@@ -1,6 +1,17 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-25 (rodada de refinamento final, etapa 1/8). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## Refinamento final em 8 rodadas (em andamento)
+
+Usuário pediu uma inspeção final estruturada em 8 rodadas sequenciais, cada uma parando para aprovação antes da próxima: (1) Direção visual + Tipografia, (2) Sistema de cores + Hierarquia/Whitespace, (3) Imagens + Motion design, (4) Mobile + Qualidade técnica invisível, depois (5) auditoria final completa. Regra fixa em todas: sem redesign, sem remover funcionalidade, só corrigir problemas reais.
+
+**Rodada 1 — Direção Visual + Tipografia: CONCLUÍDA em 25/09 (commit `136aedf`).**
+- Direção visual: auditada, sem alterações — já não tem "cara de template" (paleta 1 fundo/1 tinta/1 acento, zero `border-radius` no site inteiro, setas/numerais tipográficos em vez de ícones genéricos de biblioteca, sem sombras, gradientes restritos ao wordmark/textura de mármore). Nenhum problema real encontrado nesta frente.
+- Tipografia: consolidados 5 tamanhos de corpo quase-duplicados (15.5/15/14.5/14px, espalhados sem lógica por Método/Serviços/Obras/Quem somos/hero-aside) em 2 tokens novos no `:root` — `--fs-support:15.5px` (corpo secundário) e `--fs-meta:14px` (metadado/terciário). `.works .t` e `.door .for` tinham `letter-spacing:.24em` divergente dos pares da mesma camada (`.person .role`, `footer b`, `.photo span`, todos `.28em`) — unificado. `.step h3` e `.niche h3` eram `font-size` fixo (24px) enquanto os irmãos visuais (`.door h3`, `.works h3`) já usavam `clamp()` — convertidos para `clamp(22px,2.2vw,26px)`, mesmo peso em desktop, encolhe corretamente no mobile.
+- Validado: sintaxe HTML/CSS ok (parser + balanceamento de chaves), Playwright/Chromium desktop (1440px) e mobile (390px) com scroll completo pra disparar as revelações — sem regressão visual, sem overflow.
+- **Risco #6 do PROGRESS.md resolvido nesta sessão**: perguntei ao usuário se "mães e cristãs" deveria entrar no hero também ou só em "Quem somos" — resposta: só em "Quem somos", de forma sutil. Na prática o texto ("Mães, empresárias e cristãs...") **já estava** em `index.html` linha 430 desde o commit `b51fc63` (25/09, adoção do protótipo real) — a entrada antiga do PROGRESS.md que dizia "não está no index.html atual" ficou desatualizada e é corrigida aqui. Não precisou de código novo, só registro.
+- Próximo: aguardando aprovação do usuário para a Rodada 2 (Sistema de Cores + Hierarquia/Whitespace).
 
 ## Situação atual
 
@@ -58,7 +69,7 @@ Atualizado em: 2026-09-25. Atualize este arquivo ao final de cada tarefa/convers
 | 3 | **Autorização de clientes (LGPD) — CORRIGIDO em 25/09.** A confirmação inicial ("os clientes autorizou") era otimista demais. Levantamento detalhado do usuário mostrou: **nenhum termo escrito existe ainda** para nenhum caso. "Público no Instagram" ≠ autorização comercial. | Ver tabela completa de depoimentos/cases abaixo. Até existir termo assinado, nomes/fotos ficam fora do site — texto do depoimento pode ser usado, atribuição fica genérica (profissão/cidade) com nota "aguardando autorização". Ação recomendada pelo usuário: termo de 1 página, assinado por WhatsApp, por cliente. |
 | 4 | **Promessas absolutas** ("resultado garantido", "100% de aprovação") viram passivo jurídico se questionadas. | Revisar redação com o usuário antes de publicar cópias finais — `index.html` atual já é mais comedido, mas vale checar textos futuros. |
 | 5 | **PARCIALMENTE RESOLVIDO em 25/09.** Fotos reais de obras/clínicas/sócias chegaram (zip do Instagram) e já estão no site. **Ainda falta**: logo em vetor (SVG/AI) — o site ainda usa só o wordmark tipográfico "PERLA construtora" em texto, sem o símbolo de leque/pérola. Vídeos das obras também não foram enviados. | Pedir o arquivo vetorial do logo ao usuário quando possível. |
-| 6 | Posicionamento "mães e cristãs" é declarado pela marca mas não está no `index.html` atual. | Perguntar ao usuário se deve entrar no hero ou só na seção "Quem somos". |
+| ~~6~~ | ~~Posicionamento "mães e cristãs"...~~ | **RESOLVIDO em 25/09**: usuário confirmou que fica só em "Quem somos", de forma sutil (não entra no hero). O texto já estava em `index.html` desde o protótipo original (`b51fc63`) — a pendência era só de decisão/registro, não de código. |
 
 ## Fotos reais — integração (25/09)
 
@@ -135,7 +146,8 @@ Usuário enviou `perla-fotos-instagram.zip` (117 fotos em 6 pastas categorizadas
 
 ## Próximo passo exato
 
-1. Ainda aguardando do usuário: (a) termo de autorização assinado por cliente (Mateus, cliente de Lourdes, e os demais do levantamento), (b) identificar quem é a cliente de Lourdes, (c) confirmar/descartar Jéssica como possível parente, (d) frase/vídeo real do Dr. Bruno, (e) CREA/CAU, (f) logo vetorial (SVG/AI do símbolo de leque/pérola), (g) decisão sobre posicionamento "mães e cristãs" (risco #6). **Fotos reais já resolvidas** (ver seção "Fotos reais — integração" acima) — não é mais pendência.
+1. Ainda aguardando do usuário: (a) termo de autorização assinado por cliente (Mateus, cliente de Lourdes, e os demais do levantamento), (b) identificar quem é a cliente de Lourdes, (c) confirmar/descartar Jéssica como possível parente, (d) frase/vídeo real do Dr. Bruno, (e) CREA/CAU, (f) logo vetorial (SVG/AI do símbolo de leque/pérola). **Fotos reais e posicionamento "mães e cristãs" (risco #6) já resolvidos** — não são mais pendência.
+1b. **Refinamento final em 8 rodadas — em andamento** (ver seção própria acima). Rodada 1 (Direção Visual + Tipografia) concluída em `136aedf`. Aguardando aprovação do usuário pra seguir com a Rodada 2 (Sistema de Cores + Hierarquia/Whitespace).
 2. Assim que houver termo assinado de Mateus e/ou da cliente de Lourdes, substituir a atribuição genérica pelo nome real na seção "Clientes" do `index.html`.
 3. Quando o logo vetorial chegar, trocar o wordmark tipográfico da nav/footer pelo símbolo real.
 4. Quando CREA/CAU chegarem, preencher os `[confirmar]` correspondentes.
