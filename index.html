@@ -85,8 +85,11 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance;letter-spacing:-.015em}
 .wordmark b{font-weight:600;font-size:22px;letter-spacing:.14em;background:linear-gradient(180deg,var(--ouro-paper-texto),#4A3B24 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .wordmark .sub{font-size:10px;letter-spacing:.42em;color:var(--perola-3);text-transform:lowercase}
 .nav ul{display:flex;gap:34px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--perola-2)}
-.nav ul a{transition:color .3s ease}
+.nav ul a{position:relative;transition:color .3s ease;padding-bottom:4px}
 .nav ul a:hover{color:var(--perola)}
+.nav ul a.is-active{color:var(--perola)}
+.nav ul a.is-active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ouro)}
+@media (prefers-reduced-motion:reduce){.nav ul a{transition:none}}
 .btn{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;padding:15px 22px;border:1px solid var(--ouro);color:var(--perola);transition:background .35s ease,color .35s ease}
 .btn:hover{background:var(--ouro);color:var(--tinta)}
 .btn.solid{background:var(--ouro);color:var(--tinta)}
@@ -843,6 +846,41 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
       if (vazio) vazio.hidden = visiveis > 0;
     });
   });
+})();
+</script>
+
+<script>
+// Indicador de seção ativa no menu: marca no menu (desktop) o link da seção visível no momento,
+// sem esconder títulos atrás do header fixo (rootMargin já compensa a altura do header). Se a API
+// não existir, simplesmente não marca nada — o menu continua funcionando normalmente.
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav > .shell > ul > li > a[href^="#"]'));
+  if (!links.length) return;
+  var pares = links.map(function (a) { return { link: a, alvo: document.querySelector(a.getAttribute('href')) }; })
+    .filter(function (p) { return p.alvo; });
+  if (!pares.length) return;
+  var LINHA = 130; // px do topo, abaixo do header fixo, que define a "linha ativa"
+  var pendente = false;
+
+  function atualizar() {
+    pendente = false;
+    var atual = null;
+    pares.forEach(function (p) {
+      var r = p.alvo.getBoundingClientRect();
+      if (r.top <= LINHA && r.bottom > 96) atual = p;
+    });
+    links.forEach(function (a) { a.classList.remove('is-active'); });
+    if (atual) atual.link.classList.add('is-active');
+  }
+  function pedirAtualizacao() {
+    if (pendente) return;
+    pendente = true;
+    requestAnimationFrame(atualizar);
+  }
+
+  window.addEventListener('scroll', pedirAtualizacao, { passive: true });
+  window.addEventListener('resize', pedirAtualizacao);
+  atualizar();
 })();
 </script>
 </body>
