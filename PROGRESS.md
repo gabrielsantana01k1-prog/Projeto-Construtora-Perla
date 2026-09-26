@@ -1,16 +1,15 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09q — Assistente Perla (fluxo guiado, sem IA real) implementado nas 7 páginas, **ainda NÃO publicado no `perla-preview`** — aguardando aprovação do usuário depois de testar a prévia). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09q — Assistente Perla (fluxo guiado, sem IA real) aprovado e publicado no `perla-preview`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 ## PRÓXIMA TAREFA EXATA (ler primeiro)
 
-**Aguardando aprovação do usuário** sobre o Assistente Perla (sessão 26/09q) antes de sincronizar pro `perla-preview`. Ao retomar:
+Nada pendente de ação imediata — Assistente Perla publicado. Ao retomar:
 1. Ler esta seção + a sessão 26/09q abaixo pra saber exatamente onde paramos.
-2. Se aprovado: sincronizar `index.html`, os 6 `obras/*/index.html`, `assets/css/assistant.css` e `assets/js/assistant.js` pro `perla-preview` e avisar o link.
-3. Se pedir ajuste: o fluxo de perguntas fica em `PERGUNTAS`/`PERGUNTAS_CONTATO` no topo de `assets/js/assistant.js` (fácil adicionar/remover/reordenar perguntas); textos/cores do widget em `assets/css/assistant.css`.
-4. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
-5. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
-6. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+2. Se pedir ajuste no assistente: o fluxo de perguntas fica em `PERGUNTAS`/`PERGUNTAS_CONTATO` no topo de `assets/js/assistant.js` (fácil adicionar/remover/reordenar perguntas); textos/cores do widget em `assets/css/assistant.css`.
+3. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
+4. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
+5. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
 
 ## SESSÃO 26/09/2026-q — Assistente Perla (widget de pré-atendimento)
 
@@ -28,7 +27,7 @@ Usuário pediu um assistente virtual completo: convite após 3s (uma vez por ses
 
 **Validado** (Playwright, 2 baterias, ~50 verificações): convite aparece só depois de 3s e só uma vez por sessão (inclusive trocando de página), não reaparece sozinho depois de fechado, suprimido enquanto o menu mobile ou o lightbox de fotos está aberto (e aparece assim que fecham), botão do assistente sempre disponível; fluxo completo testado ponta a ponta (todas as perguntas do caminho "Construir", sem pular nenhuma — resumo final com todos os 15 campos corretos); atalho "prefiro falar com a equipe" a qualquer momento com resumo parcial; extrator de texto livre combinado (telefone+e-mail numa frase só); voltar/corrigir refletindo no resumo; minimizar preserva e "Apagar conversa" reseta; link `wa.me` com número fixo `5531999203886`, acentos e quebras de linha decodificados corretamente; sem sobreposição com a barra de WhatsApp mobile; sem rolagem horizontal e sem quebrar vídeos/menu em 390/768/1440px; Esc fecha, campo com `<label>`, `aria-label` no botão; smoke test nas 7 páginas (widget carrega e abre sem erro real — o único "erro" de console em todas é o mesmo bloqueio de rede ao Google Fonts deste ambiente de teste, já documentado em sessões anteriores, não é do widget).
 
-**Branch/commit**: `redesign-claro-2026-09-26` — ver `git log`. **Ainda NÃO publicado no `perla-preview`** — aguardando o usuário testar a prévia (capturas enviadas na conversa) e aprovar.
+**Branch/commit**: `redesign-claro-2026-09-26`, commit `ac4d26b`. Usuário aprovou após ver as capturas — publicado no `perla-preview` (main), commit `195b3be`. Link público: `https://gabrielsantana01k1-prog.github.io/perla-preview/`.
 
 **Pendências reais**: (1) sem serviço de IA de verdade — se um dia o usuário quiser uma IA generativa real por trás, precisa de um backend separado (a arquitetura já isola `ServicoIA` pra isso, mas hoje não chama nada); (2) sem política de privacidade formal linkada; (3) as perguntas/textos podem precisar de ajuste fino depois que o usuário testar a prévia de verdade.
 
