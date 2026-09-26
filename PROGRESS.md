@@ -1,6 +1,35 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09j — redesign parcial publicado no perla-preview, com aprovação explícita do usuário). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09k — pendências do redesign concluídas na branch dev; `perla-preview` NÃO atualizado, aguardando nova aprovação). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-k — Pendências do redesign concluídas (branch `redesign-claro-2026-09-26`, nada publicado no perla-preview)
+
+Usuário mandou a lista de 8 pendências pra concluir o redesign, com a foto real do hero anexada (finalmente resolvendo o bloqueio de rede do Pexels de sessões anteriores) e a instrução explícita de **não tocar o `perla-preview`** até nova aprovação e **não apresentar como concluído** enquanto houver pendência. Trabalhado item a item, 3 commits nesta branch (`3a402b2`, `ca0cc70`, `a7ee885`), todos com `git push`.
+
+### Concluído nesta sessão
+
+1. **Foto definitiva do hero** — arquivo real anexado pelo usuário (casa com deck de madeira, pedra clara e piscina). Gerados `hero-casa-piscina-{1920,960}.{jpg,webp}`, `<picture>` responsivo (960px mobile / 1920px desktop), zero escurecimento/corte que esconda a casa, selo discreto "Imagem ilustrativa", comentário HTML deixando explícito que essa foto nunca entra no portfólio de obras executadas. Espaçamento mobile reduzido (`h1`/`lede`/`ctas`/`trio` com margem menor abaixo de 600px) pra foto aparecer mais cedo, conforme pedido.
+2. **Contraste do wordmark "PERLA"** corrigido via WCAG (gradiente `var(--ouro-paper-texto)→#4A3B24`, 5,02:1 e 9,38:1) em `index.html` e `assets/css/obra.css` — mesmo desenho da marca, só o tratamento de cor do texto.
+3. **WhatsApp padronizado**: os 7 links que ainda estavam sem mensagem pré-preenchida (nav desktop/mobile, hero, 3 cards de Serviços, niche Clínicas) ganharam o texto genérico; `renderNav()` em `gerar-obras.js` passou a usar `mensagemWhatsapp(projeto)` (mensagem com o nome do projeto) nas 6 páginas de obra.
+4. **E-mail**: continua bloqueado — nenhum endereço oficial confirmado em nenhum material recebido. Nada foi inventado, nenhum botão sem destino foi publicado. **Preciso que você me passe o endereço oficial** pra ativar o botão "Enviar um e-mail" (faixa de contato) e o link clicável no rodapé — os dois pontos já estão prontos no código, só faltando o endereço (buscar `E-mail: aguardando` em `index.html`/`gerar-obras.js`).
+5. **Imagens em Custo/Método/Clínicas**: 2 fotos reais adicionadas em `#custo` (infraestrutura/acabamento) + frase esclarecendo que 37% não é regra fixa; foto real do consultório entregue adicionada no bloco "Clínicas e consultórios"; seção Método ganhou 4 fotos reais (uma por etapa — 3D da recepção da Clínica, gráfico real de 37/63, obra em execução na Lagoa dos Ingleses, deck+piscina entregues na Lagoa dos Ingleses).
+   - **"Acompanhamento" (print do app)**: não existe seção "Acompanhamento" no site nem nenhum arquivo de print de aplicativo em nenhuma pasta do projeto — confirmado por busca. Nada foi inventado; fica como material pendente caso você tenha/queira fornecer.
+   - **Fotos de depoimentos**: seção "Clientes" já existe (3 depoimentos de texto), mas nenhuma foto de cliente foi confirmada/autorizada pra associar — mantido só texto, sem inventar.
+6. **Interações completas**:
+   - **Método em abas**: convertido de grade estática pra abas acessíveis (clique, toque, teclado com setas/Home/End), imagem e texto trocam juntos, indicação clara da etapa ativa (sublinhado dourado + cor). Sem JS, `<noscript>` mantém todos os painéis visíveis.
+   - **Filtro de portfólio**: botões "Todas/Residencial/Reforma/Saúde/Institucional" (categorias reais, derivadas do subtítulo que cada obra já usava) sobre a lista de Obras. Sem JS, todas as obras continuam visíveis (nada fica escondido por padrão).
+   - **Comparador antes/depois**: implementado só na Casa no Vale dos Cristais, onde realmente existem 2 fotos da mesma cena (mesmo post do Instagram, mesmo ângulo de fachada) — não forçado em nenhum outro projeto por falta de fotos compatíveis. Slider nativo (`<input type="range">`, mouse/toque/teclado de graça). Sem JS, cai pra fachada antes/depois lado a lado com legendas.
+   - **Indicador de seção ativa no menu**: sublinhado dourado no link correspondente à seção visível, sem esconder títulos atrás do header fixo. Implementado com scroll + `requestAnimationFrame` (não só `IntersectionObserver`) depois de detectar que o estado ficava desatualizado após clique em link do menu (scroll suave demorado); testado com clique direto em cada link e com scroll gradual, ambos corretos.
+7. **Lightbox — 2 lacunas reais encontradas e corrigidas nesta revisão**: as miniaturas das galerias não eram focáveis (só clique funcionava, teclado não abria nenhuma foto) — adicionado `tabindex="0"` + `role="button"` + abertura por Enter/Espaço. E o foco não voltava pra miniatura ao fechar a lightbox (Esc/botão/clique fora) — corrigido, testado e confirmado via Playwright (abre por teclado, navega, fecha, foco retorna exatamente pro elemento que abriu).
+8. **Validação completa rodada**: Playwright em mobile/tablet/desktop (390/834/1440px) nas 7 páginas (home + 6 obras) — zero imagem quebrada, zero rolagem horizontal indevida, zero erro de console real. Capturas de capa e rodapé (desktop+mobile) enviadas na conversa.
+
+### Ainda pendente (não apresentar como "concluído" enquanto isto não for resolvido)
+
+- **E-mail oficial** — bloqueia só o botão de e-mail, resto do site não depende disso.
+- **Print do app de acompanhamento** — não existe material; me diga se você tem ou se prefere remover essa menção da lista "Fotos diárias no app" (etapa "Gestão e execução" do Método).
+- **Fotos de depoimentos** — só entram se/quando vier autorização + foto real do cliente.
+- **Publicação no `perla-preview`** — minha instrução explícita foi não atualizar o site público sem nova aprovação sua. Está tudo commitado e no GitHub (branch `redesign-claro-2026-09-26`), pronto pra publicar assim que você aprovar a prévia.
+- Testado só em Chromium via Playwright — não testado em navegador real (Chrome/Safari/Edge/iOS) nem Lighthouse de verdade.
 
 ## SESSÃO 26/09/2026-j — Publicação aprovada do redesign parcial no perla-preview
 
