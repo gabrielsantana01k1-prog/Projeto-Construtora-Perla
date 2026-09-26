@@ -11,7 +11,9 @@
 <meta property="og:site_name" content="Perla Construtora">
 <meta property="og:title" content="Perla Construtora | Arquitetura, Engenharia e Reformas em Belo Horizonte">
 <meta property="og:description" content="Projeto, viabilidade financeira e execução de obras e reformas em Belo Horizonte, com um só responsável.">
-<!-- TODO: og:image e og:url assim que houver logo/foto em alta e domínio de publicação definidos -->
+<!-- TODO: og:image e og:url assim que houver domínio de publicação definido (logo já temos, em assets/img/brand/) -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/brand/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/img/brand/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
@@ -67,9 +69,11 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance;letter-spacing:-.015em}
 /* ============ NAV ============ */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(14,13,12,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--linha)}
 .nav .shell{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
-.wordmark{display:grid;line-height:1;gap:3px}
+.wordmark{display:flex;align-items:center;gap:12px}
+.wordmark img{width:40px;height:40px;border-radius:50%;flex:0 0 auto;object-fit:cover}
+.wordmark .txt{display:grid;line-height:1;gap:3px}
 .wordmark b{font-weight:500;font-size:22px;letter-spacing:.14em;background:linear-gradient(180deg,#F3ECD4,var(--ouro) 75%,var(--ouro-deep));-webkit-background-clip:text;background-clip:text;color:transparent}
-.wordmark span{font-size:10px;letter-spacing:.42em;color:var(--perola-3);text-transform:lowercase}
+.wordmark .sub{font-size:10px;letter-spacing:.42em;color:var(--perola-3);text-transform:lowercase}
 .nav ul{display:flex;gap:34px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--perola-2)}
 .nav ul a{transition:color .3s ease}
 .nav ul a:hover{color:var(--perola)}
@@ -80,22 +84,40 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance;letter-spacing:-.015em}
 .btn .arr{font-family:var(--num);font-style:italic;font-size:18px;letter-spacing:0;text-transform:none}
 .link{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--perola-2);border-bottom:1px solid var(--linha-2);padding-bottom:4px;transition:color .3s ease,border-color .3s ease}
 .link:hover{color:var(--perola);border-color:var(--ouro)}
-@media (max-width:900px){.nav ul{display:none}}
+/* Menu mobile: hamburger substitui o menu desktop e o CTA do topo abaixo de 900px — nada de nav "sumindo" sem alternativa */
+.nav-burger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;margin:0;background:none;border:0;cursor:pointer;flex:0 0 auto}
+.nav-burger span{display:block;width:20px;height:1.5px;background:var(--perola);transition:transform .3s cubic-bezier(.2,.7,.1,1),opacity .25s ease}
+.nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.nav-mobile{display:none;position:fixed;left:0;right:0;top:73px;bottom:0;z-index:9;background:rgba(14,13,12,.98);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:8px var(--gutter) 32px;overflow-y:auto}
+.nav-mobile.open{display:block}
+.nav-mobile ul{display:block;list-style:none;margin:0;padding:0}
+.nav-mobile li{border-bottom:1px solid var(--linha)}
+.nav-mobile ul a{display:block;padding:20px 2px;font-family:var(--display);font-size:clamp(22px,6vw,28px);color:var(--perola)}
+.nav-mobile .btn{margin-top:28px;justify-content:center;width:100%}
+body.nav-open{overflow:hidden}
+@media (max-width:900px){.nav>.shell>ul,.nav>.shell>.btn{display:none}.nav-burger{display:flex}}
 @media (max-width:480px){.nav .btn{padding:11px 14px;font-size:10px;letter-spacing:.18em}}
 
 /* ============ HERO ============ */
 .hero{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(72px,11vw,150px) clamp(64px,8vw,110px)}
-/* Vídeo de fundo: cobre o hero, recorte central levemente acima do centro (onde está a ação). Sem parallax/escala extra — evita ampliar ainda mais um vídeo vertical (576x1024) já esticado numa seção larga, o que borrava a imagem */
+/* Imagem de fundo: cobre o hero. .hero-bg-wrap tem folga vertical (124%) para o parallax de scroll não revelar
+   borda; recebe pan (yPercent) + zoom (scale) via GSAP. .hero-bg (a própria imagem) recebe só o tilt sutil do
+   mouse — camada separada para não conflitar com o transform do wrap. */
 .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--onix)}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%}
+.hero-bg-wrap{position:absolute;left:0;right:0;top:-12%;bottom:-12%;transform-origin:center center;will-change:transform}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform-origin:center center;will-change:transform;backface-visibility:hidden}
 .hero-video-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:
-  linear-gradient(180deg, rgba(14,13,12,.90) 0%, rgba(14,13,12,.58) 30%, rgba(14,13,12,.5) 55%, rgba(14,13,12,.78) 82%, rgba(14,13,12,.95) 100%),
+  linear-gradient(100deg, rgba(14,13,12,.62) 0%, rgba(14,13,12,.4) 38%, rgba(14,13,12,.08) 60%, transparent 74%),
+  linear-gradient(180deg, rgba(14,13,12,.90) 0%, rgba(14,13,12,.62) 30%, rgba(14,13,12,.56) 55%, rgba(14,13,12,.78) 82%, rgba(14,13,12,.95) 100%),
   radial-gradient(1000px 560px at 80% 12%, rgba(194,165,110,.10), transparent 62%)}
 .hero .shell{position:relative;z-index:2}
 .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(40px,6vw,96px);align-items:end}
-.hero h1{font-size:clamp(44px,7.2vw,104px);line-height:.98;font-weight:500;margin-top:28px}
+.hero h1{font-size:clamp(44px,7.2vw,104px);line-height:.98;font-weight:600;margin-top:28px;text-shadow:0 4px 28px rgba(0,0,0,.45)}
 .hero h1 .it{font-size:1.08em;line-height:.9}
-.hero .lede{font-size:clamp(18px,1.6vw,21px);color:var(--perola-2);max-width:40ch;margin-top:34px;line-height:1.55}
+.hero .label{text-shadow:0 2px 14px rgba(0,0,0,.4)}
+.hero .lede{font-size:clamp(18px,1.6vw,21px);color:var(--perola-2);max-width:40ch;margin-top:34px;line-height:1.55;text-shadow:0 2px 16px rgba(0,0,0,.35)}
 .hero .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:28px;margin-top:44px}
 .hero-aside{display:grid;gap:26px;border-left:1px solid var(--linha);padding-left:clamp(20px,3vw,40px)}
 .hero-aside .fig{font-family:var(--num);font-style:italic;color:var(--ouro);font-size:clamp(84px,10vw,140px);line-height:.8}
@@ -107,6 +129,10 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance;letter-spacing:-.015em}
 
 /* ============ SEÇÕES ============ */
 section{padding-block:clamp(88px,11vw,160px)}
+section[id]{scroll-margin-top:88px}
+/* Ritmo vertical comprimido no mobile: o floor de 88px do clamp acima é alto demais empilhado em telas
+   pequenas — reduzido aqui só para phones, sem mexer no valor fluido usado em tablet/desktop */
+@media (max-width:600px){section{padding-block:clamp(56px,14vw,88px)}}
 .sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,5vw,80px);align-items:end;margin-bottom:clamp(48px,6vw,88px)}
 .sec-head .tag{display:grid;gap:10px;border-top:1px solid var(--linha);padding-top:14px}
 .sec-head .tag i{font-family:var(--num);font-size:12px;color:var(--ouro)}
@@ -223,6 +249,7 @@ section{padding-block:clamp(88px,11vw,160px)}
 .values div:hover b::after{transform:scaleX(1)}
 .values span{font-size:var(--fs-meta);color:var(--perola-2)}
 @media (max-width:820px){.duo{grid-template-columns:1fr}.values{grid-template-columns:1fr 1fr;row-gap:28px}.values div:nth-child(3){border-left:0;padding-left:0}}
+@media (max-width:480px){.values{grid-template-columns:1fr;row-gap:24px}.values div{border-left:0!important;padding-left:0!important}}
 
 /* ============ DEPOIMENTOS ============ */
 .quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px)}
@@ -246,6 +273,7 @@ footer a{transition:color .3s ease}
 footer a:hover{color:var(--perola)}
 footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px}
 @media (max-width:820px){footer .shell{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.final{padding-top:clamp(72px,16vw,110px)}footer .shell{grid-template-columns:1fr;gap:28px}}
 
 /* Movimento que sussurra: só entrada do hero, visível em repouso */
 @media (prefers-reduced-motion:no-preference){
@@ -270,14 +298,17 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
 }
 /* Sem JS: nunca ficar invisível */
 </style>
-<noscript><style>[data-reveal],[data-reveal-group]>*{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>[data-reveal],[data-reveal-group]>*{opacity:1!important;transform:none!important}.hero-bg-wrap,.hero-bg{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
 
 <nav class="nav" aria-label="Principal">
   <div class="shell">
-    <a href="#top" class="wordmark" aria-label="Perla Construtora"><b>PERLA</b><span>construtora</span></a>
+    <a href="#top" class="wordmark" aria-label="Perla Construtora">
+      <picture><source srcset="assets/img/brand/logo-perla-icon.webp" type="image/webp"><img src="assets/img/brand/logo-perla-icon.jpg" alt="" width="40" height="40" loading="eager"></picture>
+      <span class="txt"><b>PERLA</b><span class="sub">construtora</span></span>
+    </a>
     <ul>
       <li><a href="#metodo">Método</a></li>
       <li><a href="#servicos">Serviços</a></li>
@@ -285,14 +316,24 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
       <li><a href="#quem-somos">Quem somos</a></li>
     </ul>
     <a class="btn" href="https://wa.me/5531999203886" target="_blank" rel="noopener">Agendar conversa</a>
+    <button class="nav-burger" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Abrir menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul>
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#obras">Obras</a></li>
+    <li><a href="#quem-somos">Quem somos</a></li>
+  </ul>
+  <a class="btn solid" href="https://wa.me/5531999203886" target="_blank" rel="noopener">Agendar conversa <span class="arr">→</span></a>
+</div>
 
 <header class="hero" id="top">
   <div class="hero-media" aria-hidden="true">
-    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline="true" disableremoteplayback disablepictureinpicture preload="auto" poster="assets/video/hero-poster.jpg">
-      <source src="assets/video/hero.mp4" type="video/mp4">
-    </video>
+    <div class="hero-bg-wrap">
+      <img class="hero-bg" src="assets/img/hero/hero-penhasco.webp" alt="" width="1298" height="1600" loading="eager" fetchpriority="high">
+    </div>
     <div class="hero-video-overlay"></div>
   </div>
   <div class="shell">
@@ -460,7 +501,7 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
         <p class="role">Engenharia &amp; gestão de obras</p>
         <h3>Stephanie Faina</h3>
         <p>Engenheira civil especialista em gestão de obras. Cuida de cronograma, equipe e custo para que o projeto seja executado exatamente como foi desenhado.</p>
-        <p class="reg">CREA-MG nº [confirmar]</p>
+        <p class="reg">CREA-MG nº 1413598390</p>
       </article>
       <article class="person">
         <p class="role">Arquitetura &amp; interiores</p>
@@ -510,26 +551,98 @@ footer .legal{grid-column:1/-1;border-top:1px solid var(--linha);padding-top:20p
 
 <footer>
   <div class="shell">
-    <div><a href="#top" class="wordmark"><b>PERLA</b><span>construtora</span></a><p style="margin-top:18px;max-width:30ch">Arquitetura, engenharia e viabilidade financeira em Belo Horizonte.</p></div>
+    <div><a href="#top" class="wordmark"><picture><source srcset="assets/img/brand/logo-perla-icon.webp" type="image/webp"><img src="assets/img/brand/logo-perla-icon.jpg" alt="" width="40" height="40" loading="lazy"></picture><span class="txt"><b>PERLA</b><span class="sub">construtora</span></span></a><p style="margin-top:18px;max-width:30ch">Arquitetura, engenharia e viabilidade financeira em Belo Horizonte.</p></div>
     <div><b>Endereço</b>Rua Santa Rita Durão, 444<br>Savassi · Belo Horizonte/MG<br>30140-111</div>
     <div><b>Contato</b><a href="https://wa.me/5531999203886" target="_blank" rel="noopener">WhatsApp</a><br><a href="https://www.instagram.com/perlaconstrutora/" target="_blank" rel="noopener">Instagram</a><br><a href="https://youtube.com/@perlaconstrutora" target="_blank" rel="noopener">YouTube</a></div>
-    <div><b>Responsáveis técnicas</b>Eng. Stephanie Faina · CREA [confirmar]<br>Arq. Mariana Guimarães · CAU [confirmar]</div>
+    <div><b>Responsáveis técnicas</b>Eng. Stephanie Faina · CREA-MG 1413598390<br>Arq. Mariana Guimarães · CAU [confirmar]</div>
     <div class="legal"><span>Perla Construtora LTDA · CNPJ 55.156.540/0001-50</span><span>Protótipo de layout · fotos e registros a confirmar</span></div>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-// Vídeo do HERO: reforça mute (defesa extra além do atributo), reduz a velocidade (0.72x, capa institucional
-// não deve competir com o texto) e toca, sem travar se o navegador bloquear autoplay.
+// HERO — só a capa: entrada (fade+zoom discreto), parallax de scroll (pan+zoom do wrap) e tilt de mouse
+// (só desktop com ponteiro fino, nunca touch) na foto de fundo. Nada abaixo do hero é tocado por este script.
+// Se o GSAP/ScrollTrigger não carregar (CDN indisponível), a imagem fica estática e visível — não há
+// opacity:0 no CSS, só a animação via JS parte de opacity 0, então sem JS o navegador já renderiza opacity 1.
 (function () {
-  var v = document.querySelector('.hero-video');
-  if (!v) return;
-  v.muted = true;
-  v.defaultMuted = true;
-  v.playbackRate = 0.72;
-  v.addEventListener('loadedmetadata', function () { v.playbackRate = 0.72; });
-  var p = v.play();
-  if (p && typeof p.catch === 'function') p.catch(function () {});
+  if (typeof gsap === 'undefined') return;
+  var heroEl = document.querySelector('.hero');
+  var wrap = document.querySelector('.hero-bg-wrap');
+  var img = document.querySelector('.hero-bg');
+  if (!heroEl || !wrap || !img) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // gsap.context() permite reverter tudo (tweens, ScrollTriggers, listeners) com ctx.revert() — não é
+  // chamado nesta página estática (nada é desmontado), mas mantém a implementação limpa e segura caso o
+  // script rode em outro contexto futuramente. Nunca usamos ScrollTrigger.getAll().kill() — isso mataria
+  // ScrollTriggers de outras partes do site.
+  var ctx = gsap.context(function () {
+    if (reduceMotion) {
+      gsap.set(wrap, { opacity: 1, scale: 1 });
+      return;
+    }
+
+    var hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
+    if (hasScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+    // Entrada: fade + zoom-out discreto (0.8–1.3s, ease sofisticado)
+    gsap.fromTo(wrap, { opacity: 0, scale: 1.08 }, {
+      opacity: 1,
+      scale: 1.05,
+      duration: 1.1,
+      ease: 'power2.out',
+      onComplete: hasScrollTrigger ? initScroll : null
+    });
+
+    // Parallax de scroll: só liga depois da entrada terminar, partindo do mesmo scale:1.05 final —
+    // evita as duas animações disputarem a mesma propriedade ao mesmo tempo.
+    function initScroll() {
+      var mm = gsap.matchMedia();
+      mm.add({
+        desktop: '(min-width:1025px)',
+        tablet: '(min-width:601px) and (max-width:1024px)',
+        mobile: '(max-width:600px)'
+      }, function (context) {
+        var c = context.conditions;
+        var yP = c.desktop ? 14 : c.tablet ? 9 : 5;
+        var scaleTo = c.desktop ? 1.12 : c.tablet ? 1.08 : 1.05;
+
+        var tween = gsap.fromTo(wrap, { scale: 1.05, yPercent: 0 }, {
+          yPercent: yP,
+          scale: scaleTo,
+          ease: 'none',
+          scrollTrigger: { trigger: heroEl, start: 'top top', end: 'bottom top', scrub: 1 }
+        });
+
+        return function () {
+          if (tween.scrollTrigger) tween.scrollTrigger.kill();
+          tween.kill();
+        };
+      });
+    }
+
+    // Tilt sutil com o mouse na foto (camada separada do wrap) — só desktop com ponteiro fino, nunca touch
+    if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      var qx = gsap.quickTo(img, 'xPercent', { duration: 0.6, ease: 'power3.out' });
+      var qy = gsap.quickTo(img, 'yPercent', { duration: 0.6, ease: 'power3.out' });
+      var onMove = function (e) {
+        var r = heroEl.getBoundingClientRect();
+        qx(((e.clientX - r.left) / r.width - 0.5) * 3);
+        qy(((e.clientY - r.top) / r.height - 0.5) * 2);
+      };
+      var onLeave = function () { qx(0); qy(0); };
+      heroEl.addEventListener('mousemove', onMove);
+      heroEl.addEventListener('mouseleave', onLeave);
+
+      return function () {
+        heroEl.removeEventListener('mousemove', onMove);
+        heroEl.removeEventListener('mouseleave', onLeave);
+      };
+    }
+  }, heroEl);
 })();
 </script>
 
@@ -546,6 +659,37 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
   }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach(function (el) { io.observe(el); });
 }
+</script>
+
+<script>
+// Menu mobile: hamburger abre/fecha o drawer (<900px), fecha ao clicar num link, ao apertar Esc ou ao
+// clicar fora, e trava o scroll do body enquanto está aberto.
+(function () {
+  var burger = document.querySelector('.nav-burger');
+  var panel = document.getElementById('nav-mobile');
+  if (!burger || !panel) return;
+
+  function close() {
+    burger.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+  function open() {
+    burger.setAttribute('aria-expanded', 'true');
+    panel.classList.add('open');
+    document.body.classList.add('nav-open');
+  }
+
+  burger.addEventListener('click', function () {
+    if (panel.classList.contains('open')) close(); else open();
+  });
+  panel.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('click', function (e) {
+    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== burger && !burger.contains(e.target)) close();
+  });
+  window.addEventListener('resize', function () { if (window.innerWidth > 900) close(); });
+})();
 </script>
 </body>
 </html>

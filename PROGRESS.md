@@ -1,6 +1,6 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-25 (preparação de continuidade — documentação e verificação, sem novas alterações de código). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 — checkpoint de sessão (documentação completa, sem novas alterações de código a partir daqui). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 # ESTADO ATUAL DO PROJETO
 
@@ -11,43 +11,128 @@ Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, 
 `main` (repositório ainda não publicado — único branch existente).
 
 ## Último commit
-`8aaf618` — "Remove parallax do hero e documenta estado atual". Commit e push já realizados, working tree clean.
+`def91af` — "Atualiza estado do projeto após remoção do parallax" (25/09). **Este é o commit mais recente no histórico — tudo desta sessão de 26/09 está no working tree, ainda NÃO commitado.**
 
-## ÚLTIMO ESTADO CONFIRMADO
+## ⚠️ ÚLTIMO ESTADO CONFIRMADO (26/09/2026 — fim de sessão)
 
-- Commit: `8aaf618`.
-- Remoção do parallax do HERO concluída.
-- Push concluído.
-- Working tree clean.
-- Vídeo permanece com autoplay, muted, loop e playbackRate 0.72.
-- Propaganda final já removida.
-- Nenhuma seção abaixo do HERO foi alterada.
+- Commit mais recente no repo: `def91af` (25/09).
+- **Working tree SUJO — nada desta sessão foi commitado.** Ver `git status` completo na seção "Checkpoint de sessão" abaixo.
+- HERO mudou de vídeo para **foto estática com parallax GSAP** (o vídeo `assets/video/hero.mp4` ainda existe no repo mas **não é mais referenciado** pelo `index.html`).
+- Logo real da marca integrado (nav, footer, favicon).
+- CREA de Stephanie Faina preenchido (dado real, confirmado pelo usuário via certidão CREA-MG).
+- Menu mobile (hamburger) implementado — antes não existia nenhuma forma de navegar pelo site em telas <900px.
+- Foto das sócias trocada (nova foto real de evento).
+- Revisão de responsividade site-wide **em andamento, não finalizada** — ver "Pendências" e "Problemas conhecidos".
+- Duas perguntas feitas ao usuário nesta sessão **seguem sem resposta** — ver "Pendências".
 
-## O que já foi concluído
+## O que já foi concluído (histórico acumulado)
 - `index.html` adotado como página real do site (protótipo do usuário), single-page com âncoras `#metodo`/`#servicos`/`#obras`/`#quem-somos`.
 - Briefing de marca completo (`docs/briefing/briefing-2026-09-25.html`) — fonte da verdade de conteúdo/dados institucionais.
-- Fotos reais integradas (marquee, serviços, quem-somos) — JPEG+WebP otimizados, `~1.3MB` total.
+- Fotos reais integradas (marquee, serviços, quem-somos) — JPEG+WebP otimizados.
 - Depoimentos reais atualizados (Mateus Garcia, cliente de Lourdes) — nome/foto aguardando autorização escrita.
 - Fita de obras (marquee) recriada em CSS puro (sem lib), pausa no hover, reduced-motion respeitado.
 - Microinterações sob medida em todas as seções abaixo do hero (steps, doors, works, values, quotes).
-- Refinamento final em 8 rodadas: Rodadas 1, 2 e 3 concluídas (ver seção própria abaixo).
-- Vídeo real do HERO integrado, com duas correções subsequentes (corte da propaganda + remoção do parallax) — ver seções "Alterações realizadas no HERO" e "Vídeo atual".
+- Refinamento final em 8 rodadas: Rodadas 1, 2 e 3 concluídas (ver seção própria abaixo) — Rodada 4 nunca foi formalmente retomada; foi substituída na prática pelo trabalho de responsividade desta sessão (26/09).
+- **HERO trocado de vídeo para foto + parallax GSAP nesta sessão (26/09)** — ver seção "SESSÃO 26/09/2026" abaixo. As seções "Alterações realizadas no HERO" e "Vídeo atual" logo abaixo são **histórico do vídeo, hoje substituído** — mantidas só como registro, não refletem mais o estado atual.
 
-## Alterações realizadas no HERO
+## ⚠️ HISTÓRICO (substituído em 26/09) — Alterações realizadas no HERO (vídeo)
+> As duas seções abaixo (vídeo do HERO) descrevem uma fase anterior do projeto. Em 26/09 o vídeo foi **removido do HERO e substituído por uma foto estática com parallax via GSAP** — ver "SESSÃO 26/09/2026" mais abaixo para o estado atual. Mantido aqui só como registro histórico de decisões já tomadas sobre aquele vídeo (útil se algum dia ele voltar a ser considerado).
 1. **Vídeo definitivo integrado** (produção EGD Filmes) — `autoplay`/`muted`/`loop`/`playsinline`, sem controles, overlay de legibilidade sobre o vídeo, poster extraído do frame em 0,3s.
 2. **Corte da propaganda final** — arquivo original tinha 23,4s e terminava numa tela de logo/propaganda ("EGD Filmes/CK"); cortado por remuxagem *stream copy* (sem recompressão) para 18,4s, mantendo só a filmagem real da obra.
 3. **Velocidade reduzida** — `playbackRate = 0.72` via JS (dentro da faixa 0,65–0,80 pedida pelo usuário), validado empiricamente (razão medida currentTime/tempo real = 0,7200).
 4. **Parallax removido** — a implementação original deslocava o vídeo ao rolar (`transform:translate3d` + `height:120%` de folga). Usuário reportou o vídeo borrado; diagnóstico: um vídeo vertical (576×1024) já precisa de ampliação forte pra cobrir uma seção larga via `object-fit:cover`, e o parallax ampliava ainda mais em cima disso. Removido o bloco JS inteiro (~30 linhas) e a folga extra de CSS — vídeo agora estático, enquadramento padrão.
 
-## Vídeo atual
-- **arquivo utilizado**: `assets/video/hero.mp4` (3.076.593 bytes, H.264, 576×1024, sem áudio) + poster `assets/video/hero-poster.jpg`.
-- **autoplay**: sim.
-- **muted**: sim (atributo `muted`/`defaultMuted` + reforçado via JS).
-- **loop**: sim — validado que reinicia sem frame preto/flash/propaganda.
-- **playbackRate**: `0.72`.
-- **corte aplicado no final**: sim — 23,4s → 18,4s, propaganda/logo removidos fisicamente do arquivo (não é CSS/JS escondendo, é o arquivo mesmo cortado).
-- **overlay/gradiente**: sim — `.hero-video-overlay`, gradiente escuro (tons de `--onix`) mais forte no topo/rodapé, mais claro no meio, garante contraste do texto sobre qualquer cena.
-- **comportamento mobile**: mesmo arquivo, mesmo enquadramento (`object-fit:cover;object-position:center 32%`, sem parallax); testado em 430/390/375/360px sem overflow horizontal.
+## ⚠️ HISTÓRICO (substituído em 26/09) — Vídeo do HERO (não usado mais)
+- **arquivo**: `assets/video/hero.mp4` (3.076.593 bytes, H.264, 576×1024, sem áudio) + poster `assets/video/hero-poster.jpg`. **Arquivos ainda existem no repo, mas não são mais referenciados pelo `index.html`** — órfãos, podem ser removidos numa limpeza futura se o vídeo não for reaproveitado.
+- autoplay/muted/loop/playbackRate 0.72 — comportamento antigo, não existe mais no código atual.
+
+## SESSÃO 26/09/2026 — HERO (foto + parallax GSAP), logo, CREA, foto das sócias, responsividade
+
+Sessão longa, várias tarefas sequenciais aprovadas uma a uma pelo usuário via preview (Artifact publicado, atualizado a cada mudança — link só existe dentro da conversa, não é permanente). **Nada foi commitado durante toda a sessão** — tudo abaixo está só no working tree.
+
+### 1. Teste do vídeo VN Pré-Moldados (revertido, não faz mais parte do projeto)
+Usuário mandou um vídeo (`video_perla.mp4`) para testar no HERO. Inspeção frame a frame revelou que era um vídeo institucional **pronto de outra empresa** (marca d'água "VN Pré-Moldados" visível o vídeo todo, legendas queimadas promovendo a VN, funcionário com capacete de logo da VN, tela de encerramento com o logo completo da VN). Sinalizado ao usuário antes de aplicar. Usuário autorizou usar mesmo assim **só para teste visual local, sem commit**. Foi implementado temporariamente (vídeo sem áudio, loop reiniciando via JS antes da tela de logo da VN pra não aparecer no loop) e depois **revertido a pedido do usuário** (`git checkout` nos 3 arquivos) antes da tarefa seguinte começar. **Não sobrou nenhum resquício no código atual** — mencionado aqui só para o histórico ficar completo.
+
+### 2. HERO: vídeo → foto + parallax GSAP (mudança principal desta sessão)
+Usuário pediu uma "Hero cinematográfica" (parallax de scroll, tilt de mouse, entrada animada) usando uma foto fornecida (casa/residência moderna em cima de um penhasco, à beira-mar). Pedido original veio com um prompt genérico assumindo stack React/Next.js/TypeScript/Tailwind/shadcn/npm — **não existe nada disso neste projeto** (confirmado antes de alterar: sem `package.json`, sem `tsconfig`, sem `tailwind.config`). Adaptado para vanilla JS + GSAP via CDN, sem build step, mantendo a arquitetura estática.
+
+- **Imagem**: `assets/img/hero/hero-penhasco.webp` — cópia **byte-idêntica** do arquivo enviado (checksum conferido), sem nenhuma edição.
+- **Markup**: `<video class="hero-video">` removido; entrou `<div class="hero-bg-wrap"><img class="hero-bg" ...></div>` dentro do mesmo `.hero-media`. Overlay (`.hero-video-overlay`) mantido — só o gradiente foi reforçado depois (ver item 3).
+- **CSS**: `.hero-bg-wrap` tem `top:-12%;bottom:-12%` (124% de altura) — folga estática pro parallax de scroll não revelar borda. `.hero-bg` (a imagem) é uma camada separada, só pro tilt do mouse — CAMADAS DIFERENTES evitam as duas animações (scroll e mouse) brigarem pela mesma propriedade `transform`.
+- **JS** (novo bloco, GSAP + ScrollTrigger via CDN `cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/`):
+  - Entrada: `opacity 0→1`, `scale 1.08→1.05`, 1.1s, `power2.out`.
+  - Parallax de scroll (só liga depois da entrada terminar, pra não conflitar): `yPercent` + `scale` via `scrollTrigger:{scrub:1}`, com `gsap.matchMedia()` para 3 faixas — desktop (`yPercent:14, scale:1.12`), tablet (`9, 1.08`), mobile (`5, 1.05`). Validado empiricamente (Playwright, `getBoundingClientRect`) que o wrap cobre o container em 100% do scroll, em todos os breakpoints, sem revelar gap.
+  - Tilt de mouse: só ativa com `(hover:hover) and (pointer:fine)` — nunca em touch/mobile, testado.
+  - `prefers-reduced-motion:reduce` desativa tudo (imagem estática).
+  - Fallback sem JS/CDN indisponível: imagem renderiza `opacity:1` normalmente (não há `opacity:0` no CSS, só na animação JS) — reforçado também no `<noscript>`.
+  - Cleanup via `gsap.context()` (nunca `ScrollTrigger.getAll().kill()`, que mataria ScrollTriggers de outras partes do site).
+- **Observação registrada, não uma ação pendente**: a imagem (casa sobre penhasco) tem estética de render/imagem conceitual muito circulada em redes de arquitetura — o usuário foi avisado de que vale confirmar se é obra real da Perla antes de publicar (regra do próprio `CLAUDE.md`/Checklist $10K sobre "imagens com intenção real"), mas decidiu seguir mesmo assim. Não é mais uma pendência bloqueante, só um registro de que o alerta foi dado.
+
+### 3. Ajuste de contraste/legibilidade do texto do HERO
+Usuário achou o texto da headline difícil de ler sobre a foto nova e pediu mais destaque. Ajustado:
+- `.hero-video-overlay`: adicionado um **terceiro gradiente** (linear, diagonal, mais escuro à esquerda onde fica o texto, esmaecendo pra transparente perto dos 74% — onde está a casa, que fica mais visível). Gradiente vertical original também escurecido um pouco na faixa do meio (`.58→.62`, `.5→.56`).
+- `.hero h1`: `font-weight` 500→600, `text-shadow:0 4px 28px rgba(0,0,0,.45)` adicionado.
+- `.hero .label` e `.hero .lede`: `text-shadow` sutil adicionado pra reforçar contraste em qualquer trecho da foto.
+
+### 4. Logo real da marca integrado
+Usuário mandou o logo oficial (badge circular preto+dourado, mármore + símbolo de leque/pérola + wordmark "PERLA construtora"). Isso **resolve a pendência antiga "falta arquivo vetorial do logo"** (não é vetor SVG/AI, é raster, mas é o logo real da marca — suficiente pro uso no site).
+- Master salvo **sem nenhuma edição** (checksum idêntico) em `assets/img/brand/logo-perla.jpg` (1254×1254).
+- Gerados (tecnicamente, sem alterar composição): `logo-perla-icon.jpg`/`.webp` (160×160, pro nav/footer) e `favicon-32.png`/`favicon-180.png` (pro `<link rel="icon">`/`apple-touch-icon`).
+- **Onde entrou**: nav (substituiu o wordmark só-texto, agora tem o círculo do logo + texto ao lado), footer (mesmo tratamento), favicon do site (não existia nenhum antes).
+- CSS: `.wordmark` virou `display:flex` (era `display:grid`) pra acomodar a imagem + texto lado a lado; texto ficou dentro de `.wordmark .txt`. **Cuidado se for mexer aqui de novo**: existe um bug já corrigido de especificidade CSS — o seletor `.nav ul{display:none}` original também escondia sem querer o `<ul>` de dentro do menu mobile (que também é descendente de `.nav`); a correção foi trocar pra `.nav>.shell>ul` (ver item 6).
+
+### 5. CREA de Stephanie Faina preenchido
+Usuário mandou a certidão CREA-MG da empresa (Nº 3403735/2026). **Atenção**: o documento tem DOIS números diferentes e o usuário citou o errado no texto da mensagem:
+- Registro da EMPRESA no CREA-MG: `0001681052` (campo "Interessado(a) → Registro") — foi o número que o usuário digitou na mensagem ("NUMERO DO REGISTRO 1681052").
+- Registro INDIVIDUAL de Stephanie Faina Vilela (a responsável técnica): `1413598390` (campo "Responsáveis Técnicos → Profissional → Registro") — **este é o número correto pra exibir ao lado do nome dela**, porque a lei exige o registro do responsável técnico, não da empresa.
+- Usei **1413598390** em `index.html` (seção "Quem somos" e footer): `CREA-MG nº 1413598390` / `CREA-MG 1413598390`. Usuário foi avisado da diferença entre os dois números, mas **não confirmou explicitamente que concorda** com qual dos dois deveria ir no site — vale reconfirmar isso na próxima sessão antes de considerar definitivo.
+- CAU da Mariana Guimarães **continua `[confirmar]`** — não foi enviado.
+- **Nunca inventar/alterar esse número sem confirmação do usuário** — regra permanente do `CLAUDE.md` deste projeto.
+
+### 6. Menu mobile (hamburger) — antes não existia nenhuma forma de navegar no site em <900px
+Auditoria encontrou que `.nav ul{display:none}` abaixo de 900px escondia os links do menu **sem nenhum substituto** — bug real de usabilidade, não só um "nice to have". Implementado:
+- Botão hamburger (3 linhas → vira X animado via `aria-expanded`) visível só <900px.
+- Drawer full-screen (`#nav-mobile`, fora do `<nav>` — ver bug abaixo) com os 4 links + CTA "Agendar conversa" em destaque.
+- Fecha ao: clicar num link, apertar Esc, clicar fora (clique fora só é alcançável tocando na barra superior fora do botão, já que o drawer cobre a tela toda abaixo da nav — comportamento correto pra esse tipo de menu full-screen).
+- Trava o scroll do `body` enquanto aberto (`body.nav-open{overflow:hidden}`).
+- **Dois bugs reais encontrados e corrigidos durante a implementação, documentados aqui pra não reintroduzir**:
+  1. `.nav ul{display:none}` (a regra que esconde o menu desktop) também escondia por engano o `<ul>` de dentro do drawer mobile, porque ambos são descendentes de `.nav`. Corrigido trocando pra `.nav>.shell>ul` (seletor de filho direto) — se algum dia adicionar outro `<ul>` dentro de `.nav`, checar esse seletor de novo.
+  2. O `<div class="nav-mobile">` estava, na primeira versão, DENTRO do `<nav>` — e `.nav` tem `backdrop-filter:blur(10px)`. `backdrop-filter` (assim como `transform`/`filter`/`will-change:transform`) cria um "containing block" novo pra descendentes `position:fixed`, então o drawer ficava "preso" dentro da caixa de 73px da nav em vez de cobrir a tela toda. Corrigido movendo o `<div class="nav-mobile">` pra **fora** do `<nav>`, como irmão dele no `<body>` (o JS/CSS que referenciam por id/classe continuam funcionando normalmente). **Se algum dia mover esse `<div>` de volta pra dentro do `<nav>`, o bug volta.**
+- Testado funcionalmente via Playwright em 375px e 768px: abrir/fechar, clique em link (fecha + navega), Esc (fecha), sem erros de JS no console.
+
+### 7. Ritmo vertical comprimido no mobile
+`section{padding-block:clamp(88px,11vw,160px)}` tinha um floor de 88px que se aplicava sempre em telas até ~800px (11vw nunca chegava a 88px abaixo disso) — pedido do usuário pra "comprimir o ritmo vertical no mobile" sem mexer no valor fluido usado em tablet/desktop. Adicionado `@media (max-width:600px){section{padding-block:clamp(56px,14vw,88px)}}` — só telas de celular ficam mais compactas. Mesma lógica aplicada em `.final` (CTA final) e no grid do footer/`.values`, que também colapsam pra 1 coluna só abaixo de 480px (antes colapsavam pra 2 colunas já em 820px, o que ficava apertado em telas de 375-430px — ver screenshots que motivaram isso). Adicionado também `section[id]{scroll-margin-top:88px}` como proteção pra os links do menu (inclusive os novos do drawer mobile) nunca ficarem parcialmente escondidos atrás da nav sticky ao navegar por âncora.
+
+### 8. Foto da seção "Quem somos" trocada
+Usuário mandou uma foto nova (as duas sócias caminhando num evento, "Blue Tree Transatlântico Convention Center" ao fundo) pra substituir a foto antiga. Troca pura de asset — **zero alteração em `index.html`**:
+- `assets/img/equipe/socias-retrato.jpg` e `.webp` sobrescritos com a foto nova, recortada (crop, não distorção) pra bater exatamente com o `aspect-ratio:1080/972` já usado no CSS — testados 3 recortes diferentes (mais centralizado / mais pro alto), escolhido o que mantinha as duas pessoas inteiras e bem enquadradas.
+- Alt text mantido (ainda descreve as duas sócias corretamente).
+
+### 9. Responsividade — auditoria site-wide (⚠️ NÃO FINALIZADA)
+Usuário pediu uma revisão completa de responsividade em 6 larguras (1440/1024/768/430/390/375px), em todas as seções, com foco em "resize, hide/substituição de nav, tighten de espaçamento" — não uma cópia do desktop encolhida. **O que já foi feito e validado** (itens 6 e 7 acima) cobre os problemas mais graves encontrados (menu inexistente no mobile, ritmo vertical pesado). **O que ainda falta**: revisão seção-a-seção mais granular em 1024px/768px especificamente (tablet), e uma segunda passada de verificação depois das mudanças do item 8 (foto nova) e item 3 (contraste do hero) pra garantir que nada regrediu. Ver "Pendências" e "Próximo passo exato".
+
+### Checkpoint de sessão (git status exato em 26/09, fim da sessão)
+
+```
+On branch main
+Changes not staged for commit:
+	modified:   assets/img/equipe/socias-retrato.jpg
+	modified:   assets/img/equipe/socias-retrato.webp
+	modified:   index.html
+
+Untracked files:
+	assets/img/brand/
+	assets/img/hero/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+- **Branch**: `main`.
+- **Último commit no histórico**: `def91af` (25/09) — nada de 26/09 foi commitado.
+- **Modificados** (já existiam, conteúdo alterado): `index.html`, `assets/img/equipe/socias-retrato.jpg`, `assets/img/equipe/socias-retrato.webp`.
+- **Novos/não rastreados**: `assets/img/brand/` (5 arquivos: logo master + ícone jpg/webp + 2 favicons), `assets/img/hero/` (1 arquivo: `hero-penhasco.webp`).
+- **Não modificados mas agora órfãos** (sem referência no HTML): `assets/video/hero.mp4`, `assets/video/hero-poster.jpg`.
+- **Nenhum commit, push, merge ou troca de branch foi feito nesta sessão** — tudo acima é só working tree, esperando autorização explícita do usuário.
 
 ## Rodadas de design já concluídas
 Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuário antes da próxima:
@@ -58,9 +143,11 @@ Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuár
 - Rodada 5 (auditoria final completa): ainda não iniciada.
 
 ## Arquivos principais
-- `index.html` — página única do site (HTML+CSS+JS embutidos).
-- `assets/video/hero.mp4`, `assets/video/hero-poster.jpg` — vídeo e poster do HERO.
-- `assets/img/{marquee,servicos,equipe}/` — fotos reais (JPEG+WebP).
+- `index.html` — página única do site (HTML+CSS+JS embutidos, GSAP+ScrollTrigger via CDN agora incluídos por `<script src>`).
+- `assets/img/hero/hero-penhasco.webp` — foto de fundo do HERO (substituiu o vídeo).
+- `assets/video/hero.mp4`, `assets/video/hero-poster.jpg` — **órfãos**, não referenciados mais pelo `index.html` desde 26/09; ainda existem no repo (não foram deletados).
+- `assets/img/brand/` — logo da marca: `logo-perla.jpg` (master, intocado), `logo-perla-icon.{jpg,webp}` (nav/footer), `favicon-32.png`/`favicon-180.png` (favicon/apple-touch-icon). Novo em 26/09.
+- `assets/img/{marquee,servicos,equipe}/` — fotos reais (JPEG+WebP). `equipe/socias-retrato.{jpg,webp}` foi substituída em 26/09 (foto nova de evento).
 - `design-system/construtora-perla/MASTER.md` — identidade de marca/design system, paleta, tipografia, "Checklist $10K".
 - `docs/briefing/briefing-2026-09-25.html` — briefing de marca completo (fonte da verdade de conteúdo/dados).
 - `CLAUDE.md` — regras permanentes do projeto (compliance, branches, escopo).
@@ -68,45 +155,57 @@ Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuár
 
 ## Decisões que NÃO devem ser revertidas
 - Paleta fechada: onix + pérola + ouro champanhe (+ papel isolado na seção "37%"). Vinho (`#8C303C`) fica só no Instagram, nunca no site.
-- Nunca inventar CREA/CAU, WhatsApp ou qualquer dado de compliance — manter `[confirmar]` até o usuário fornecer o dado real.
+- Nunca inventar CREA/CAU, WhatsApp ou qualquer dado de compliance — manter `[confirmar]` até o usuário fornecer o dado real (e, quando fornecido, confirmar qual dos números do documento é o correto — ver caso do CREA na seção da sessão 26/09).
 - Nomes/fotos de clientes só entram com termo de autorização **escrito** — "público no Instagram" não conta como autorização.
 - Jéssica (@jessicafaina) — nome não pode ser usado até confirmar que não é parente da Stephanie.
 - Nome de criança (filho de Vinícius e Ana) nunca vai para o site.
 - @laranesteruk e @mairacardi não são clientes da Perla — nunca usar como prova social.
 - Escopo atual do site: só a home (uma página). Portfólio completo, FAQ e página de Clínicas ficam para uma etapa futura.
-- Vídeo do HERO usado exatamente como enviado pela produtora, sem substituir — a única edição autorizada é o corte da propaganda final.
+- **HERO usa foto (não mais vídeo) desde 26/09** — `assets/img/hero/hero-penhasco.webp`, intocada (checksum idêntico ao arquivo enviado). Não trocar por outra imagem/gerar nova sem pedido explícito do usuário.
+- **GSAP + ScrollTrigger via CDN (`cdnjs.cloudflare.com`) são dependência oficial do projeto desde 26/09** — usados só no script do HERO (entrada, parallax de scroll, tilt de mouse). Não adicionar React/Next.js/Tailwind/shadcn/npm ao projeto — instrução explícita do usuário, site continua 100% estático.
+- Logo real da marca (raster, `assets/img/brand/`) integrado em nav/footer/favicon desde 26/09 — não reverter para o wordmark só-texto sem pedido explícito.
+- Menu mobile (hamburger) é funcionalidade nova obrigatória — antes dele não havia NENHUMA forma de navegar o site em <900px. Não remover.
 - Site estático puro, sem framework/build step — hospedagem cPanel (mesmo modelo do projeto Arobot/Sr. Gordinezz), a decidir na hora de publicar.
 - Enquanto o site não estiver publicado/em uso real, pode-se trabalhar direto em `main` (regra do próprio `CLAUDE.md` deste projeto) — mas commit/push só depois de aprovação do usuário para cada mudança.
 
 ## Pendências
+- **Confirmação Rio vs. Perla**: numa mensagem desta sessão, o usuário pediu pra alterar a seção "O custo que ninguém mostra" mas se referiu a "página da Rio" (nome de outro projeto/site). O conteúdo descrito bate exatamente com a seção `#custo` da Perla, mas o nome citado não é da Perla. **Perguntado ao usuário, sem resposta ainda.** Nenhuma alteração foi feita nessa seção por causa disso — não mexer em `#custo`/`.paper` até isso ser esclarecido.
+- **Imagem nova para o fundo da seção "O custo"** ("imagem 3", foto de uma sala com vidraças voltadas pro mar) foi mencionada pelo usuário mas **nunca chegou como arquivo** (só apareceu inline numa mensagem, não localizável em disco). Pedir reenvio antes de implementar aquele pedido.
+- **Confirmação do número de CREA usado**: preenchi `1413598390` (registro individual de Stephanie, extraído da certidão) em vez de `1681052` (registro da empresa, que foi o número que o usuário digitou na mensagem). Expliquei a diferença ao usuário mas ele não confirmou explicitamente qual queria — vale reconfirmar.
+- **Revisão de responsividade não finalizada**: menu mobile e ritmo vertical já implementados e testados; falta uma segunda passada granular em 1024/768px e reverificação pós foto-nova/contraste-do-hero. Ver "Próximo passo exato".
 - Termo de autorização assinado (LGPD) de cada cliente citado — nenhum existe ainda por escrito (Mateus Garcia, cliente de Lourdes, demais do levantamento).
 - Identificar quem é a cliente do depoimento de Lourdes.
 - Confirmar/descartar se Jéssica (@jessicafaina) é parente da Stephanie.
 - Frase/vídeo real de depoimento do Dr. Bruno Fernandes Galdino.
-- CREA (Stephanie Faina) e CAU (Mariana Guimarães) — usuário vai enviar depois; bloqueia publicação em produção, não bloqueia desenvolvimento.
-- Logo vetorial (SVG/AI, símbolo de leque/pérola) — site usa só o wordmark tipográfico "PERLA construtora".
-- Nitidez do vídeo do HERO em telas largas segue limitada pela resolução de origem (576×1024, vertical/reels); só se resolve com material em resolução maior ou formato 16:9 da produtora.
+- CAU de Mariana Guimarães — ainda não enviado (CREA de Stephanie já foi, ver acima).
+- Foto das sócias em telas retina/2x: a foto nova (26/09) ainda não foi auditada quanto a nitidez em alta densidade — herda a mesma limitação que a foto antiga tinha.
 - `.bar-legend` com `font-size:15px` hardcoded em vez do token `--fs-support` — limpeza menor registrada na Rodada 2, ainda não feita.
 - Decisão de domínio/hospedagem final ainda não tomada (cPanel é o modelo, falta definir o domínio).
+- `assets/video/hero.mp4`/`hero-poster.jpg` ficaram órfãos (sem uso) — decidir se apagam do repo ou ficam guardados.
 
 ## PRÓXIMA TAREFA EXATA
-1. Rodada 4 — Mobile + Qualidade técnica invisível.
-2. Após aprovação da Rodada 4, executar Rodada 5 — QA final de produção.
+1. Obter resposta do usuário sobre as duas perguntas em aberto: (a) confirmação Rio vs. Perla para a seção "O custo", (b) reenvio da "imagem 3" (foto da sala com vista pro mar), antes de tocar em `#custo`/`.paper`.
+2. Reconfirmar com o usuário qual número de CREA usar (`1413598390` individual, já aplicado, vs. `1681052` da empresa).
+3. Finalizar a revisão de responsividade: passada granular em 1024px/768px por seção, e reverificação completa (sem overflow, sem sobreposição) depois de todas as mudanças desta sessão (foto do hero, foto das sócias, logo, contraste).
+4. Quando o usuário aprovar o estado atual como um todo: `git add` + commit (mensagem cobrindo hero/logo/CREA/foto/responsividade) + push — só com autorização explícita, nunca por conta própria.
+5. Retomar a Rodada 4/5 do refinamento final (mobile + QA de produção) se o usuário quiser formalizá-la separadamente, já que boa parte do trabalho de mobile desta sessão cobre o mesmo objetivo.
 
 ## Problemas conhecidos
-- Chromium de teste do Playwright (ambiente de nuvem) não decodifica H.264 — validação visual do vídeo em si (não do layout) exige uma cópia temporária em WebM, descartada após o teste, nunca commitada. O arquivo do site continua em H.264 (compatibilidade universal com navegadores reais).
-- Vídeo do HERO não foi testado em navegador real (Chrome/Safari/Edge) nesta sessão — só validado via Playwright (layout/atributos) e via cópia WebM temporária (decodificação/loop/velocidade), pela limitação de ambiente acima.
-- Foto das sócias (`equipe/socias-retrato.jpg`) renderiza levemente abaixo do ideal de nitidez em telas retina/2x — sem solução sem uma versão de maior resolução do arquivo original (vieram do Instagram).
+- **CDN do GSAP bloqueado neste sandbox de desenvolvimento** (`cdnjs.cloudflare.com` retorna 403 do proxy do ambiente) — **não afeta usuários reais** (é só a política de rede deste container de dev). Para testar localmente nesta sessão, o GSAP foi baixado via `npm pack gsap@3.12.5` (registry.npmjs.org é liberado) e servido de uma cópia local só para teste — o `index.html` real sempre apontou pro CDN público, nunca para a cópia local.
+- Chromium de teste do Playwright (ambiente de nuvem) não decodifica H.264 — irrelevante agora que o HERO não usa mais vídeo, mas documentado por completude caso o vídeo antigo (`assets/video/hero.mp4`) seja reaproveitado no futuro.
+- Clique "fora" do drawer mobile só fecha o menu se o clique cair na barra superior (fora do botão) — como o drawer cobre a tela inteira abaixo da nav quando aberto, não existe uma área "vazia" da página pra clicar enquanto ele está aberto. Comportamento esperado pra esse tipo de menu full-screen, não é um bug, mas documentado caso pareça estranho numa revisão futura.
+- Revisão de responsividade granular em 1024px/768px ainda não fechada (ver Pendências).
 
 ## Informações que ainda dependem do cliente
 - Termo de autorização assinado de cada cliente citado (nome/foto/depoimento).
 - Confirmação se Jéssica (@jessicafaina) é parente da Stephanie.
 - Identidade da cliente do depoimento de Lourdes.
 - Frase/vídeo de depoimento real do Dr. Bruno Fernandes Galdino.
-- Números de registro profissional: CREA (Stephanie Faina) e CAU (Mariana Guimarães).
-- Arquivo vetorial do logo (SVG/AI) com o símbolo de leque/pérola.
-- Eventual vídeo do HERO em resolução maior ou formato horizontal/16:9, caso queiram corrigir de vez a nitidez em telas largas.
+- Número de registro profissional CAU de Mariana Guimarães (CREA de Stephanie já veio em 26/09, ver seção da sessão).
+- Confirmar qual número de CREA usar no site: `1413598390` (individual, já aplicado) ou `1681052` (empresa) — ver seção da sessão 26/09.
 - Decisão de domínio de publicação final (hospedagem já definida como cPanel).
+- Esclarecer a referência a "página da Rio" feita nesta sessão (ver Pendências).
+- Reenvio da "imagem 3" (foto de sala com vista pro mar) para a seção "O custo".
 
 ---
 
@@ -205,7 +304,7 @@ Usuário gravou a tela e reportou que o vídeo do HERO estava borrado/embaçado.
 
 - **Paleta:** 1 fundo (onix `#0E0D0C`) + 1 tinta (pérola `#EFE7D6`) + 1 acento único (ouro champanhe chapado `#C2A56E`) + 1 seção clara isolada (papel `#F4EEE6`, só na seção do dado "37%"). Gradiente metálico restrito ao wordmark do logo. Vinho (`#8C303C`, fase 2 do Instagram) **não entra no site** — fica só no Instagram editorial, decisão já tomada pela marca.
 - **Tipografia:** Newsreader (display/corpo) + Cormorant Garamond itálico (números/destaques, ex: "37%").
-- **Símbolo:** leque/concha de cinco pétalas facetadas sobre pérola — falta o arquivo vetorial (ver pendências).
+- **Símbolo:** leque/concha de cinco pétalas facetadas sobre pérola — logo real (raster, não vetorial) recebido e integrado em 26/09 (`assets/img/brand/`), usado em nav/footer/favicon.
 - Documentado em `design-system/construtora-perla/MASTER.md` (já atualizado, substitui a paleta genérica Cinzel/Josefin que eu tinha gerado antes de receber o briefing real).
 
 ## Posicionamento e conteúdo (do briefing)
@@ -224,10 +323,10 @@ Usuário gravou a tela e reportou que o vídeo do HERO estava borrado/embaçado.
 | # | Risco | Ação necessária |
 |---|-------|------------------|
 | ~~1~~ | ~~WhatsApp incompleto~~ | **RESOLVIDO em 25/09**: número correto confirmado pelo usuário — `31 9 9920-3886` (celular de Stephanie Faina), 9 dígitos. Atualizado em todos os 8 links `wa.me/` + texto visível do `index.html` para `wa.me/5531999203886`. |
-| 2 | **Registros CAU (Mariana) e CREA (Stephanie) ausentes.** Publicidade de arquitetura/engenharia no Brasil exige nome + registro do responsável técnico visível. | **NÃO bloqueante para continuar** — usuário confirmou em 25/09 que vai enviar o CREA depois. `index.html` mantém `[confirmar]` nos lugares certos — **nunca inventar um número aqui**, mesmo sob pressão pra "terminar logo". Site não deve ser publicado em produção com isso pendente. |
+| 2 | **PARCIALMENTE RESOLVIDO em 26/09.** CREA de Stephanie preenchido (`1413598390`, extraído de certidão CREA-MG real — mas ver pendência sobre qual dos 2 números do documento é o correto). **CAU de Mariana ainda ausente.** | `index.html` mantém `[confirmar]` no CAU — **nunca inventar um número aqui**. Site não deve ser publicado em produção com isso pendente. |
 | 3 | **Autorização de clientes (LGPD) — CORRIGIDO em 25/09.** A confirmação inicial ("os clientes autorizou") era otimista demais. Levantamento detalhado do usuário mostrou: **nenhum termo escrito existe ainda** para nenhum caso. "Público no Instagram" ≠ autorização comercial. | Ver tabela completa de depoimentos/cases abaixo. Até existir termo assinado, nomes/fotos ficam fora do site — texto do depoimento pode ser usado, atribuição fica genérica (profissão/cidade) com nota "aguardando autorização". Ação recomendada pelo usuário: termo de 1 página, assinado por WhatsApp, por cliente. |
 | 4 | **Promessas absolutas** ("resultado garantido", "100% de aprovação") viram passivo jurídico se questionadas. | Revisar redação com o usuário antes de publicar cópias finais — `index.html` atual já é mais comedido, mas vale checar textos futuros. |
-| 5 | **PARCIALMENTE RESOLVIDO em 25/09.** Fotos reais de obras/clínicas/sócias chegaram (zip do Instagram) e já estão no site. **Ainda falta**: logo em vetor (SVG/AI) — o site ainda usa só o wordmark tipográfico "PERLA construtora" em texto, sem o símbolo de leque/pérola. Vídeos das obras também não foram enviados. | Pedir o arquivo vetorial do logo ao usuário quando possível. |
+| 5 | **RESOLVIDO em 26/09.** Logo real da marca (raster) recebido e integrado em nav/footer/favicon. Fotos reais de obras/clínicas/sócias já estavam no site desde 25/09; foto das sócias foi atualizada em 26/09 (foto nova de evento). Vídeos das obras ainda não foram enviados — não bloqueante. | Nenhuma ação pendente aqui. |
 | ~~6~~ | ~~Posicionamento "mães e cristãs"...~~ | **RESOLVIDO em 25/09**: usuário confirmou que fica só em "Quem somos", de forma sutil (não entra no hero). O texto já estava em `index.html` desde o protótipo original (`b51fc63`) — a pendência era só de decisão/registro, não de código. |
 
 ## Fotos reais — integração (25/09)
@@ -305,14 +404,16 @@ Usuário enviou `perla-fotos-instagram.zip` (117 fotos em 6 pastas categorizadas
 
 ## Próximo passo exato
 
-1. Ainda aguardando do usuário: (a) termo de autorização assinado por cliente (Mateus, cliente de Lourdes, e os demais do levantamento), (b) identificar quem é a cliente de Lourdes, (c) confirmar/descartar Jéssica como possível parente, (d) frase/vídeo real do Dr. Bruno, (e) CREA/CAU, (f) logo vetorial (SVG/AI do símbolo de leque/pérola). **Fotos reais e posicionamento "mães e cristãs" (risco #6) já resolvidos** — não são mais pendência.
-1b. **Refinamento final em 8 rodadas — em andamento** (ver seção própria acima). Rodada 1 concluída em `136aedf`, Rodada 2 em `c020a7f`, Rodada 3 (Imagens + Motion Design) concluída nesta etapa. Aguardando aprovação do usuário pra seguir com a Rodada 4 (Mobile + Qualidade técnica invisível).
+> ⚠️ Ver "PRÓXIMA TAREFA EXATA" no topo do arquivo — é a versão canônica e mais atual (26/09). Lista abaixo mantida por histórico, atualizada pra não contradizer o topo.
+
+1. Ainda aguardando do usuário: (a) termo de autorização assinado por cliente (Mateus, cliente de Lourdes, e os demais do levantamento), (b) identificar quem é a cliente de Lourdes, (c) confirmar/descartar Jéssica como possível parente, (d) frase/vídeo real do Dr. Bruno, (e) CAU de Mariana, (f) confirmação de qual número de CREA usar (ver seção da sessão 26/09), (g) esclarecimento Rio vs. Perla, (h) reenvio da "imagem 3" pra seção "O custo". **Fotos reais, posicionamento "mães e cristãs" (risco #6) e logo (risco #5) já resolvidos** — não são mais pendência.
+1b. **Refinamento final em 8 rodadas** — Rodada 1 (`136aedf`), Rodada 2 (`c020a7f`) e Rodada 3 (`79ab683`) concluídas em 25/09. Rodada 4 (Mobile) nunca foi formalmente retomada como tal, mas seu objetivo foi coberto na prática pelo trabalho de responsividade de 26/09 (menu mobile, ritmo vertical) — ver seção da sessão. Rodada 5 (QA final) ainda não iniciada.
 2. Assim que houver termo assinado de Mateus e/ou da cliente de Lourdes, substituir a atribuição genérica pelo nome real na seção "Clientes" do `index.html`.
-3. Quando o logo vetorial chegar, trocar o wordmark tipográfico da nav/footer pelo símbolo real.
-4. Quando CREA/CAU chegarem, preencher os `[confirmar]` correspondentes.
+3. ~~Quando o logo vetorial chegar, trocar o wordmark tipográfico da nav/footer pelo símbolo real.~~ **FEITO em 26/09** (logo raster, não vetorial, mas já integrado).
+4. Quando CAU de Mariana chegar, preencher o `[confirmar]` correspondente (CREA de Stephanie já preenchido, ver pendência sobre qual número).
 5. Rodar checklist de pré-entrega completo (`ui-ux-pro-max` `references/pro-rules.md`) antes de considerar a home "pronta".
 6. Só depois disso: decidir domínio/hospedagem (cPanel) e publicar.
-7. Commitar e dar push a cada etapa concluída, atualizando este arquivo.
+7. Commitar e dar push a cada etapa concluída, atualizando este arquivo — **pendente agora**: tudo de 26/09 segue não commitado, aguardando autorização do usuário.
 
 ## Verificação feita nesta etapa (fotos)
 
