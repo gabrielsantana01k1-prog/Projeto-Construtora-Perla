@@ -1,6 +1,31 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09k — pendências do redesign concluídas na branch dev; `perla-preview` NÃO atualizado, aguardando nova aprovação). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09l — usuário aprovou e publicou esta rodada no `perla-preview`, commit `aaae666`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## PRÓXIMA TAREFA EXATA (ler primeiro)
+
+Nada pendente de ação imediata — última entrega já publicada e aprovada. Ao retomar:
+1. Ler esta seção + a sessão 26/09l abaixo pra saber exatamente onde paramos.
+2. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
+3. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
+4. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+
+## SESSÃO 26/09/2026-l — Publicação aprovada no perla-preview (rodada de pendências do redesign)
+
+Usuário aprovou a prévia da sessão 26/09k e pediu explicitamente para publicar no `perla-preview` (site público, sem login, pra mandar pro cliente/Stephanie) e depois poder rodar `/clear` com segurança.
+
+**Ação**: sincronizado `index.html`, `assets/`, `robots.txt`, `obras/` e `projetos/` do repositório de dev (branch `redesign-claro-2026-09-26`, commit `145b13f`) para `perla-preview` (branch `main`) — commit `aaae666`, com push confirmado. `.htaccess`, `CLAUDE.md`, `PROGRESS.md`, `docs/`, `design-system/` e `scripts/` **não foram sincronizados** (regra permanente do espelho público, ver seção própria deste arquivo).
+
+**Link público (sem necessidade de login)**: `https://gabrielsantana01k1-prog.github.io/perla-preview/` — GitHub Pages pode levar 1–2 minutos para republicar após o push.
+
+**Validado antes de publicar**: servidor local do `perla-preview` já sincronizado, testado com Playwright nas 7 páginas (home + 6 obras) — zero rolagem horizontal indevida, zero imagem quebrada de verdade (as únicas flagadas eram fotos dentro de painéis ocultos das abas do Método, carregam normalmente ao clicar na aba — falso positivo já confirmado na sessão 26/09k).
+
+**Ainda pendente, agora visível também no site público** (nada foi inventado pra "completar" essas partes):
+- E-mail de contato (botão da faixa de contato + link do rodapé só aparecem quando o endereço oficial for confirmado).
+- Print do app de acompanhamento (não existe esse material em nenhuma pasta do projeto).
+- Fotos de depoimentos (texto já publicado, sem foto — só entra com autorização + foto real do cliente).
+
+**Repositório de dev**: branch `redesign-claro-2026-09-26` segue como está (commit `145b13f`), sem merge pra `main` de dev — só o espelho público foi atualizado.
 
 ## SESSÃO 26/09/2026-k — Pendências do redesign concluídas (branch `redesign-claro-2026-09-26`, nada publicado no perla-preview)
 
