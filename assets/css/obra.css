@@ -3,12 +3,16 @@
    build step nem CSS compartilhado por import; qualquer mudança de marca no index.html precisa
    ser replicada aqui manualmente (ver CLAUDE.md / PROGRESS.md). */
 :root{
-  color-scheme: dark;
-  --onix:#0E0D0C; --onix-2:#141210;
-  --perola:#EFE7D6; --perola-2:#B3A994; --perola-3:#89806F;
+  color-scheme: light;
+  /* Tema claro (redesign 26/09) — mesmo pivô do index.html: os nomes --onix/--perola foram
+     mantidos, só os VALORES viraram os do tema claro. Ver .lightbox mais abaixo, que re-declara
+     esses tokens localmente para continuar escura de propósito (visualização de foto em tela
+     cheia) — é o único componente desta folha que precisa disso. */
+  --onix:#F4EEE6; --onix-2:#FFFDF8;
+  --perola:#231A17; --perola-2:#5C4F46; --perola-3:#6F6156;
   --ouro:#C2A56E; --ouro-deep:#9C8A5E;
-  --linha:rgba(239,231,214,.10); --linha-2:rgba(239,231,214,.18);
-  /* Tema claro (rodapé/faixa de contato) — mesmos hex oficiais do index.html, nada inventado */
+  --linha:rgba(35,26,23,.14); --linha-2:rgba(35,26,23,.22);
+  /* Papel/tinta (mesmos tokens, agora iguais a --onix/--perola) */
   --papel:#F4EEE6; --tinta:#231A17; --tinta-2:#5C4F46; --linha-p:rgba(35,26,23,.14); --ouro-paper:#8F7442; --ouro-paper-texto:#7A6237; /* variante escurecida p/ texto pequeno (4.5:1 em --papel) */
   --display:"Newsreader", "Iowan Old Style", Georgia, serif;
   --num:"Cormorant Garamond", "Iowan Old Style", Georgia, serif;
@@ -32,7 +36,7 @@ img{max-width:100%;display:block}
 :focus-visible{outline:1px solid var(--ouro);outline-offset:4px}
 
 /* ============ NAV (idêntico ao index.html) ============ */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(14,13,12,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--linha)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(244,238,230,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--linha)}
 .nav .shell{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
 .wordmark{display:flex;align-items:center;gap:12px}
 .wordmark img{width:40px;height:40px;border-radius:50%;flex:0 0 auto;object-fit:cover}
@@ -43,8 +47,8 @@ img{max-width:100%;display:block}
 .nav ul a{transition:color .3s ease}
 .nav ul a:hover{color:var(--perola)}
 .btn{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;padding:15px 22px;border:1px solid var(--ouro);color:var(--perola);transition:background .35s ease,color .35s ease}
-.btn:hover{background:var(--ouro);color:var(--onix)}
-.btn.solid{background:var(--ouro);color:var(--onix)}
+.btn:hover{background:var(--ouro);color:var(--tinta)}
+.btn.solid{background:var(--ouro);color:var(--tinta)}
 .btn.solid:hover{background:var(--perola)}
 .btn .arr{font-family:var(--num);font-style:italic;font-size:18px;letter-spacing:0;text-transform:none}
 .link{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--perola-2);border-bottom:1px solid var(--linha-2);padding-bottom:4px;transition:color .3s ease,border-color .3s ease}
@@ -58,7 +62,7 @@ img{max-width:100%;display:block}
 .nav-mobile.open{display:block}
 .nav-mobile ul{display:block;list-style:none;margin:0;padding:0}
 .nav-mobile li{border-bottom:1px solid var(--linha)}
-.nav-mobile ul a{display:block;padding:20px 2px;font-family:var(--display);font-size:clamp(22px,6vw,28px);color:var(--perola)}
+.nav-mobile ul a{display:block;padding:20px 2px;font-family:var(--display);font-size:clamp(22px,6vw,28px);color:#EFE7D6}
 .nav-mobile .btn{margin-top:28px;justify-content:center;width:100%}
 body.nav-open{overflow:hidden}
 @media (max-width:900px){.nav>.shell>ul,.nav>.shell>.btn{display:none}.nav-burger{display:flex}}
@@ -108,7 +112,9 @@ body.nav-open{overflow:hidden}
    1 ou 2 fotos nunca sobrarem "sozinhas à esquerda com vazio ao lado" — o próprio flex-wrap resolve
    isso naturalmente, qualquer que seja a quantidade. */
 .etapa-grid.mini{display:flex;flex-wrap:wrap;justify-content:center}
-.etapa-grid.mini figure{flex:0 1 280px;max-width:min(100%,var(--fw,280px))}
+/* Tamanho o mais próximo possível do original (a var(--fw), setada por foto, é a largura real do
+   arquivo) — nunca amplia além disso. 340px é só o ponto de partida do flex antes do cap. */
+.etapa-grid.mini figure{flex:0 1 340px;max-width:min(100%,var(--fw,340px))}
 
 /* ============ CTA FINAL ============ */
 .obra-cta{padding-block:clamp(64px,9vw,120px);text-align:center;border-top:1px solid var(--linha)}
@@ -124,8 +130,9 @@ body.nav-open{overflow:hidden}
 .obra-prox .tt{font-size:clamp(18px,2.4vw,24px)}
 @media (max-width:600px){.obra-prox{grid-template-columns:1fr}.obra-prox a:last-child{border-left:0;border-top:1px solid var(--linha);text-align:left}}
 
-/* ============ LIGHTBOX ============ */
-.lightbox{position:fixed;inset:0;z-index:50;display:none;background:rgba(14,13,12,.97);backdrop-filter:blur(6px)}
+/* ============ LIGHTBOX (continua escura de propósito — visualização de foto em tela cheia) ============ */
+.lightbox{--onix:#0E0D0C;--onix-2:#141210;--perola:#EFE7D6;--perola-2:#B3A994;--perola-3:#89806F;--linha:rgba(239,231,214,.10);--linha-2:rgba(239,231,214,.18);
+  position:fixed;inset:0;z-index:50;display:none;background:rgba(14,13,12,.97);backdrop-filter:blur(6px)}
 .lightbox.open{display:flex;align-items:center;justify-content:center}
 .lightbox figure{margin:0;max-width:min(94vw,1100px);max-height:88vh;text-align:center}
 .lightbox img{max-width:100%;max-height:78vh;width:auto;height:auto;margin:0 auto;object-fit:contain}
@@ -161,13 +168,14 @@ footer.rodape-claro .shell{display:grid;grid-template-columns:1.1fr 1fr 1.1fr;ga
 .rodape-marca .wordmark-lg b{font-family:var(--display);font-weight:600;font-size:21px;color:var(--tinta)}
 .rodape-marca p{margin-top:16px;max-width:32ch;font-size:var(--fs-support);color:var(--tinta-2)}
 
-.rede-cards{display:grid;gap:10px}
+.rede-cards{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:640px){.rede-cards{grid-template-columns:1fr 1fr}}
 .rede-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--linha-p);background:#FFFDF8;transition:border-color .2s ease,transform .15s ease,box-shadow .2s ease}
 .rede-card:hover{border-color:var(--ouro-paper);box-shadow:0 6px 18px rgba(35,26,23,.08);transform:translateY(-1px)}
 .rede-card:focus-visible{outline:2px solid var(--ouro-paper);outline-offset:2px}
 .rede-card:active{transform:translateY(0)}
-.rede-icon{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--papel);display:flex;align-items:center;justify-content:center;color:var(--ouro-paper)}
-.rede-icon svg{width:18px;height:18px}
+.rede-icon{flex:0 0 auto;width:48px;height:48px;border-radius:50%;background:var(--papel);display:flex;align-items:center;justify-content:center;color:var(--ouro-paper)}
+.rede-icon svg{width:24px;height:24px}
 .rede-info{flex:1 1 auto;min-width:0}
 .rede-info b{display:block;font-size:14px;color:var(--tinta)}
 .rede-info span{display:block;font-size:12.5px;color:var(--tinta-2);margin-top:2px}

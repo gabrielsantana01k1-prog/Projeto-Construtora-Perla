@@ -155,7 +155,7 @@ function renderFooter(projeto) {
       <div class="rede-cards">
         <a class="rede-card" href="https://www.instagram.com/perlaconstrutora/" target="_blank" rel="noopener">
           <span class="rede-icon">${ICONE_INSTAGRAM}</span>
-          <span class="rede-info"><b>Instagram</b><span>Projetos, detalhes e bastidores.</span></span>
+          <span class="rede-info"><b>Instagram</b><span>Projetos e bastidores</span></span>
           <span class="rede-seta" aria-hidden="true">→</span>
         </a>
         <a class="rede-card" href="https://youtube.com/@perlaconstrutora" target="_blank" rel="noopener">
@@ -269,7 +269,7 @@ function gerarPagina(projeto, indice) {
 <meta name="robots" content="noindex, nofollow">
 <title>${esc(corrigir(projeto.titulo))} | Perla Construtora</title>
 <meta name="description" content="${esc(meta.resumo)}">
-<meta name="theme-color" content="#0E0D0C">
+<meta name="theme-color" content="#F4EEE6">
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/brand/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/brand/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
