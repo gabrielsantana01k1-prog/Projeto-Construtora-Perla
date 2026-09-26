@@ -1,15 +1,33 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09n — ajuste de visibilidade do véu dos 3 vídeos de fundo, commit local `[ver git log]`, **ainda NÃO publicado no `perla-preview`** — aguardando aprovação do usuário). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09o — limpeza final de etiquetas/textos internos + correções pontuais, publicada no `perla-preview` a pedido explícito do usuário). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 ## PRÓXIMA TAREFA EXATA (ler primeiro)
 
-**Aguardando aprovação do usuário** para a rodada de ajuste do véu marfim (sessão 26/09n) antes de sincronizar pro `perla-preview`. Ao retomar:
-1. Ler esta seção + a sessão 26/09n abaixo pra saber exatamente onde paramos.
-2. Se o usuário já aprovou (respondeu à prévia com gravações de tela enviada nesta sessão): sincronizar `index.html` pro `perla-preview` (só esse arquivo mudou nesta rodada, nenhum vídeo novo) e avisar o link. Se ele pediu mais ajuste de opacidade/contraste: reabrir `#custo .bgvideo-scrim`, `#metodo .bgvideo-scrim` e `#depoimentos .bgvideo-scrim` (perto da linha 190 do `index.html`) e recalibrar.
-3. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
-4. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
-5. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+Nada pendente de ação imediata — rodada 26/09o publicada. Ao retomar:
+1. Ler esta seção + a sessão 26/09o abaixo pra saber exatamente onde paramos.
+2. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
+3. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
+4. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+
+## SESSÃO 26/09/2026-o — Limpeza final: etiquetas visuais, textos internos, aria-labels
+
+Usuário pediu uma limpeza final preservando layout/fotos/vídeos/funcionalidades: remover a etiqueta "Imagem ilustrativa" (`.hero-nota`) e as 4 etiquetas "Vídeo ilustrativo" (`.bgvideo-tag`) sem deixar vão; revisar alt/aria-label pra descrições objetivas ("Pausar vídeo"/"Reproduzir vídeo") sem atribuir fotos de banco a obras da Perla, preservando os registros de origem/licença nos comentários internos do código; trocar a legenda do comparador da Vale dos Cristais (removendo o ID de post exposto "DTyDfZ7kc39"); trocar "Sem RT" por "Sem comissão de fornecedores"; varrer a home + as 6 páginas de obra por texto interno exposto (pendências, placeholders, IA/processo de dev); preservar rótulos úteis ao cliente (Antes/Obra/Projeto 3D/Entregue, aprovações de Prefeitura/Vigilância); testar tudo; publicar no `perla-preview` e conferir o link público.
+
+**Feito** (só `index.html` e `obras/casa-vale-dos-cristais/index.html` mudaram — nenhum vídeo/foto novo):
+1. Removidas as 5 etiquetas visuais (`.hero-nota` na capa + 4× `.bgvideo-tag`) e o CSS órfão correspondente (`.bgvideo-tag` e o `flex-direction:row-reverse` do mobile, que só existia pra acomodar a etiqueta ao lado do botão). Os grupos de controle (`.bgvideo-controls`) ficaram só com o botão de pausar/tocar — sem vão nem fundo vazio (confirmado por captura de tela).
+2. `aria-label` dos 4 botões simplificado para "Pausar vídeo" (estado inicial); JS (`sincronizarBotao`) ajustado pra alternar "Pausar vídeo" ⇄ "Reproduzir vídeo" (era "Retomar", com textos mais longos e variados por seção).
+3. Alt da foto do hero revisado para deixar explícito, na própria descrição acessível, que é banco de imagens e não uma obra da Perla ("... — foto de banco de imagens, não é uma obra executada pela Perla"), já que a etiqueta visual saiu. O comentário HTML com a origem/licença (Pexels, Max Vakhtbovych, ID 8134746) foi mantido intacto — é exatamente o "registro interno" que a regra de compliance do `CLAUDE.md` pede pra preservar. Mesma lógica pro comentário do vídeo de depoimentos (imóvel ilustrativo, sem relação com os clientes citados) — mantido.
+4. Legenda do comparador da Vale dos Cristais trocada para "Compare a fachada antes e depois da obra." (removido o ID de post do Instagram que estava exposto).
+5. "Sem RT" → "Sem comissão de fornecedores" (mantida a frase explicativa ao lado, sem mudança).
+6. Varredura em `index.html` + nas 6 páginas de obra (com os comentários HTML removidos do texto antes de procurar, pra não confundir nota interna com texto exposto) por "aguardando", "pendente", "placeholder", "rascunho", pedidos de autorização, menção a IA/Claude/Anthropic/processo de desenvolvimento: **nada encontrado exposto na interface** — as únicas ocorrências desses termos no código são comentários HTML internos (pendências reais documentadas pro usuário, ex.: e-mail oficial ainda não confirmado, depoimentos aguardando termo de autorização) ou nomes de variável JS sem relação (`pendente` = flag de debounce do scroll). Nada foi removido dessa categoria — são exatamente os registros internos que devem ficar preservados, só não aparecem pro visitante.
+7. Confirmado que "Antes", "Obra", "Projeto 3D", "Entregue" e as aprovações de Prefeitura/Vigilância Sanitária continuam presentes e intactos em todas as páginas (não são avisos internos, são informação real de obra).
+
+**Validado** (Playwright/Chromium, suite com ~85 verificações): as 7 páginas (home + 6 obras) em desktop 1440px e mobile 390px — zero imagem quebrada, zero rolagem horizontal indevida, zero erro de JavaScript real (o único "erro" de console em toda a bateria é `net::ERR_CERT_AUTHORITY_INVALID` na chamada ao Google Fonts, causado pela política de rede/proxy deste ambiente de teste, não pelo site — confirmado isolando a requisição; no ar público, com HTTPS real, isso não ocorre). Também testado e confirmado: menu desktop (rolagem por âncora) e mobile (hambúrguer abre/fecha, Esc fecha); abas do Método (troca de painel + `aria-selected`); filtro de Obras por categoria (e reset "Todas"); os 4 vídeos carregando/reproduzindo ao ficar visíveis + botão de pausar/retomar em cada um; comparador antes/depois da Vale dos Cristais (arrastar o slider muda o recorte da imagem); lightbox nas 6 páginas de obra (abre, seta "próxima" avança, Esc fecha e devolve o foco); link "Projeto anterior" entre obras; links de WhatsApp (mesmo número em todos), Instagram e YouTube presentes.
+
+**Branch/commit**: `redesign-claro-2026-09-26` — ver `git log` pelo commit mais recente com esta mensagem (inclui também a rodada 26/09n do véu, publicada junto). Sincronizado no `perla-preview` (main) — ver commit mais recente lá. Link público: `https://gabrielsantana01k1-prog.github.io/perla-preview/`.
+
+**Pendente**: nenhuma pendência nova desta rodada. Itens já conhecidos (e-mail oficial, print do app, autorização de depoimentos) continuam em aberto — ver comentários no próprio `index.html`.
 
 ## SESSÃO 26/09/2026-n — Ajuste de visibilidade do véu (feedback pós-publicação, aguardando aprovação)
 
