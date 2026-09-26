@@ -11,7 +11,11 @@ Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, 
 `main` (repositório ainda não publicado — único branch existente).
 
 ## Último commit
-`92885b9` — "Clareia overlay do HERO e adiciona fotos reais na lista de Obras" (26/09b). Commit anterior: `641349a` — "HERO: vídeo → foto+parallax GSAP; logo real; CREA; menu mobile; responsividade" (26/09, sessão principal).
+Ver "SESSÃO 26/09/2026-c" abaixo para o SHA do commit de preparação do GitHub Pages (noindex + robots.txt). Commit anterior: `92885b9` — "Clareia overlay do HERO e adiciona fotos reais na lista de Obras" (26/09b). Antes desse: `641349a` — "HERO: vídeo → foto+parallax GSAP; logo real; CREA; menu mobile; responsividade" (26/09, sessão principal).
+
+## Pendências — aguardando o usuário (fora do meu controle)
+- **Habilitar GitHub Pages**: Settings → Pages → Source "Deploy from a branch" → `main` / `/ (root)` → Save. Depois disso o link `https://gabrielsantana01k1-prog.github.io/Projeto-Construtora-Perla/` fica público — é onde a Stephanie deve acessar a prévia.
+- **Antes de publicar no domínio final**: remover `<meta name="robots" content="noindex, nofollow">` do `<head>` e apagar/ajustar `robots.txt` — eles existem só pra esconder essa URL temporária de buscadores.
 
 ## ⚠️ ÚLTIMO ESTADO CONFIRMADO (26/09/2026-b — fim de sessão)
 
@@ -133,6 +137,17 @@ no changes added to commit (use "git add" and/or "git commit -a")
 - **Novos/não rastreados**: `assets/img/brand/` (5 arquivos: logo master + ícone jpg/webp + 2 favicons), `assets/img/hero/` (1 arquivo: `hero-penhasco.webp`).
 - **Não modificados mas agora órfãos** (sem referência no HTML): `assets/video/hero.mp4`, `assets/video/hero-poster.jpg`.
 - **Nenhum commit, push, merge ou troca de branch foi feito nesta sessão** — tudo acima é só working tree, esperando autorização explícita do usuário.
+
+## SESSÃO 26/09/2026-c — Preparação para prévia pública (GitHub Pages)
+
+Usuário quer mandar um link público (sem login/sessão do Claude) para a Stephanie aprovar o site antes de comprar domínio e publicar de verdade. Artifact do Claude foi descartado porque sempre exige sessão/login. Solução: **GitHub Pages**, servindo direto do branch `main` (repo já é público, confirmado via API do GitHub — funciona no plano gratuito).
+
+**Preparado nesta sessão** (só falta o usuário habilitar a opção em Settings → Pages do repositório, que exige permissão de administração que este ambiente não tem):
+- `<meta name="robots" content="noindex, nofollow">` adicionado ao `<head>` do `index.html`.
+- `robots.txt` criado na raiz do repo (`Disallow: /` para todos os user-agents).
+- Motivo: essa URL do GitHub Pages (`https://gabrielsantana01k1-prog.github.io/Projeto-Construtora-Perla/`) é temporária — só para aprovação do cliente. Sem isso, o Google poderia indexar essa URL antes do domínio definitivo, criando conteúdo duplicado quando o site for publicado no domínio final. **Remover o `noindex` e o `robots.txt`** quando o site for para o domínio de produção de verdade (senão o domínio final também não vai ser indexado).
+- Auditoria de conteúdo sensível antes de tornar o link público: confirmado que não há CREA/CAU/WhatsApp/CNPJ inventados (WhatsApp `5531999203886` e CNPJ `55.156.540/0001-50` já eram dados reais confirmados em sessões anteriores); os dois campos `CAU nº [confirmar]` continuam marcados como pendentes, não preenchidos com valor fictício; os 3 depoimentos seguem sem nome/foto do cliente, com nota explícita "aguardando autorização" onde aplicável — nada disso precisou de correção, já estava certo.
+- **Passo que fica com o usuário**: GitHub → repositório `Projeto-Construtora-Perla` → Settings → Pages → Source: "Deploy from a branch" → Branch `main` / `/ (root)` → Save. A URL pública aparece na mesma página ~1 min depois.
 
 ## SESSÃO 26/09/2026-b — Clareamento do site (overlay do HERO + fotos reais em Obras)
 
