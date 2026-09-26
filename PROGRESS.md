@@ -11,7 +11,7 @@ Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, 
 `main` (repositório ainda não publicado — único branch existente).
 
 ## Último commit
-Ver "SESSÃO 26/09/2026-c" abaixo para o SHA do commit de preparação do GitHub Pages (noindex + robots.txt). Commit anterior: `92885b9` — "Clareia overlay do HERO e adiciona fotos reais na lista de Obras" (26/09b). Antes desse: `641349a` — "HERO: vídeo → foto+parallax GSAP; logo real; CREA; menu mobile; responsividade" (26/09, sessão principal).
+`1acbd6d` — "Prepara site para prévia pública via GitHub Pages" (26/09c: noindex + robots.txt). Antes: `92885b9` — clareamento do hero/Obras (26/09b); `641349a` — hero foto+GSAP/logo/CREA/menu mobile (26/09 principal).
 
 ## Pendências — aguardando o usuário (fora do meu controle)
 - **Habilitar GitHub Pages**: Settings → Pages → Source "Deploy from a branch" → `main` / `/ (root)` → Save. Depois disso o link `https://gabrielsantana01k1-prog.github.io/Projeto-Construtora-Perla/` fica público — é onde a Stephanie deve acessar a prévia.
