@@ -1,6 +1,39 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09g — varredura de bugs/segurança/performance antes de publicar). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09h — redesign claro em andamento, branch separada, aguardando ZIP do hero + e-mail oficial). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-h — Redesign claro (em andamento) — branch `redesign-claro-2026-09-26`
+
+Usuário pediu um redesign completo do site (tema claro predominante, nova foto de hero, páginas de projeto reestruturadas, seções da home reorganizadas, novas interações) em duas mensagens grandes, mais um complemento focado em rodapé/contato. **Nada disso foi publicado no `perla-preview`** — tudo commitado só na branch `redesign-claro-2026-09-26` do repo de dev, aguardando aprovação explícita antes de substituir a versão pública, conforme pedido.
+
+### Bloqueios reais, ainda não resolvidos
+- **Foto do hero**: o ZIP com as 3 versões da foto escolhida (Pexels, Max Vakhtbovych, casa com piscina) nunca chegou nesta conversa — o caminho informado (`C:/Users/gabri/...`) é do computador do usuário, esta sessão não alcança arquivos locais. Preciso do arquivo anexado na conversa.
+- **E-mail oficial**: não existe nenhum endereço de e-mail em nenhum material do projeto (briefing, PROGRESS.md anterior, index.html). Por regra explícita do próprio pedido ("não inventar e-mail e não publicar botão sem destino"), o botão/link de e-mail foi **omitido** em toda a implementação — pronto para entrar assim que o endereço for confirmado (procurar por `E-mail: aguardando` nos comentários do código para achar os 2 lugares exatos: faixa de contato e rodapé, em `index.html` e `scripts/gerar-obras.js`).
+
+### Feito e testado nesta sessão
+1. **Bug real corrigido nas páginas de projeto** (não era percepção): etapas com 1 foto pequena usavam `grid-template-columns` com `auto-fill`, que cria colunas vazias invisíveis — a foto ficava espremida à esquerda com um vão enorme ao lado (era exatamente o "Rua Andaluzita" citado como referência do problema). Reescrita a grade: `cols-N` (N = min(fotos, 3)) para fotos normais, flex centralizado para fotos pequenas de origem (nunca ampliadas além do tamanho real). 3 colunas desktop / 2 tablet / 1 celular, confirmado nos 3 breakpoints.
+2. **Galeria não depende mais de nenhuma animação para aparecer** — removido `data-reveal` dos blocos de etapa; `<noscript>` adicionado nas páginas de obra (mesmo padrão do index.html) como rede de segurança se o JS falhar.
+3. Selo "Entregue" adicionado ao lado do já existente "Imagem 3D do projeto".
+4. **Rodapé e faixa de contato completamente redesenhados**, já no tema claro oficial da marca (reaproveita os tokens `--papel/--tinta/--tinta-2/--linha-p/--ouro-paper` que a própria Perla já definiu para a seção `#custo` — nenhuma cor nova inventada):
+   - Faixa antes do rodapé: "Seu próximo capítulo começa com um projeto bem cuidado" + botão grande "Conversar pelo WhatsApp" (mensagem pré-preenchida — genérica na home, com o nome do projeto nas 6 páginas de obra).
+   - Rodapé em 3 zonas: marca (logo maior + "Perla Construtora" por extenso), redes sociais (cartões clicáveis Instagram/YouTube com ícone+descrição+seta), contato e localização (WhatsApp, endereço, "Como chegar" → Google Maps). Faixa inferior discreta preserva CREA/CNPJ/responsáveis técnicas.
+   - Barra fixa de WhatsApp no celular — some quando a lightbox ou o menu mobile abrem (testado), nunca sobrepõe outro controle.
+   - Ícones em SVG inline, sem emoji. Botões/cartões com hover+focus+active visíveis, alvos de toque ≥44px, `prefers-reduced-motion` respeitado.
+   - **Contraste conferido matematicamente**: um par (dourado sobre marfim em texto pequeno, "Como chegar"/hover do link de contato) dava só 3,8:1 — criado `--ouro-paper-texto` (#7A6237, 5,02:1) especificamente para texto pequeno. Todo o resto ≥5:1 (a maioria acima de 14:1).
+5. **Logo confirmado adequado**: só existe um arquivo de marca (`logo-perla.jpg`, selo circular com fundo próprio em mármore preto) — funciona bem sobre qualquer fundo por já ter moldura própria, não é necessário pedir uma versão "para fundo claro".
+
+**Estado visual atual (temporário, documentado no CSS)**: só a faixa de contato final + rodapé estão no tema claro nesta entrega. Hero, método, serviços, lista de obras e quem-somos continuam no tema escuro atual — a emenda visual entre o menu/hero (ainda escuros) e o novo bloco claro é esperada e será resolvida quando o resto da página converter, numa entrega separada.
+
+### Ainda pendente (grande parte do pedido original, não iniciado)
+- Conversão do tema claro no restante da página (hero, método, serviços, obras, quem-somos, depoimentos).
+- Nova foto do hero (bloqueado — aguardando ZIP), com o layout 60/40 desktop e empilhado no celular.
+- Reorganização de conteúdo da home (imagens no custo/método/serviços/clínicas, obras mais perto do topo, captura do app de acompanhamento se existir).
+- Tabs interativas do método, filtros de portfólio por categoria, comparador antes/depois, indicador de seção ativa no menu.
+- Testado só em Chromium (Playwright) — não testado em navegador real (Chrome/Safari/Edge) nem Lighthouse de verdade.
+
+### Commits desta sessão (branch `redesign-claro-2026-09-26`)
+- `cd38c3b` — reescreve a galeria das páginas de projeto (grade responsiva, sem depender de animação).
+- `1d1d0be` — reformula rodapé e pontos de contato (faixa de contato, 3 zonas, barra mobile).
 
 ## SESSÃO 26/09/2026-g — Varredura completa (bugs, segurança, performance) antes de publicar
 
