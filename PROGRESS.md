@@ -1,6 +1,41 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09f — páginas de projeto implementadas + correção da mistura de fotos). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09g — varredura de bugs/segurança/performance antes de publicar). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-g — Varredura completa (bugs, segurança, performance) antes de publicar
+
+Usuário pediu uma varredura geral do site (bugs, botões/abas quebrados, velocidade, segurança/código exposto) para deixá-lo pronto para publicação e handoff a outros desenvolvedores.
+
+**Funcional** — testado com Playwright em 1440px e 390px nas 7 páginas (home + 6 obras):
+- Zero overflow horizontal, zero imagem quebrada, zero erro de console, zero link interno quebrado, em todas as páginas.
+- Lightbox testado nas 6 páginas de obra: abre, avança com seta/teclado por todas as fotos, volta ao início (wrap), fecha com Esc — em todas.
+- **Bug de UX corrigido**: o contador do lightbox (`n / total`) às vezes não abria em "1" ao clicar na primeira foto visível, porque o índice seguia a ordem crua do manifest em vez da ordem visual (por etapa). Corrigido em `scripts/gerar-obras.js` — agora sempre abre em "1 / N".
+- Menu mobile (hamburger) testado nas 7 páginas — abre e fecha em todas.
+- Nav "Projeto anterior/Próximo" testado como cadeia completa a partir de qualquer projeto — visita os 6 exatamente uma vez antes de repetir (sem projeto duplicado ou faltando).
+- Links externos (WhatsApp, Instagram, YouTube) conferidos como idênticos em todas as páginas.
+
+**Segurança**:
+- Varredura por padrões de segredo (API key, token, senha, chave privada, AWS, Bearer) em todo o código — nada encontrado, só falsos positivos (comentário "tokens" = variáveis de design/CSS).
+- Nenhum arquivo de credencial (`.env`, `.pem`, `id_rsa`, etc.) no repositório.
+- Nenhum link `http://` (não-seguro) — tudo em HTTPS.
+- Nenhum formulário de coleta de dados ainda existe no site (pendência de roadmap conhecida, não um risco).
+- `noindex, nofollow` e `robots.txt` confirmados consistentes nas 7 páginas (prévia não deve ser indexada ainda).
+- **Adicionado `.htaccess`** na raiz: cabeçalhos de segurança (X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy), `Options -Indexes` (nunca listar pasta), cache de assets estáticos, e bloqueio explícito de `CLAUDE.md`/`PROGRESS.md` caso algum dia sejam publicados por engano no mesmo diretório. **Não tem efeito no GitHub Pages atual** — só passa a valer na hospedagem cPanel/Apache final.
+- **Observação, não corrigida**: os `<script src>` do GSAP (via `cdnjs.cloudflare.com`) não têm atributo `integrity` (Subresource Integrity). Não apliquei um hash agora porque não consegui buscar o hash oficial da versão 3.12.5 a partir deste ambiente (proxy de rede do sandbox bloqueia `cdnjs.cloudflare.com`) e um hash errado quebraria o carregamento do GSAP silenciosamente. Fica como recomendação para quem tiver acesso: adicionar `integrity="sha384-..."` + `crossorigin="anonymous"` nas duas tags de script do GSAP no `index.html`.
+- **Observação, não alterada (decisão sua)**: o repositório tem uma pasta `.claude/skills/` (75 arquivos, ~3,7 MB) commitada desde 25/09 ("Instala skill frontend-design como parte do projeto") — são arquivos internos de ferramenta do Claude Code, não fazem parte do site. Não é um vazamento de segredo, só peso/ruído extra no repositório para quem for abrir isso pela primeira vez. Não removi porque foi uma decisão deliberada de uma sessão anterior — avise se quiser que eu tire isso do repositório (ou adicione um `.gitignore` para não voltar).
+
+**Performance**:
+- Medido com Playwright (Performance API) em localhost: home ~667 KB / 23 requisições; página de projeto com mais fotos (Lagoa dos Ingleses) caiu de **918 KB para 433 KB** (-53%) depois da correção abaixo.
+- **Achado e corrigido**: as fotos das 6 páginas de projeto (pasta `projetos/`) só tinham o JPEG original, sem WebP — diferente do resto do site, que já usa `<picture>`+WebP em tudo. Gerado WebP (qualidade 82) para as 35 fotos — **49% menor** que o JPEG (3,85 MB → 1,95 MB no total) — e `scripts/gerar-obras.js` atualizado para servir `<picture><source webp>` com fallback JPEG em todas as fotos de galeria.
+- `loading="lazy"` e `fetchpriority="high"` na capa já estavam corretos (herdados da implementação anterior), confirmados nos testes.
+
+**Handoff para outros desenvolvedores**:
+- **Criado `README.md`** na raiz: o que é o projeto, estrutura de pastas, como rodar localmente (`python3 -m http.server` ou `npx serve`), como adicionar/alterar um projeto (editar manifest → rodar `validar-projetos.js` → `gerar-obras.js`), e onde estão as regras (`CLAUDE.md`/`PROGRESS.md`).
+- Repositório de dev (privado) e prévia pública (`perla-preview`) sincronizados nesta sessão — ver commits.
+
+**Não testado/fora do escopo desta varredura**: teste em navegador real (Chrome/Safari/Edge) fora do Chromium do Playwright; Lighthouse/PageSpeed de verdade (precisa do site publicado num domínio real, não localhost); teste de carga/tráfego.
+
+## SESSÃO 26/09/2026-f — Páginas de projeto implementadas, mistura de fotos corrigida
 
 ## SESSÃO 26/09/2026-f — Páginas de projeto implementadas, mistura de fotos corrigida
 

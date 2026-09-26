@@ -139,8 +139,9 @@ function renderEtapaBloco(projeto, etapa, fotos, fotoIndexGlobal) {
       const fetchpriority = primeira ? ' fetchpriority="high"' : '';
       const alt = esc(`${corrigir(projeto.titulo)} — ${corrigir(foto.legenda)}`);
       const src = `../../projetos/${projeto.pasta}/${foto.arquivo}`;
+      const srcWebp = src.replace(/\.jpg$/i, '.webp');
       return `<figure class="${cls.trim()}" data-lightbox-index="${idxGlobal}">
-          <span class="frame">${selo}<img src="${src}" alt="${alt}" width="${foto.largura}" height="${foto.altura}" loading="${loading}"${fetchpriority}></span>
+          <span class="frame">${selo}<picture><source srcset="${srcWebp}" type="image/webp"><img src="${src}" alt="${alt}" width="${foto.largura}" height="${foto.altura}" loading="${loading}"${fetchpriority}></picture></span>
           <figcaption>${esc(corrigir(foto.legenda))}</figcaption>
         </figure>`;
     })
@@ -164,8 +165,15 @@ function renderTimeline(etapasPresentes) {
 function gerarPagina(projeto, indice) {
   const meta = META[projeto.slug] || { categoria: '', resumo: '' };
   const etapasPresentes = ETAPA_ORDEM.filter((e) => projeto.fotos.some((f) => f.etapa === e));
+
+  // Ordem visual = mesma ordem em que as fotos aparecem na página (por etapa, depois por `ordem`
+  // do manifest) — o índice do lightbox segue essa ordem, não a ordem crua do manifest, para o
+  // contador sempre abrir em "1 / N" na primeira foto que a pessoa vê e clica.
+  const fotosOrdemVisual = etapasPresentes.flatMap((etapa) =>
+    projeto.fotos.filter((f) => f.etapa === etapa).sort((a, b) => a.ordem - b.ordem)
+  );
   const fotoIndexGlobal = new Map();
-  projeto.fotos.forEach((f, i) => fotoIndexGlobal.set(f.arquivo, i));
+  fotosOrdemVisual.forEach((f, i) => fotoIndexGlobal.set(f.arquivo, i));
 
   const blocos = etapasPresentes
     .map((etapa) => {
@@ -177,9 +185,7 @@ function gerarPagina(projeto, indice) {
   const anterior = publicados[(indice - 1 + publicados.length) % publicados.length];
   const proximo = publicados[(indice + 1) % publicados.length];
 
-  const fotosLightbox = projeto.fotos
-    .slice()
-    .sort((a, b) => a.ordem - b.ordem)
+  const fotosLightbox = fotosOrdemVisual
     .map((f) => ({
       src: `../../projetos/${projeto.pasta}/${f.arquivo}`,
       legenda: corrigir(f.legenda),
