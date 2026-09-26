@@ -1,6 +1,20 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09i — tema claro concluído em todo o site + prévia navegável publicada). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09j — redesign parcial publicado no perla-preview, com aprovação explícita do usuário). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-j — Publicação aprovada do redesign parcial no perla-preview
+
+Usuário pediu o link da prévia para mandar pra Stephanie. Ofereci o link do Artifact (privado por padrão), mas ele exige a Stephanie ter/usar conta Claude — o que o usuário não queria ("sem ele precisar criar perfil no Claude"). Sinalizado que Artifact já foi descartado antes neste projeto por esse mesmo motivo (ver histórico). Perguntei diretamente: publicar o estado atual (parcial) no `perla-preview` agora, ou esperar terminar tudo. **Usuário escolheu publicar agora.**
+
+**Ação**: sincronizado o estado da branch `redesign-claro-2026-09-26` para `perla-preview` (main) — commit `da5387d`. O link público de sempre (`https://gabrielsantana01k1-prog.github.io/perla-preview/`) agora mostra o tema claro (home + 6 páginas de obra), aprovado explicitamente pelo usuário **mesmo sabendo que é parcial**:
+- Foto do hero ainda é a foto real temporária (Lagoa dos Ingleses) — a foto do Pexels escolhida ainda não chegou (bloqueio de rede).
+- Sem botão de e-mail (endereço oficial ainda não confirmado).
+- Sem as interações novas (tabs do método, filtros de portfólio, comparador antes/depois).
+- Conteúdo de cada seção (custo/método/serviços/quem-somos/depoimentos) ainda não foi reorganizado com mais imagens/textos mais curtos — só cores/layout base foram convertidos.
+
+**Importante**: o repositório de desenvolvimento (`Projeto-Construtora-Perla`) continua com a branch `redesign-claro-2026-09-26` separada, **não fizemos merge para a `main` de dev** — só o espelho público (`perla-preview`) foi atualizado. Próxima sessão: continuar os itens pendentes acima nessa mesma branch, e decidir depois se/quando fazer o merge para a `main` do repo de desenvolvimento.
+
+## SESSÃO 26/09/2026-i — Tema claro em todo o site + hero split + prévia navegável
 
 ## SESSÃO 26/09/2026-i — Tema claro em todo o site + hero split + prévia navegável
 
