@@ -1,14 +1,39 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09o — limpeza final de etiquetas/textos internos + correções pontuais, publicada no `perla-preview` a pedido explícito do usuário). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09p — ritmo vertical mais compacto entre seções, publicada no `perla-preview` a pedido explícito do usuário; sessão 26/09q — assistente virtual em andamento). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 ## PRÓXIMA TAREFA EXATA (ler primeiro)
 
-Nada pendente de ação imediata — rodada 26/09o publicada. Ao retomar:
-1. Ler esta seção + a sessão 26/09o abaixo pra saber exatamente onde paramos.
+1. Ler esta seção + a sessão mais recente abaixo pra saber exatamente onde paramos.
 2. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
 3. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
 4. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+
+## SESSÃO 26/09/2026-p — Ritmo vertical mais compacto entre seções
+
+Usuário achou a página longa demais pelos vãos entre seções (Custo→Método→Serviços→Obras→Quem somos) e pediu compactar preservando tamanho de texto/imagens/vídeos/conteúdo, com faixas-alvo: 48–64px de padding por seção no desktop / 32–40px no mobile (ponto de partida, não aplicado indiscriminadamente), 16–24px título↔descrição, 24–32px cabeçalho↔cartões, 16–24px entre cartões. Pediu também revisar altura das seções com vídeo (não devem ter min-height maior que o conteúdo), preservar a capa e a legibilidade sobre os vídeos, nunca usar zoom/transform/margem negativa, aplicar o mesmo critério nas páginas de projeto sem perder a separação Antes/Projeto/Obra/Entregue, testar em 390/768/1440px, e publicar com prova de antes/depois na mesma largura/zoom.
+
+**Feito** (`index.html` + `assets/css/obra.css`):
+- `section{padding-block}`: de `clamp(88px,11vw,160px)` para `clamp(48px,6vw,64px)` (desktop) e de `clamp(56px,14vw,88px)` para `clamp(32px,8vw,40px)` (≤600px) — exatamente as faixas pedidas.
+- `.sec-head{margin-bottom}` (cabeçalho→cartões): de `clamp(48px,6vw,88px)` para `clamp(24px,3vw,32px)`; `.sec-head{gap}` (coluna título/descrição) reduzido de `clamp(28px,5vw,80px)` para `clamp(20px,5vw,64px)`.
+- Ajustes pontuais (não a mesma faixa genérica, calibrados por seção): `.duo-photo{margin-bottom}` 32–56→24–40px; `.values{margin-top}` 56–96→32–48px; `.cta-contato{padding-block}` 72–128→48–72px (mantido um pouco maior que o padrão por ser a chamada final, mas bem mais enxuto).
+- `assets/css/obra.css` (páginas de projeto): `.obra-topo` 48/96→40/64 (topo) e 40/64→32/48 (base); `.etapa-bloco` (Antes/Projeto/Obra/Entregue) 40–72→40–56px — mínimo mantido em 40px de propósito, e a borda (`border-bottom`) entre cada etapa preserva a separação visual independente do padding; `.comparador-secao` mesma faixa; `.obra-cta` 64–120→48–72px; `.cta-contato` 56–96→48–72px.
+- Nenhum `min-height`/`height` fixo foi encontrado nas 3 seções com vídeo (`#custo`/`#metodo`/`#depoimentos`) além do `padding-block` genérico já ajustado acima — a altura dessas seções já era 100% dirigida pelo conteúdo+padding, então a redução de padding reduziu a altura delas proporcionalmente, sem qualquer outra mudança. O cartão de vídeo do contato (`.contato-video-card{height:...}`) não foi alterado — é um cartão de tamanho deliberado, não um vão vazio.
+- Capa (`.hero-*`) e `.contato-video-card` ficaram **fora** desta rodada, como pedido.
+
+**Medido** (altura total da página, mesma largura/zoom, antes→depois):
+- `index.html`: 390px 12031→11479px (−4,6%) · 768px 12024→11304px (−6,0%) · 1440px 11172→9537px (−14,6%).
+- `obras/casa-vale-dos-cristais/index.html`: 390px 4959→4927px (−0,6%, já estava dentro da faixa mobile) · 1440px 5131→4907px (−4,4%).
+
+**Validado**: capturas de "antes" (stash temporário do diff) e "depois" nas transições Custo↔Método, Método↔Serviços, Serviços↔Obras, Obras↔Quem-somos, em 390px e 1440px — layout mais compacto, sem cartões colados nem texto cortado. Clique nos links do menu (desktop e hambúrguer mobile) confirmado deixando o título da seção sempre abaixo do cabeçalho fixo (73px), em 390/768/1440px — `scroll-margin-top:88px` (site) e `104px` (projeto) continuam suficientes. Abas do Método, filtro de Obras e autoplay dos vídeos ao ficar visível re-testados e OK após a mudança. `tidy`/`node --check` sem erros.
+
+**Branch/commit**: `redesign-claro-2026-09-26` — ver `git log`. Publicado no `perla-preview` (main) — ver `git log` lá. Link público: `https://gabrielsantana01k1-prog.github.io/perla-preview/`.
+
+**Pendente**: nenhuma pendência nova desta rodada.
+
+## SESSÃO 26/09/2026-q — Assistente virtual (em andamento)
+
+Usuário pediu, em paralelo à rodada de espaçamento, um assistente virtual completo (convite após 3s, fluxo guiado de perguntas, resumo editável, encaminhamento pro WhatsApp fixo da empresa) com instrução explícita: **sem backend de IA real disponível neste ambiente** (site é estático, GitHub Pages) — implementar o fluxo guiado determinístico como alternativa funcional e declarar essa limitação no relatório, nunca apresentar o fluxo guiado como se fosse uma integração de IA de verdade. Detalhes de progresso desta parte: ver o restante desta sessão/conversa (ainda em andamento no momento deste registro).
 
 ## SESSÃO 26/09/2026-o — Limpeza final: etiquetas visuais, textos internos, aria-labels
 
