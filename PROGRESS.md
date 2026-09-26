@@ -1,6 +1,38 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09h — redesign claro em andamento, branch separada, aguardando ZIP do hero + e-mail oficial). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09i — tema claro concluído em todo o site + prévia navegável publicada). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-i — Tema claro em todo o site + hero split + prévia navegável
+
+Continuação da sessão 26/09h. Usuário reenviou o pedido do hero (ZIP não chegou de novo — path local do Windows) com fallback explícito: baixar direto do Pexels (foto de Max Vakhtbovych, ID 8134746, https://www.pexels.com/photo/a-beautiful-house-with-swimming-pool-8134746/, licença pexels.com/license). **Também bloqueado**: `www.pexels.com` está na política de rede deste ambiente (confirmado via `curl` e via `WebFetch` — os dois retornam bloqueio explícito de proxy, não é limitação de ferramenta, é policy do ambiente). Usuário foi avisado (dentro da conversa) que precisa anexar o arquivo de verdade ou liberar o domínio nas configurações de rede do ambiente.
+
+**Feito nesta sessão (branch `redesign-claro-2026-09-26`, nada publicado no `perla-preview`)**:
+
+1. **Tema claro aplicado em TODO o site** (antes só o rodapé/faixa de contato tinham convertido) — home E as 6 páginas de projeto. Mecanismo: os tokens `--onix`/`--perola`/`--perola-2`/`--perola-3`/`--linha`/`--linha-2` tiveram só o VALOR trocado (nomes mantidos, evita reescrever centenas de regras) — `--onix` virou o marfim `#F4EEE6`, `--perola` virou o texto escuro `#231A17`, etc. Poucos componentes que devem continuar escuros de propósito foram fixados com cor literal ou tokens redeclarados localmente, para não sumir com o remapeamento:
+   - `.nav-mobile` (menu mobile) — continua com fundo escuro, texto forçado para `#EFE7D6`.
+   - `.photo span` (legenda sobre foto na fita animada) — tem scrim escuro próprio.
+   - `.bar .a` (bloco "37%" dentro do `#custo`) — já era um bloco escuro intencional dentro da seção clara.
+   - **`.lightbox`** nas páginas de obra — continua em "modo cinema" escuro (visualização de foto em tela cheia); os tokens foram redeclarados só dentro do seletor `.lightbox{...}`, sem afetar o resto da página.
+   - `.btn.solid`/`.btn:hover` (texto sobre fundo dourado) — trocado de `var(--onix)` (que virou claro) para `var(--tinta)` (sempre escuro), senão o texto sumiria sobre o botão dourado.
+   - `.nav` (cabeçalho) — fundo trocado de `rgba(14,13,12,.82)` para `rgba(244,238,230,.88)` (translúcido claro).
+   - Textura de mármore (`.marble::before`) — linhas trocadas de quase-brancas pra tom escuro sutil, senão ficariam invisíveis sobre o novo fundo claro.
+   - `theme-color` da aba do navegador atualizado para `#F4EEE6` (home e as 6 páginas de obra).
+2. **Hero reconstruído em layout split**: painel marfim à esquerda (~40%, título + descrição curta + CTA principal "Quero fazer minha obra" + CTA secundário "Conhecer as obras", que agora aponta pro `#obras` em vez do `#metodo`) + fotografia grande à direita (~60%), **sem overlay/escurecimento** — luminosidade e cores naturais preservadas. Empilha no celular (texto primeiro, foto depois). Removido o bloco "37%" que ficava flutuando sobre a foto (redundante com a seção `#custo`, que já cobre isso). Removido também o script GSAP de parallax/tilt (não se aplica ao layout novo, sem foto full-bleed) e os 2 `<script src>` do CDN GSAP — menos peso, menos requisições, sem nenhuma perda funcional.
+   - **Foto atual (temporária)**: a foto real da Casa na Lagoa dos Ingleses, marcada com comentário HTML exatamente onde trocar quando a foto do Pexels chegar (inclui o lembrete de adicionar o aviso "Imagem ilustrativa" só nessa hora, já que a foto real da Perla não precisa desse aviso).
+3. **Cartões de Instagram/YouTube** ajustados à especificação exata: lado a lado no desktop (`grid-template-columns:1fr 1fr` a partir de 640px), empilhados no celular, ícone maior (52px desktop/48px obra, era 40px/36px), texto do Instagram trocado para "Projetos e bastidores" (era mais longo).
+4. **Galeria de projeto — fotos pequenas aumentadas**: Rua Andaluzita (as únicas fotos ≤480px de largura em todo o acervo — 360×314, frames de um reel específico) tiveram o tamanho de exibição aumentado de ~280px para ~340px (próximo do tamanho real, sem ultrapassar — o cap `max-width:var(--fw)` por foto impede upscaling). **Confirmado que não existe original maior**: busquei o post de origem (`DN-56o3Da1H`) no material bruto do Instagram já baixado nesta conversa — não está lá, não há versão de resolução maior disponível em nenhum material que recebi.
+5. **Publicada uma prévia navegável** via Artifact (não expõe o `perla-preview` público): `https://claude.ai/artifact/6UFp2WE1WuZQidsGW3g5f8` — espelha exatamente o estado atual da branch (home + 6 páginas de obra + todos os assets/fotos).
+
+**Validado**: Playwright em 1440/390px nas 7 páginas — zero overflow, zero imagem quebrada, zero erro de console, zero link quebrado. Lightbox recontada (abre em 1/N, navega, fecha com Esc, mantém tema escuro). Menu mobile abre/fecha nas 7 páginas. Cadeia projeto-anterior/próximo íntegra.
+
+**Ainda pendente (fora do escopo desta rodada)**:
+- Foto definitiva do hero (bloqueado — precisa do arquivo anexado ou do domínio liberado).
+- Botão/link de e-mail (bloqueado — nenhum endereço oficial em nenhum material recebido; nada foi inventado).
+- Reorganização de conteúdo/imagens dentro de cada seção (custo, método, serviços, clínicas, quem-somos, depoimentos) e textos mais curtos — só o tema/cores foram convertidos, o CONTEÚDO de cada seção ainda é o mesmo de antes.
+- Interações novas: tabs do método (imagem+texto trocam juntos), filtros de portfólio por categoria, comparador antes/depois, indicador de seção ativa no menu.
+- Testado só em Chromium (Playwright); não testado em navegador real nem Lighthouse de verdade.
+
+## SESSÃO 26/09/2026-h — Redesign claro (em andamento) — branch `redesign-claro-2026-09-26`
 
 ## SESSÃO 26/09/2026-h — Redesign claro (em andamento) — branch `redesign-claro-2026-09-26`
 
