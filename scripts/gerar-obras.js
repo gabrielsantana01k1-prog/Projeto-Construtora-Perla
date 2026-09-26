@@ -110,16 +110,83 @@ function renderNav() {
 </div>`;
 }
 
-function renderFooter() {
-  return `<footer>
+const ICONE_CHAT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
+const ICONE_INSTAGRAM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>';
+const ICONE_YOUTUBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg>';
+const ICONE_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+const MAPS_HREF = 'https://www.google.com/maps/search/?api=1&query=Rua+Santa+Rita+Dur%C3%A3o%2C+444%2C+Savassi%2C+Belo+Horizonte%2FMG%2C+30140-111';
+
+function mensagemWhatsapp(projeto) {
+  const base = projeto
+    ? `Olá! Conheci a Perla pelo site e gostaria de conversar sobre o projeto ${corrigir(projeto.titulo)}.`
+    : 'Olá! Conheci a Perla pelo site e gostaria de conversar sobre meu projeto.';
+  return `https://wa.me/5531999203886?text=${encodeURIComponent(base)}`;
+}
+
+function renderCtaContato(projeto) {
+  const wa = mensagemWhatsapp(projeto);
+  return `<section class="cta-contato paper">
   <div class="shell">
-    <div><a href="../../index.html" class="wordmark"><picture><source srcset="../../assets/img/brand/logo-perla-icon.webp" type="image/webp"><img src="../../assets/img/brand/logo-perla-icon.jpg" alt="Perla Construtora" width="40" height="40" loading="lazy"></picture><span class="txt"><b>PERLA</b><span class="sub">construtora</span></span></a><p style="margin-top:18px;max-width:30ch">Arquitetura, engenharia e viabilidade financeira em Belo Horizonte.</p></div>
-    <div><b>Endereço</b>Rua Santa Rita Durão, 444<br>Savassi · Belo Horizonte/MG<br>30140-111</div>
-    <div><b>Contato</b><a href="https://wa.me/5531999203886" target="_blank" rel="noopener">WhatsApp</a><br><a href="https://www.instagram.com/perlaconstrutora/" target="_blank" rel="noopener">Instagram</a><br><a href="https://youtube.com/@perlaconstrutora" target="_blank" rel="noopener">YouTube</a></div>
-    <div><b>Responsáveis técnicas</b>Eng. Stephanie Faina · CREA-MG 1413598390<br>Arq. Mariana Guimarães</div>
-    <div class="legal"><span>Perla Construtora LTDA · CNPJ 55.156.540/0001-50</span></div>
+    <p class="label dim" style="color:var(--tinta-2)">Fale com a Perla</p>
+    <h2 style="margin-top:16px">Seu próximo capítulo começa com um projeto <span class="it" style="color:var(--ouro-paper)">bem cuidado</span><span class="dot" style="color:var(--ouro-paper)">.</span></h2>
+    <p>Converse com a Perla sobre o que você deseja construir ou transformar.</p>
+    <div class="ctas">
+      <a class="btn-contato principal" href="${wa}" target="_blank" rel="noopener">${ICONE_CHAT} Conversar pelo WhatsApp</a>
+      <!-- Botão "Enviar um e-mail" entra assim que o endereço oficial for confirmado — ver PROGRESS.md. -->
+    </div>
   </div>
-</footer>`;
+</section>`;
+}
+
+function renderFooter(projeto) {
+  const wa = mensagemWhatsapp(projeto);
+  return `<footer class="rodape-claro paper">
+  <div class="shell">
+    <div class="rodape-marca">
+      <a href="../../index.html" class="wordmark-lg" aria-label="Perla Construtora, ir para o início">
+        <picture><source srcset="../../assets/img/brand/logo-perla-icon.webp" type="image/webp"><img src="../../assets/img/brand/logo-perla-icon.jpg" alt="" width="56" height="56" loading="lazy"></picture>
+        <b>Perla Construtora</b>
+      </a>
+      <p>Arquitetura, engenharia e cuidado em cada detalhe.</p>
+    </div>
+
+    <div class="rodape-redes">
+      <p class="footer-titulo">Conheça de perto o trabalho da Perla</p>
+      <div class="rede-cards">
+        <a class="rede-card" href="https://www.instagram.com/perlaconstrutora/" target="_blank" rel="noopener">
+          <span class="rede-icon">${ICONE_INSTAGRAM}</span>
+          <span class="rede-info"><b>Instagram</b><span>Projetos, detalhes e bastidores.</span></span>
+          <span class="rede-seta" aria-hidden="true">→</span>
+        </a>
+        <a class="rede-card" href="https://youtube.com/@perlaconstrutora" target="_blank" rel="noopener">
+          <span class="rede-icon">${ICONE_YOUTUBE}</span>
+          <span class="rede-info"><b>YouTube</b><span>Conheça nosso canal.</span></span>
+          <span class="rede-seta" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rodape-contato">
+      <p class="footer-titulo">Contato e localização</p>
+      <a class="contato-linha" href="${wa}" target="_blank" rel="noopener">${ICONE_CHAT.replace('<svg ', '<svg class="contato-icon" ')} WhatsApp · (31) 9 9920-3886</a>
+      <!-- E-mail: aguardando endereço oficial confirmado pela empresa. -->
+      <div class="endereco-bloco">
+        ${ICONE_PIN.replace('<svg ', '<svg class="contato-icon" ')}
+        <address>Rua Santa Rita Durão, 444<br>Savassi · Belo Horizonte/MG<br>30140-111</address>
+      </div>
+      <a class="como-chegar" href="${MAPS_HREF}" target="_blank" rel="noopener">Como chegar →</a>
+    </div>
+
+    <div class="legal">
+      <span>Eng. Stephanie Faina · CREA-MG 1413598390 · Arq. Mariana Guimarães</span>
+      <span>Perla Construtora LTDA · CNPJ 55.156.540/0001-50</span>
+    </div>
+  </div>
+</footer>
+
+<div class="barra-contato-mobile" id="barra-contato">
+  <a href="${wa}" target="_blank" rel="noopener">${ICONE_CHAT} WhatsApp</a>
+</div>`;
 }
 
 function renderEtapaBloco(projeto, etapa, fotos, fotoIndexGlobal) {
@@ -211,7 +278,7 @@ function gerarPagina(projeto, indice) {
 <link rel="stylesheet" href="../../assets/css/obra.css">
 <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
 </head>
-<body>
+<body class="tem-barra-contato">
 ${renderNav()}
 
 <header class="obra-topo">
@@ -231,19 +298,14 @@ ${renderNav()}
 
 ${blocos}
 
-<section class="obra-cta">
-  <div class="shell" data-reveal>
-    <h2>Quero uma obra <span class="it">assim</span><span class="dot">.</span></h2>
-    <a class="btn solid" href="https://wa.me/5531999203886" target="_blank" rel="noopener">Quero uma obra assim <span class="arr">→</span></a>
-  </div>
-</section>
-
 <nav class="obra-prox" aria-label="Outros projetos">
   <a href="../${anterior.slug}/index.html"><span class="lbl">← Projeto anterior</span><span class="tt">${esc(corrigir(anterior.titulo))}</span></a>
   <a href="../${proximo.slug}/index.html"><span class="lbl">Próximo projeto →</span><span class="tt">${esc(corrigir(proximo.titulo))}</span></a>
 </nav>
 
-${renderFooter()}
+${renderCtaContato(projeto)}
+
+${renderFooter(projeto)}
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galeria em tela cheia">
   <button class="fechar" type="button" aria-label="Fechar">✕</button>
@@ -276,8 +338,8 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
   var burger = document.querySelector('.nav-burger');
   var panel = document.getElementById('nav-mobile');
   if (!burger || !panel) return;
-  function close() { burger.setAttribute('aria-expanded', 'false'); panel.classList.remove('open'); document.body.classList.remove('nav-open'); }
-  function open() { burger.setAttribute('aria-expanded', 'true'); panel.classList.add('open'); document.body.classList.add('nav-open'); }
+  function close() { burger.setAttribute('aria-expanded', 'false'); panel.classList.remove('open'); document.body.classList.remove('nav-open', 'esconder-barra-contato'); }
+  function open() { burger.setAttribute('aria-expanded', 'true'); panel.classList.add('open'); document.body.classList.add('nav-open', 'esconder-barra-contato'); }
   burger.addEventListener('click', function () { if (panel.classList.contains('open')) close(); else open(); });
   panel.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
@@ -305,8 +367,8 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
     etapaEl.textContent = f.etapa;
     contador.textContent = (atual + 1) + ' / ' + fotos.length;
   }
-  function abrir(i) { mostrar(i); lb.classList.add('open'); document.body.classList.add('nav-open'); }
-  function fechar() { lb.classList.remove('open'); document.body.classList.remove('nav-open'); }
+  function abrir(i) { mostrar(i); lb.classList.add('open'); document.body.classList.add('nav-open', 'esconder-barra-contato'); }
+  function fechar() { lb.classList.remove('open'); document.body.classList.remove('nav-open', 'esconder-barra-contato'); }
 
   document.querySelectorAll('[data-lightbox-index]').forEach(function (fig) {
     fig.querySelector('img').addEventListener('click', function () {
