@@ -1,6 +1,6 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 — checkpoint de sessão (documentação completa, sem novas alterações de código a partir daqui). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09b — clareamento do site). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 # ESTADO ATUAL DO PROJETO
 
@@ -11,19 +11,19 @@ Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, 
 `main` (repositório ainda não publicado — único branch existente).
 
 ## Último commit
-`def91af` — "Atualiza estado do projeto após remoção do parallax" (25/09). **Este é o commit mais recente no histórico — tudo desta sessão de 26/09 está no working tree, ainda NÃO commitado.**
+`641349a` — "HERO: vídeo → foto+parallax GSAP; logo real; CREA; menu mobile; responsividade" (26/09, sessão anterior). **A sessão 26/09b (clareamento do hero + thumbnails em Obras) foi commitada em seguida — ver "SESSÃO 26/09/2026-b" logo abaixo para o SHA e detalhes.**
 
-## ⚠️ ÚLTIMO ESTADO CONFIRMADO (26/09/2026 — fim de sessão)
+## ⚠️ ÚLTIMO ESTADO CONFIRMADO (26/09/2026-b — fim de sessão)
 
-- Commit mais recente no repo: `def91af` (25/09).
-- **Working tree SUJO — nada desta sessão foi commitado.** Ver `git status` completo na seção "Checkpoint de sessão" abaixo.
+- `641349a` commitado e enviado ao GitHub (sessão 26/09 principal: hero foto+GSAP, logo, CREA, menu mobile, responsividade).
+- **Sessão 26/09b**: usuário reportou que o site "ficou muito escuro". Resolvido **sem imagens geradas por IA** (opção escolhida pelo usuário entre duas alternativas: "clarear com o que já existe"), suavizando o overlay do HERO e adicionando 6 fotos reais (thumbnails) na lista de Obras, que antes era só texto. Ver seção própria abaixo para detalhes, commit e verificação visual.
 - HERO mudou de vídeo para **foto estática com parallax GSAP** (o vídeo `assets/video/hero.mp4` ainda existe no repo mas **não é mais referenciado** pelo `index.html`).
 - Logo real da marca integrado (nav, footer, favicon).
 - CREA de Stephanie Faina preenchido (dado real, confirmado pelo usuário via certidão CREA-MG).
 - Menu mobile (hamburger) implementado — antes não existia nenhuma forma de navegar pelo site em telas <900px.
 - Foto das sócias trocada (nova foto real de evento).
 - Revisão de responsividade site-wide **em andamento, não finalizada** — ver "Pendências" e "Problemas conhecidos".
-- Duas perguntas feitas ao usuário nesta sessão **seguem sem resposta** — ver "Pendências".
+- Duas perguntas feitas ao usuário na sessão 26/09 principal **seguem sem resposta** — ver "Pendências".
 
 ## O que já foi concluído (histórico acumulado)
 - `index.html` adotado como página real do site (protótipo do usuário), single-page com âncoras `#metodo`/`#servicos`/`#obras`/`#quem-somos`.
@@ -134,6 +134,22 @@ no changes added to commit (use "git add" and/or "git commit -a")
 - **Não modificados mas agora órfãos** (sem referência no HTML): `assets/video/hero.mp4`, `assets/video/hero-poster.jpg`.
 - **Nenhum commit, push, merge ou troca de branch foi feito nesta sessão** — tudo acima é só working tree, esperando autorização explícita do usuário.
 
+## SESSÃO 26/09/2026-b — Clareamento do site (overlay do HERO + fotos reais em Obras)
+
+Usuário reportou, após o commit `641349a` da sessão principal de 26/09: **"eu achei que o site ficou muito escuro"**, perguntando se dava pra usar o ElevenLabs (geração de imagem por IA) pra trazer mais imagem/visibilidade ao site.
+
+**Conflito identificado antes de agir**: o `CLAUDE.md` deste projeto tem uma regra permanente no "Checklist $10K" — ponto 5, "Imagens com intenção — nenhuma foto genérica de banco de imagens sem propósito; toda imagem/empreendimento tem que reforçar a mensagem (qualidade, obra real, status)". Imagem gerada por IA é conceitualmente o oposto disso: não é "obra real". Levado ao usuário via pergunta direta (duas opções: clarear com fotos reais já existentes vs. gerar imagens novas por IA). **Usuário escolheu clarear com o que já existe** — decisão que respeita a regra do projeto sem descartar o problema real reportado (site escuro).
+
+**O que foi feito:**
+1. **Overlay do HERO suavizado** — opacidades do gradiente reduzidas (diagonal 100deg: `.62/.4/.08` → `.48/.28/.05`; vertical 180deg: `.90/.62/.56/.78/.95` → `.74/.44/.38/.6/.82`; radial dourado: `.10` → `.12`). Forma/ângulos dos gradientes mantidos — só a intensidade caiu. Texto do hero continua legível (já tem `text-shadow` própria no `h1`/`.label`/`.lede`, independente do overlay).
+2. **6 fotos reais adicionadas à lista de Obras** (`#obras`), que antes era só texto (numeral + título + tags, sem nenhuma imagem): thumbnails quadrados 56×56px (`240×240` de origem, JPEG q80 + WebP q76, ~55KB total para os 12 arquivos), com zoom sutil no hover (`scale(1.08)`), grid reorganizado no mobile (thumbnail ocupando as 3 linhas do card). Fotos vieram do mesmo material já vetorado em sessões anteriores (pasta de fotos da Perla), nenhuma imagem nova/não vetorada foi introduzida:
+   - `lagoa-ingleses.jpg/webp`, `vale-cristais.jpg/webp`, `clinica-mateus-garcia.jpg/webp`, `queijo-artesanal.jpg/webp`, `apartamento-110m2.jpg/webp`, `rua-andaluzita.jpg/webp` — todos em `assets/img/obras/`.
+3. **Curadoria de fotos** — 3 candidatas descartadas antes do uso final: (a) foto de clínica com TV de marca "M GARCIA" + flâmula de universidade visível (risco de branding não autorizado) → trocada por foto neutra de recepção; (b) 2 fotos escuras do queijo artesanal (contrárias ao objetivo de clarear) → reaproveitada foto já vetorada e clara (`marquee/queijo-artesanal.jpg`); (c) foto candidata para "Rua Andaluzita" era **byte-idêntica** a uma já usada em Serviços (`servicos/obra-em-andamento.jpg`) → trocada por outro frame do mesmo ensaio, ainda não usado em nenhuma outra seção.
+
+**Validação**: HTML validado com parser Python (parse OK) após cada edição; todos os caminhos de imagem novos conferidos no disco (existem). Verificação visual via Playwright/Chromium — 5 capturas (`hero`, `obras`, `obras-hover`, `mobile-hero`, `mobile-obras`) revisadas manualmente: overlay do hero visivelmente mais claro com texto ainda legível; as 6 thumbnails renderizam corretamente (sem imagem quebrada, enquadramento correto) tanto em desktop (1440px) quanto mobile (390px); grid mobile do Obras não quebrou com a nova coluna de thumbnail.
+
+**Escopo confirmado antes do commit**: `git diff` revisado — só `.hero-video-overlay` (CSS) e `.works`/lista de Obras (CSS+HTML) foram tocados; nenhuma outra seção do site foi alterada.
+
 ## Rodadas de design já concluídas
 Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuário antes da próxima:
 - **Rodada 1 — Direção Visual + Tipografia**: concluída, commit `136aedf`.
@@ -169,6 +185,7 @@ Sequência de 8 rodadas de refinamento final, cada uma com aprovação do usuár
 - Enquanto o site não estiver publicado/em uso real, pode-se trabalhar direto em `main` (regra do próprio `CLAUDE.md` deste projeto) — mas commit/push só depois de aprovação do usuário para cada mudança.
 
 ## Pendências
+- **Imagens geradas por IA (ElevenLabs)**: usuário perguntou sobre usar para clarear o site; decidiu por fotos reais já existentes (ver "SESSÃO 26/09/2026-b"). Não é mais uma pendência aberta, mas fica registrado: **não usar geração de imagem por IA neste projeto** sem uma nova decisão explícita do usuário — conflita com o ponto 5 do Checklist $10K (`CLAUDE.md`).
 - **Confirmação Rio vs. Perla**: numa mensagem desta sessão, o usuário pediu pra alterar a seção "O custo que ninguém mostra" mas se referiu a "página da Rio" (nome de outro projeto/site). O conteúdo descrito bate exatamente com a seção `#custo` da Perla, mas o nome citado não é da Perla. **Perguntado ao usuário, sem resposta ainda.** Nenhuma alteração foi feita nessa seção por causa disso — não mexer em `#custo`/`.paper` até isso ser esclarecido.
 - **Imagem nova para o fundo da seção "O custo"** ("imagem 3", foto de uma sala com vidraças voltadas pro mar) foi mencionada pelo usuário mas **nunca chegou como arquivo** (só apareceu inline numa mensagem, não localizável em disco). Pedir reenvio antes de implementar aquele pedido.
 - **Confirmação do número de CREA usado**: preenchi `1413598390` (registro individual de Stephanie, extraído da certidão) em vez de `1681052` (registro da empresa, que foi o número que o usuário digitou na mensagem). Expliquei a diferença ao usuário mas ele não confirmou explicitamente qual queria — vale reconfirmar.
