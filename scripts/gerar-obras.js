@@ -122,31 +122,31 @@ function renderFooter() {
 </footer>`;
 }
 
-function orientacao(foto) {
-  return foto.altura > foto.largura ? 'v' : 'h';
-}
-
 function renderEtapaBloco(projeto, etapa, fotos, fotoIndexGlobal) {
   const ehMini = fotos.every((f) => f.largura <= 480);
-  const claseGrid = ehMini ? 'etapa-grid mini' : 'etapa-grid';
+  // Nº de colunas nunca passa do nº de fotos do bloco (1 ou 2 fotos não ficam esticadas numa
+  // grade de 3 nem isoladas com vazio ao lado) — breakpoints reduzem ainda mais em tablet/celular.
+  const claseGrid = ehMini ? 'etapa-grid mini' : `etapa-grid cols-${Math.min(fotos.length, 3)}`;
   const figs = fotos
     .map((foto) => {
       const idxGlobal = fotoIndexGlobal.get(foto.arquivo);
-      const cls = ehMini ? '' : ' ' + orientacao(foto);
-      const selo = foto.etapa === 'projeto' ? '<span class="selo-3d">Imagem 3D do projeto</span>' : '';
+      let selo = '';
+      if (foto.etapa === 'projeto') selo = '<span class="selo">Imagem 3D do projeto</span>';
+      else if (foto.etapa === 'entregue') selo = '<span class="selo entregue">Entregue</span>';
       const primeira = foto.arquivo === projeto.capa;
       const loading = primeira ? 'eager' : 'lazy';
       const fetchpriority = primeira ? ' fetchpriority="high"' : '';
       const alt = esc(`${corrigir(projeto.titulo)} — ${corrigir(foto.legenda)}`);
       const src = `../../projetos/${projeto.pasta}/${foto.arquivo}`;
       const srcWebp = src.replace(/\.jpg$/i, '.webp');
-      return `<figure class="${cls.trim()}" data-lightbox-index="${idxGlobal}">
+      const style = ehMini ? ` style="--fw:${foto.largura}px"` : '';
+      return `<figure data-lightbox-index="${idxGlobal}"${style}>
           <span class="frame">${selo}<picture><source srcset="${srcWebp}" type="image/webp"><img src="${src}" alt="${alt}" width="${foto.largura}" height="${foto.altura}" loading="${loading}"${fetchpriority}></picture></span>
           <figcaption>${esc(corrigir(foto.legenda))}</figcaption>
         </figure>`;
     })
     .join('\n        ');
-  return `<section class="etapa-bloco" id="etapa-${etapa}" data-reveal>
+  return `<section class="etapa-bloco" id="etapa-${etapa}">
       <div class="shell">
         <h2>${ETAPA_LABEL[etapa]}</h2>
         <div class="${claseGrid}">
@@ -209,6 +209,7 @@ function gerarPagina(projeto, indice) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
 <link rel="stylesheet" href="../../assets/css/obra.css">
+<noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
 </head>
 <body>
 ${renderNav()}
