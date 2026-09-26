@@ -1,14 +1,34 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09m — vídeos de fundo em Custo/Método/Depoimentos + cartão de vídeo no contato, publicados no `perla-preview`, commit `e6a28f2`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09n — ajuste de visibilidade do véu dos 3 vídeos de fundo, commit local `[ver git log]`, **ainda NÃO publicado no `perla-preview`** — aguardando aprovação do usuário). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 ## PRÓXIMA TAREFA EXATA (ler primeiro)
 
-Nada pendente de ação imediata — esta rodada (vídeos de fundo) já foi publicada no `perla-preview` a pedido explícito do usuário (ver sessão 26/09m). Ao retomar:
-1. Ler esta seção + a sessão 26/09m abaixo pra saber exatamente onde paramos.
-2. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
-3. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
-4. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+**Aguardando aprovação do usuário** para a rodada de ajuste do véu marfim (sessão 26/09n) antes de sincronizar pro `perla-preview`. Ao retomar:
+1. Ler esta seção + a sessão 26/09n abaixo pra saber exatamente onde paramos.
+2. Se o usuário já aprovou (respondeu à prévia com gravações de tela enviada nesta sessão): sincronizar `index.html` pro `perla-preview` (só esse arquivo mudou nesta rodada, nenhum vídeo novo) e avisar o link. Se ele pediu mais ajuste de opacidade/contraste: reabrir `#custo .bgvideo-scrim`, `#metodo .bgvideo-scrim` e `#depoimentos .bgvideo-scrim` (perto da linha 190 do `index.html`) e recalibrar.
+3. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
+4. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
+5. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+
+## SESSÃO 26/09/2026-n — Ajuste de visibilidade do véu (feedback pós-publicação, aguardando aprovação)
+
+Usuário conferiu a publicação da sessão 26/09m no `perla-preview` — vídeos carregando/reproduzindo certo — mas achou o véu marfim (`rgba(244,238,230,.86)` fixo nas 3 seções) opaco demais, deixando o vídeo "quase imperceptível". Pediu: reduzir a cobertura nas áreas livres de texto (testar 60–70%), preservar as superfícies 100% opacas atrás de números/gráfico/depoimentos, usar degradê quando necessário (mais sólido atrás do texto, mais transparente onde o vídeo pode aparecer), garantir área visível o bastante pra perceber o movimento, manter o tema claro, não mexer no cartão do contato (vídeo das chaves), manter carregamento/pausa/fallback como estavam, e testar abertura nova no celular incluindo o caso de autoplay bloqueado (com opção de tocar manualmente, sem alterar a lógica de `prefers-reduced-motion`). Pediu prévia com gravação de tela (não só print) e aprovação antes de publicar.
+
+**Feito** (só `index.html` mudou — nenhum vídeo foi reprocessado, por instrução explícita):
+1. **Véu por seção, em degradê**, substituindo o `rgba(...,.86)` único:
+   - `#custo`: `linear-gradient` vertical — 82% nos primeiros ~22% da altura (atrás do título/parágrafo do `.sec-head`), caindo para 62% no resto (onde só existe o cartão opaco `.split` + as margens/vãos da seção).
+   - `#depoimentos`: mesmo princípio — 82% no topo (título), 64% no resto (os depoimentos em si já são cartões 100% opacos, não dependem do véu).
+   - `#metodo`: sem cartão opaco cobrindo a seção inteira (só a foto real de cada etapa, que ocupa a coluna esquerda), por isso o véu combina 2 camadas: um reforço só na faixa do topo (título+abas, 66% caindo a 0% até 40% da altura) SOMADO a um degradê horizontal permanente (60% perto da foto à esquerda, subindo a 76% do lado do texto à direita).
+   - Nenhuma mudança nos cartões que já eram opacos (`#custo .split`, `.quotes figure`) — continuam 100% opacos, como pedido.
+2. **Botão de pausar/tocar corrigido para refletir o estado real do `<video>`** (antes só assumia estado por intenção, não conferia se o autoplay de fato tinha começado): agora escuta os eventos nativos `play`/`pause` do vídeo pra sincronizar ícone/`aria-pressed`/`aria-label`, e o clique manual sempre tenta `video.play()` direto (nunca é bloqueado por `prefers-reduced-motion` ou por um "pausado" anterior) — só o disparo automático por rolagem/`IntersectionObserver` continua respeitando motion reduzido. Isso resolve o caso de autoplay bloqueado pelo navegador: o botão já nasce mostrando "tocar" nesse caso (em vez de mostrar "pausar" com o vídeo na real parado), e o toque da pessoa inicia a reprodução.
+3. Cartão do contato (vídeo das chaves): **não alterado** — sem véu (já não tinha), botão de pausar e link de WhatsApp intactos.
+
+**Validado** (Playwright/Chromium): reprodução normal + clique pausa/retoma com estado real conferido; simulação de autoplay bloqueado (mock de `HTMLMediaElement.prototype.play` rejeitando a 1ª chamada) confirmando que o botão nasce em "tocar" e que o toque manual inicia a reprodução de fato (`currentTime` avançando); `prefers-reduced-motion:reduce` confirmado ainda impedindo autoplay automático E ainda impedindo retomada automática ao voltar de um scroll — mas o clique manual continua funcionando mesmo assim (exatamente como pedido); zero rolagem horizontal (desktop/mobile); link de WhatsApp do cartão de contato ainda idêntico ao botão principal. Capturas de tela (desktop 1440px e mobile 390px) das 3 seções + 2 gravações de tela (~9,5s cada, mostrando o movimento de verdade, com diff de frames confirmado) enviadas ao usuário pra aprovação.
+
+**Branch/commit**: `redesign-claro-2026-09-26` — ver `git log` pelo commit mais recente com esta mensagem. **Ainda NÃO sincronizado pro `perla-preview`** — aguardando aprovação explícita desta rodada específica antes de publicar (regra permanente do `CLAUDE.md`).
+
+**Pendente**: aprovação do usuário sobre a nova opacidade do véu (pode pedir mais ajuste fino por seção).
 
 ## SESSÃO 26/09/2026-m — Vídeos de fundo ilustrativos (Custo, Método, Depoimentos, cartão do contato)
 
