@@ -246,6 +246,13 @@ section[id]{scroll-margin-top:88px}
 @media (max-width:900px){.doors{grid-template-columns:1fr}.niche{grid-template-columns:auto 1fr;grid-template-areas:"foto num" "texto texto" "link link"}.niche .foto{grid-area:foto}.niche .it{grid-area:num}.niche>div{grid-area:texto}.niche .link{grid-area:link;margin-top:12px}}
 
 /* ============ OBRAS ============ */
+.filtros{display:flex;flex-wrap:wrap;gap:10px;margin:-8px 0 28px}
+.filtro{appearance:none;background:none;cursor:pointer;font-family:inherit;font-size:13px;letter-spacing:.02em;color:var(--perola-3);border:1px solid var(--linha-2);border-radius:999px;padding:8px 18px;transition:color .25s ease,border-color .25s ease,background-color .25s ease}
+.filtro:hover{color:var(--perola);border-color:var(--perola-3)}
+.filtro:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+.filtro.is-active{color:var(--onix);background:var(--perola);border-color:var(--perola)}
+.filtros-vazio{color:var(--perola-3);font-size:14px;padding:18px 0;margin:0}
+.works li[hidden]{display:none}
 .works{list-style:none;margin:0;padding:0;border-top:1px solid var(--linha)}
 .works li{border-bottom:1px solid var(--linha)}
 .works a{display:grid;grid-template-columns:56px 56px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr) 40px;gap:20px;align-items:center;padding:26px 0;transition:padding .35s ease}
@@ -584,13 +591,21 @@ footer.rodape-claro .legal{grid-column:1/-1;border-top:1px solid var(--linha-p);
       </div>
       <p>Residências, clínicas e reformas para investimento em Belo Horizonte e região.</p>
     </div>
+    <div class="filtros" role="group" aria-label="Filtrar obras por categoria">
+      <button type="button" class="filtro is-active" data-filtro="todas">Todas</button>
+      <button type="button" class="filtro" data-filtro="residencial">Residencial</button>
+      <button type="button" class="filtro" data-filtro="reforma">Reforma</button>
+      <button type="button" class="filtro" data-filtro="saude">Saúde</button>
+      <button type="button" class="filtro" data-filtro="institucional">Institucional</button>
+    </div>
+    <p class="filtros-vazio" hidden>Nenhuma obra nessa categoria por enquanto.</p>
     <ul class="works" data-reveal-group>
-      <li><a href="obras/casa-lagoa-dos-ingleses/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/lagoa-ingleses.webp" type="image/webp"><img src="assets/img/obras/lagoa-ingleses.jpg" alt="Deck e piscina da Casa na Lagoa dos Ingleses" loading="lazy" width="240" height="240"></picture></span><span class="n">01</span><h3>Casa na Lagoa dos Ingleses</h3><span class="t">Residencial · Construção</span><span class="d">Varanda com vista, espaço gourmet</span><span class="go">→</span></a></li>
-      <li><a href="obras/casa-vale-dos-cristais/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/vale-cristais.webp" type="image/webp"><img src="assets/img/obras/vale-cristais.jpg" alt="Arco e piscina da Casa no Vale dos Cristais" loading="lazy" width="240" height="240"></picture></span><span class="n">02</span><h3>Casa no Vale dos Cristais</h3><span class="t">Residencial · Obra interna</span><span class="d">Execução completa dos interiores</span><span class="go">→</span></a></li>
-      <li><a href="obras/clinica-dr-mateus-garcia/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/clinica-mateus-garcia.webp" type="image/webp"><img src="assets/img/obras/clinica-mateus-garcia.jpg" alt="Consultório entregue com a marca do cliente, Clínica Dr. Mateus Garcia" loading="lazy" width="240" height="240"></picture></span><span class="n">03</span><h3>Clínica Dr. Mateus Garcia</h3><span class="t">Saúde · Projeto + obra</span><span class="d">Alvará e sanitário deferidos</span><span class="go">→</span></a></li>
-      <li><a href="obras/centro-referencia-queijo-artesanal/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/queijo-artesanal.webp" type="image/webp"><img src="assets/img/obras/queijo-artesanal.jpg" alt="Balcão de recepção com a marca, Centro de Referência do Queijo Artesanal" loading="lazy" width="240" height="240"></picture></span><span class="n">04</span><h3>Centro de Referência do Queijo Artesanal</h3><span class="t">Institucional</span><span class="d">Obra completa</span><span class="go">→</span></a></li>
-      <li><a href="obras/apartamento-110m2-buritis/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/apartamento-110m2.webp" type="image/webp"><img src="assets/img/obras/apartamento-110m2.jpg" alt="Projeto 3D da suíte, Apartamento de 110 m² em 4 meses" loading="lazy" width="240" height="240"></picture><span class="selo-3d-mini">3D</span></span><span class="n">05</span><h3>Apartamento de 110 m² em 4 meses</h3><span class="t">Residencial · Reforma</span><span class="d">Compra em abril, mudança em 30 de julho</span><span class="go">→</span></a></li>
-      <li><a href="obras/rua-andaluzita-savassi/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/rua-andaluzita.webp" type="image/webp"><img src="assets/img/obras/rua-andaluzita.jpg" alt="Cozinha entregue, Rua Andaluzita, Savassi" loading="lazy" width="240" height="240"></picture></span><span class="n">06</span><h3>Rua Andaluzita, Savassi</h3><span class="t">Reforma para valorizar</span><span class="d">Consultoria + execução</span><span class="go">→</span></a></li>
+      <li data-categoria="residencial"><a href="obras/casa-lagoa-dos-ingleses/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/lagoa-ingleses.webp" type="image/webp"><img src="assets/img/obras/lagoa-ingleses.jpg" alt="Deck e piscina da Casa na Lagoa dos Ingleses" loading="lazy" width="240" height="240"></picture></span><span class="n">01</span><h3>Casa na Lagoa dos Ingleses</h3><span class="t">Residencial · Construção</span><span class="d">Varanda com vista, espaço gourmet</span><span class="go">→</span></a></li>
+      <li data-categoria="residencial reforma"><a href="obras/casa-vale-dos-cristais/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/vale-cristais.webp" type="image/webp"><img src="assets/img/obras/vale-cristais.jpg" alt="Arco e piscina da Casa no Vale dos Cristais" loading="lazy" width="240" height="240"></picture></span><span class="n">02</span><h3>Casa no Vale dos Cristais</h3><span class="t">Residencial · Obra interna</span><span class="d">Execução completa dos interiores</span><span class="go">→</span></a></li>
+      <li data-categoria="saude"><a href="obras/clinica-dr-mateus-garcia/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/clinica-mateus-garcia.webp" type="image/webp"><img src="assets/img/obras/clinica-mateus-garcia.jpg" alt="Consultório entregue com a marca do cliente, Clínica Dr. Mateus Garcia" loading="lazy" width="240" height="240"></picture></span><span class="n">03</span><h3>Clínica Dr. Mateus Garcia</h3><span class="t">Saúde · Projeto + obra</span><span class="d">Alvará e sanitário deferidos</span><span class="go">→</span></a></li>
+      <li data-categoria="institucional"><a href="obras/centro-referencia-queijo-artesanal/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/queijo-artesanal.webp" type="image/webp"><img src="assets/img/obras/queijo-artesanal.jpg" alt="Balcão de recepção com a marca, Centro de Referência do Queijo Artesanal" loading="lazy" width="240" height="240"></picture></span><span class="n">04</span><h3>Centro de Referência do Queijo Artesanal</h3><span class="t">Institucional</span><span class="d">Obra completa</span><span class="go">→</span></a></li>
+      <li data-categoria="residencial reforma"><a href="obras/apartamento-110m2-buritis/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/apartamento-110m2.webp" type="image/webp"><img src="assets/img/obras/apartamento-110m2.jpg" alt="Projeto 3D da suíte, Apartamento de 110 m² em 4 meses" loading="lazy" width="240" height="240"></picture><span class="selo-3d-mini">3D</span></span><span class="n">05</span><h3>Apartamento de 110 m² em 4 meses</h3><span class="t">Residencial · Reforma</span><span class="d">Compra em abril, mudança em 30 de julho</span><span class="go">→</span></a></li>
+      <li data-categoria="residencial reforma"><a href="obras/rua-andaluzita-savassi/index.html"><span class="thumb"><picture><source srcset="assets/img/obras/rua-andaluzita.webp" type="image/webp"><img src="assets/img/obras/rua-andaluzita.jpg" alt="Cozinha entregue, Rua Andaluzita, Savassi" loading="lazy" width="240" height="240"></picture></span><span class="n">06</span><h3>Rua Andaluzita, Savassi</h3><span class="t">Reforma para valorizar</span><span class="d">Consultoria + execução</span><span class="go">→</span></a></li>
     </ul>
   </div>
 </section>
@@ -798,6 +813,34 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
       else if (e.key === 'Home') novo = 0;
       else if (e.key === 'End') novo = tabs.length - 1;
       if (novo !== null) { e.preventDefault(); ativar(novo, true); }
+    });
+  });
+})();
+</script>
+
+<script>
+// Filtro do portfólio: mostra só as obras da categoria escolhida (categorias reais, vindas do
+// data-categoria de cada item). Sem JS, nada fica escondido — todas as obras aparecem normalmente.
+(function () {
+  var barra = document.querySelector('.filtros');
+  var lista = document.querySelector('.works');
+  var vazio = document.querySelector('.filtros-vazio');
+  if (!barra || !lista) return;
+  var botoes = Array.prototype.slice.call(barra.querySelectorAll('.filtro'));
+  var itens = Array.prototype.slice.call(lista.children);
+
+  botoes.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      botoes.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+      var alvo = btn.getAttribute('data-filtro');
+      var visiveis = 0;
+      itens.forEach(function (li) {
+        var cats = (li.getAttribute('data-categoria') || '').split(' ');
+        var mostra = alvo === 'todas' || cats.indexOf(alvo) !== -1;
+        li.hidden = !mostra;
+        if (mostra) visiveis++;
+      });
+      if (vazio) vazio.hidden = visiveis > 0;
     });
   });
 })();

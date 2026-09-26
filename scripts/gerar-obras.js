@@ -209,7 +209,7 @@ function renderEtapaBloco(projeto, etapa, fotos, fotoIndexGlobal) {
       const srcWebp = src.replace(/\.jpg$/i, '.webp');
       const style = ehMini ? ` style="--fw:${foto.largura}px"` : '';
       return `<figure data-lightbox-index="${idxGlobal}"${style}>
-          <span class="frame">${selo}<picture><source srcset="${srcWebp}" type="image/webp"><img src="${src}" alt="${alt}" width="${foto.largura}" height="${foto.altura}" loading="${loading}"${fetchpriority}></picture></span>
+          <span class="frame">${selo}<picture><source srcset="${srcWebp}" type="image/webp"><img src="${src}" alt="${alt}" width="${foto.largura}" height="${foto.altura}" loading="${loading}"${fetchpriority} tabindex="0" role="button" aria-label="Ampliar: ${alt}"></picture></span>
           <figcaption>${esc(corrigir(foto.legenda))}</figcaption>
         </figure>`;
     })
@@ -220,6 +220,30 @@ function renderEtapaBloco(projeto, etapa, fotos, fotoIndexGlobal) {
         <div class="${claseGrid}">
         ${figs}
         </div>
+      </div>
+    </section>`;
+}
+
+function renderComparador(projeto) {
+  const comp = projeto.comparador;
+  if (!comp) return '';
+  const antes = projeto.fotos.find((f) => f.arquivo === comp.antes);
+  const depois = projeto.fotos.find((f) => f.arquivo === comp.depois);
+  if (!antes || !depois) return '';
+  const srcAntes = `../../projetos/${projeto.pasta}/${antes.arquivo}`;
+  const srcDepois = `../../projetos/${projeto.pasta}/${depois.arquivo}`;
+  return `<section class="comparador-secao" data-reveal>
+      <div class="shell">
+        <h2>Antes e depois: mesma fachada</h2>
+        <p class="comp-legenda-topo">${esc(comp.legenda)}</p>
+        <div class="comp-frame" id="comp-frame">
+          <img class="comp-depois" src="${srcDepois}" alt="${esc(corrigir(projeto.titulo))} — depois: ${esc(corrigir(depois.legenda))}" width="${depois.largura}" height="${depois.altura}" loading="lazy">
+          <img class="comp-antes" src="${srcAntes}" alt="${esc(corrigir(projeto.titulo))} — antes: ${esc(corrigir(antes.legenda))}" width="${antes.largura}" height="${antes.altura}" loading="lazy">
+          <span class="comp-handle" aria-hidden="true"></span>
+          <span class="comp-label comp-label-antes">Antes</span>
+          <span class="comp-label comp-label-depois">Depois</span>
+        </div>
+        <input type="range" class="comp-slider" id="comp-slider" min="0" max="100" value="50" aria-label="Arraste para comparar a fachada antes e depois da obra">
       </div>
     </section>`;
 }
@@ -277,7 +301,18 @@ function gerarPagina(projeto, indice) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
 <link rel="stylesheet" href="../../assets/css/obra.css">
-<noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
+<noscript><style>
+[data-reveal]{opacity:1 !important;transform:none !important}
+.comp-slider{display:none}
+.comp-frame{aspect-ratio:auto !important;display:flex !important;flex-wrap:wrap;gap:0}
+.comp-frame img{position:static !important;clip-path:none !important;width:50% !important;height:auto !important}
+.comp-antes{order:1}
+.comp-depois{order:2}
+.comp-handle{display:none}
+.comp-label{position:static !important;display:block !important;text-align:center;width:50%}
+.comp-label-antes{order:3}
+.comp-label-depois{order:4}
+</style></noscript>
 </head>
 <body class="tem-barra-contato">
 ${renderNav(projeto)}
@@ -298,6 +333,8 @@ ${renderNav(projeto)}
 </header>
 
 ${blocos}
+
+${renderComparador(projeto)}
 
 <nav class="obra-prox" aria-label="Outros projetos">
   <a href="../${anterior.slug}/index.html"><span class="lbl">← Projeto anterior</span><span class="tt">${esc(corrigir(anterior.titulo))}</span></a>
@@ -350,6 +387,7 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
 </script>
 <script>
 // Lightbox — tela cheia, setas + teclado, Esc fecha, contador "n / total", legenda e etapa.
+// Ao fechar, o foco volta pra miniatura que abriu a foto (nunca some pro topo da página).
 (function () {
   var fotos = JSON.parse(document.getElementById('fotos-data').textContent);
   var lb = document.getElementById('lightbox');
@@ -358,6 +396,7 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
   var etapaEl = document.getElementById('lightbox-etapa');
   var contador = document.getElementById('lightbox-contador');
   var atual = 0;
+  var gatilho = null;
 
   function mostrar(i) {
     atual = (i + fotos.length) % fotos.length;
@@ -368,12 +407,29 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
     etapaEl.textContent = f.etapa;
     contador.textContent = (atual + 1) + ' / ' + fotos.length;
   }
-  function abrir(i) { mostrar(i); lb.classList.add('open'); document.body.classList.add('nav-open', 'esconder-barra-contato'); }
-  function fechar() { lb.classList.remove('open'); document.body.classList.remove('nav-open', 'esconder-barra-contato'); }
+  function abrir(i, origem) {
+    gatilho = origem || null;
+    mostrar(i);
+    lb.classList.add('open');
+    document.body.classList.add('nav-open', 'esconder-barra-contato');
+    lb.querySelector('.fechar').focus();
+  }
+  function fechar() {
+    lb.classList.remove('open');
+    document.body.classList.remove('nav-open', 'esconder-barra-contato');
+    if (gatilho) { gatilho.focus(); gatilho = null; }
+  }
 
   document.querySelectorAll('[data-lightbox-index]').forEach(function (fig) {
-    fig.querySelector('img').addEventListener('click', function () {
-      abrir(parseInt(fig.getAttribute('data-lightbox-index'), 10));
+    var alvo = fig.querySelector('img');
+    alvo.addEventListener('click', function () {
+      abrir(parseInt(fig.getAttribute('data-lightbox-index'), 10), alvo);
+    });
+    alvo.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        abrir(parseInt(fig.getAttribute('data-lightbox-index'), 10), alvo);
+      }
     });
   });
   lb.querySelector('.fechar').addEventListener('click', fechar);
@@ -385,6 +441,18 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Int
     if (e.key === 'Escape') fechar();
     if (e.key === 'ArrowLeft') mostrar(atual - 1);
     if (e.key === 'ArrowRight') mostrar(atual + 1);
+  });
+})();
+</script>
+<script>
+// Comparador antes/depois: input range nativo (mouse, toque e teclado já funcionam sem código
+// extra) controla quanto da foto "depois" fica visível por cima da foto "antes".
+(function () {
+  var frame = document.getElementById('comp-frame');
+  var slider = document.getElementById('comp-slider');
+  if (!frame || !slider) return;
+  slider.addEventListener('input', function () {
+    frame.style.setProperty('--pos', slider.value + '%');
   });
 })();
 </script>
