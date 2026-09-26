@@ -82,7 +82,8 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function renderNav() {
+function renderNav(projeto) {
+  const wa = mensagemWhatsapp(projeto);
   return `<nav class="nav" aria-label="Principal">
   <div class="shell">
     <a href="../../index.html" class="wordmark" aria-label="Perla Construtora">
@@ -95,7 +96,7 @@ function renderNav() {
       <li><a href="../../index.html#obras">Obras</a></li>
       <li><a href="../../index.html#quem-somos">Quem somos</a></li>
     </ul>
-    <a class="btn" href="https://wa.me/5531999203886" target="_blank" rel="noopener">Agendar conversa</a>
+    <a class="btn" href="${wa}" target="_blank" rel="noopener">Agendar conversa</a>
     <button class="nav-burger" type="button" aria-expanded="false" aria-controls="nav-mobile" aria-label="Abrir menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -106,7 +107,7 @@ function renderNav() {
     <li><a href="../../index.html#obras">Obras</a></li>
     <li><a href="../../index.html#quem-somos">Quem somos</a></li>
   </ul>
-  <a class="btn solid" href="https://wa.me/5531999203886" target="_blank" rel="noopener">Agendar conversa <span class="arr">→</span></a>
+  <a class="btn solid" href="${wa}" target="_blank" rel="noopener">Agendar conversa <span class="arr">→</span></a>
 </div>`;
 }
 
@@ -279,7 +280,7 @@ function gerarPagina(projeto, indice) {
 <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
 </head>
 <body class="tem-barra-contato">
-${renderNav()}
+${renderNav(projeto)}
 
 <header class="obra-topo">
   <div class="shell">
