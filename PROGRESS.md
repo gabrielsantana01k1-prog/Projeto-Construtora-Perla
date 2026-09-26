@@ -11,7 +11,7 @@ Construtora Perla — site institucional estático (HTML/CSS/JS, sem framework, 
 `main` (repositório ainda não publicado — único branch existente).
 
 ## Último commit
-`641349a` — "HERO: vídeo → foto+parallax GSAP; logo real; CREA; menu mobile; responsividade" (26/09, sessão anterior). **A sessão 26/09b (clareamento do hero + thumbnails em Obras) foi commitada em seguida — ver "SESSÃO 26/09/2026-b" logo abaixo para o SHA e detalhes.**
+`92885b9` — "Clareia overlay do HERO e adiciona fotos reais na lista de Obras" (26/09b). Commit anterior: `641349a` — "HERO: vídeo → foto+parallax GSAP; logo real; CREA; menu mobile; responsividade" (26/09, sessão principal).
 
 ## ⚠️ ÚLTIMO ESTADO CONFIRMADO (26/09/2026-b — fim de sessão)
 
