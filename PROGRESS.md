@@ -1,6 +1,20 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09d — fluxo de sincronização com `perla-preview`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09e — spec de páginas de projeto, aguardando anexo). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-e — Especificação de páginas de projeto (`/obras/{slug}`) — BLOQUEADA, aguardando anexo
+
+Usuário enviou um `.docx` ("Perla-especificação-páginas-de-projeto") pedindo para transformar cada linha da seção Obras da home em uma página própria do projeto (galeria em 4 etapas: Antes → Projeto → Obra → Entregue, lightbox, selo "Imagem 3D", navegação anterior/próximo), dirigida por um `manifest.json` com 6 projetos (Lagoa dos Ingleses, Vale dos Cristais, Clínica Dr. Mateus Garcia, Centro do Queijo Artesanal, Apartamento 110m² Buritis, Rua Andaluzita).
+
+**Conflito identificado antes de agir**: a spec inteira foi escrita assumindo Next.js (`next/image`, `generateStaticParams`, `public/projetos/`, `npm run build`, script de validação no prebuild) — mas este projeto é site estático puro, sem framework/build step (regra já registrada e reafirmada quando um pedido anterior, do hero, também veio com stack React/Next genérica). Levado ao usuário via pergunta direta (3 opções: gerar HTML estático em dev / renderizar via JS no cliente / adotar Next.js de verdade).
+
+**Decisão do usuário**: gerar HTML estático via script Node rodado localmente em tempo de desenvolvimento (não em runtime/deploy) — um script lê o `manifest.json`, roda as validações anti-mistura da spec (arquivo inexistente, `.jpg` órfão, hash duplicado entre projetos, capa fora das fotos do projeto) e gera um `.html` por projeto. O site publicado continua 100% estático, sem framework, sem build step no servidor — mesmo modelo já usado no ajuste do hero.
+
+**Bloqueio real, ainda não resolvido**: a spec cita um anexo obrigatório, `perla-projetos.zip` (37 arquivos, 3,8 MB) com as fotos reais de cada projeto + o `manifest.json` de verdade — **não foi enviado junto com o `.docx`**. Regra da própria spec: "nenhuma foto entra no site fora do que está no manifest" — sem o zip, não há como implementar nada de verdade (nem fotos, nem dados por projeto). **Nenhum código foi escrito ainda.**
+
+**Compliance já sinalizado na spec (consistente com o `CLAUDE.md` deste projeto)**: Clínica Dr. Mateus Garcia e Apartamento 110m² Buritis vêm marcados `requer_autorizacao_cliente: true` — só publicar (`publicado: true`) após autorização escrita do cliente, mesma regra permanente já seguida no projeto. Nenhuma ação nova necessária aqui, só reforço.
+
+**Pendências conhecidas já apontadas pela própria spec** (não bloqueiam o início, mas registradas): Apartamento 110m² ainda sem fotos de "Entregue" (capa é imagem 3D, precisa do selo também na miniatura da home); fotos de Rua Andaluzita e parte de Lagoa dos Ingleses são frames de vídeo, a trocar por fotos originais depois.
 
 ## SESSÃO 26/09/2026-d — Fluxo de sincronização com `perla-preview` (regra permanente)
 
