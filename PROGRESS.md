@@ -1,14 +1,36 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09l — usuário aprovou e publicou esta rodada no `perla-preview`, commit `aaae666`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09m — vídeos de fundo em Custo/Método/Depoimentos + cartão de vídeo no contato, publicados no `perla-preview`, commit `e6a28f2`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
 
 ## PRÓXIMA TAREFA EXATA (ler primeiro)
 
-Nada pendente de ação imediata — última entrega já publicada e aprovada. Ao retomar:
-1. Ler esta seção + a sessão 26/09l abaixo pra saber exatamente onde paramos.
+Nada pendente de ação imediata — esta rodada (vídeos de fundo) já foi publicada no `perla-preview` a pedido explícito do usuário (ver sessão 26/09m). Ao retomar:
+1. Ler esta seção + a sessão 26/09m abaixo pra saber exatamente onde paramos.
 2. Perguntar ao usuário se ele já tem: (a) o e-mail oficial de contato, (b) o print do app de acompanhamento (ou se prefere remover essa menção), (c) autorização + foto de algum cliente pra depoimento. Nenhum desses bloqueia o site atual — só destrava itens específicos.
 3. Repositório de dev (`Projeto-Construtora-Perla`) segue na branch `redesign-claro-2026-09-26`, ainda sem merge pra `main` de dev — decidir com o usuário quando fazer esse merge.
 4. Qualquer nova alteração: sempre commitar+pushar na branch de dev primeiro; só sincronizar pro `perla-preview` de novo com aprovação explícita do usuário (mesma regra de sempre, ver `CLAUDE.md`).
+
+## SESSÃO 26/09/2026-m — Vídeos de fundo ilustrativos (Custo, Método, Depoimentos, cartão do contato)
+
+Usuário anexou 4 vídeos com destino específico para cada um e pediu, ao final, o link atualizado do `perla-preview` para apresentar ao cliente — tratado como aprovação explícita para publicar esta rodada assim que validada (sem round-trip extra de prévia antes de publicar).
+
+**Processamento dos 4 vídeos** (`ffmpeg`, instalado nesta sessão — não estava disponível no ambiente): áudio removido (`-an`), redimensionados (1600px de largura para os 3 de seção cheia, 960px para o cartão do contato, menor por ser um retângulo pequeno), loop preparado com crossfade suave (`xfade`, 0.4–0.6s) no ponto de repetição pra suavizar o corte do loop, 24fps. Exportados em dois formatos por otimização/compatibilidade: MP4 (H.264, `faststart`) e WebM (VP9) — o `<video>` usa `<source>` com WebM primeiro, MP4 como fallback. Poster estático (frame inicial) extraído de cada um. Nomes preservados/mapeados (original → arquivo publicado):
+- `video 1 Custo da reforma.mp4` → `assets/video/custo-fundo.{mp4,webm}` (+ `-poster.jpg`)
+- `video 2. Método Perla.mp4` → `assets/video/metodo-fundo.{mp4,webm}`
+- `video 3. Depoimentos.mp4` → `assets/video/depoimentos-fundo.{mp4,webm}`
+- `video 4. Retângulo ao lado do contato.mp4` → `assets/video/contato-cartao.{mp4,webm}`
+
+**Nas 3 seções** (`#custo`, `#metodo`, `#depoimentos` — id nova, seção "Clientes" não tinha id): vídeo de fundo com véu marfim (`rgba(244,238,230,.86)`) entre vídeo e conteúdo, texto sempre 100% opaco. Ajustes de opacidade explícitos pedidos: `.split` do `#custo` (gráfico 37/63, legendas, fotos) virou um cartão opaco próprio (`--onix-2`, borda, sombra); `.quotes figure` (depoimentos) virou cartão claro com fundo/borda/sombra (antes só tinha uma linha superior transparente). `#metodo` não precisou de cardificação (só não deixar o grão de mármore duplicar sobre o vídeo — `.sec-video.marble::before{content:none}`). Comentário no HTML deixa explícito que o imóvel do vídeo de depoimentos é ilustrativo/banco de imagens, sem relação com os clientes citados (mesma regra de compliance do `CLAUDE.md`).
+
+**Cartão do contato**: vídeo só no retângulo à direita da seção "Fale com a Perla" (nunca fundo da seção nem atrás do texto/CTA à esquerda — sem véu marfim, essa regra era só para as 3 seções acima). Chamada clicável "Vamos planejar sua próxima conquista? / Conversar com a Perla →" no rodapé do cartão, abrindo o mesmo link de WhatsApp do botão principal (confirmado via teste automatizado que os dois `href` são idênticos). Seção reestruturada em grid de 2 colunas (texto+CTA / cartão de vídeo); no mobile empilha em 1 coluna, cartão logo abaixo do botão de WhatsApp (não lá embaixo da seção).
+
+**Comportamento comum aos 4 vídeos** (`IntersectionObserver`, um só bloco de script no fim da página): `<video>` só recebe as fontes (`src` dos `<source>`) e dá `load()`+`play()` quando a seção entra perto da área visível (`rootMargin:200px`) — não carrega os 4 de uma vez. Pausa ao sair da área visível. Botão de pausar/retomar acessível (`aria-pressed`/`aria-label` dinâmicos) em cada bloco, com prioridade sobre a visibilidade (pausado manualmente não volta a tocar sozinho). Sob `prefers-reduced-motion:reduce` nenhum vídeo toca — fica só o poster. Falha de reprodução (testado forçando 404 nas fontes) também cai pro poster (`bgvideo-failed` esconde o `<video>`, o `background-image` do wrapper cobre o espaço). Tag "Vídeo ilustrativo" visível em todos os 4 (desktop e mobile).
+
+**Validado** (Playwright/Chromium, `/opt/pw-browsers/chromium`): HTML sem erros (`tidy`), os 6 blocos `<script>` sem erro de sintaxe (`node --check`), captura desktop (1440px) e mobile (390px) das 4 seções, clique no botão de pausar/retomar confirmado via estado real do elemento (`video.paused`/`aria-pressed`), pausa ao rolar pra fora da seção e retomada ao rolar de volta confirmadas, `prefers-reduced-motion:reduce` confirmado sem carregar nenhuma fonte de vídeo, zero rolagem horizontal indevida (desktop e mobile), `#obras` (única outra seção `.marble`) confirmado intacto/sem vídeo. **Achado técnico do próprio Chromium empacotado com o Playwright neste ambiente**: não decodifica H.264 (`canPlayType` vazio) — por isso o WebM foi adicionado também, o que permitiu validar a reprodução de verdade (antes só dava pra confirmar via extração de frame com `ffprobe`/`ffmpeg`). Não afeta usuários reais (todo navegador de verdade tem H.264).
+
+**Branch/commit**: `redesign-claro-2026-09-26`, commit `275a160` (dev) — push confirmado. Publicado no `perla-preview` (main), commit `e6a28f2` — push confirmado. Link público: `https://gabrielsantana01k1-prog.github.io/perla-preview/` (GitHub Pages pode levar 1–2 min para republicar).
+
+**Pendente**: nenhuma pendência nova desta rodada. Testado só em Chromium via Playwright — não testado em navegador real (Chrome/Safari/Edge/iOS) nem em rede lenta de verdade (só simulado via lazy-load/IntersectionObserver).
 
 ## SESSÃO 26/09/2026-l — Publicação aprovada no perla-preview (rodada de pendências do redesign)
 
