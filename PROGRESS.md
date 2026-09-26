@@ -1,6 +1,14 @@
 # PROGRESS.md — estado do projeto (Site Construtora Perla)
 
-Atualizado em: 2026-09-26 (sessão 26/09b — clareamento do site). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+Atualizado em: 2026-09-26 (sessão 26/09d — fluxo de sincronização com `perla-preview`). Atualize este arquivo ao final de cada tarefa/conversa, antes de `/clear`.
+
+## SESSÃO 26/09/2026-d — Fluxo de sincronização com `perla-preview` (regra permanente)
+
+Usuário identificou que existe um segundo repositório, `gabrielsantana01k1-prog/perla-preview` (público, 1 commit "Add files via upload"), contendo só `index.html` (idêntico ao deste repo), `assets/` e `robots.txt` — sem `CLAUDE.md`/`PROGRESS.md`/docs. Confirmado que é um espelho de publicação (GitHub Pages, repo público exigido pelo plano free), não um repositório de desenvolvimento paralelo.
+
+**Decisão registrada (agora permanente em `CLAUDE.md`)**: continuar todo o desenvolvimento aqui, em `Projeto-Construtora-Perla`. A partir de agora, **sempre que uma edição aprovada for commitada neste repositório**, sincronizar `index.html`/`assets/`/`robots.txt` para o `perla-preview`, para a dona do projeto (Stephanie) conseguir visualizar a versão mais recente na web (link do GitHub Pages).
+
+**Pendência técnica**: esta sessão tem acesso de **leitura** ao `perla-preview` (clone anônimo em `/home/user/gabrielsantana01k1-prog/perla-preview`), mas a tentativa de anexar acesso de **push** foi bloqueada pelo classificador de permissões do ambiente (auto mode). Ou seja: a regra de sincronização está documentada, mas a próxima sessão/tarefa que precisar efetivamente empurrar (`git push`) pro `perla-preview` vai precisar que o usuário autorize esse acesso explicitamente quando solicitado (prompt de permissão), ou fornecer outra forma de publicar (ex: upload manual, GitHub Actions, etc.).
 
 # ESTADO ATUAL DO PROJETO
 

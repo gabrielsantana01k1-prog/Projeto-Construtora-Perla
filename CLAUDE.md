@@ -57,6 +57,15 @@ Toda decisão de design/desenvolvimento deste site (layout, CSS, tipografia, ima
 - Conferir responsividade básica (mobile/desktop) quando aplicável.
 - Não usar dados de contato ou textos fictícios como se fossem reais — placeholders devem ficar claramente marcados até serem substituídos pelos dados reais do usuário.
 
+## Publicação de prévia pública (repo `perla-preview`)
+
+- O repositório `gabrielsantana01k1-prog/perla-preview` (público) é **só um espelho de publicação** via GitHub Pages, usado para a Stephanie (dona do projeto) visualizar o site na web. Ele **não é o repositório de desenvolvimento** — nunca editar diretamente nele.
+- Todo desenvolvimento continua neste repositório (`Projeto-Construtora-Perla`, privado).
+- **Sempre que uma edição aprovada for commitada aqui**, sincronizar o conteúdo público (`index.html`, `assets/`, `robots.txt`) para o `perla-preview`, para a prévia na web ficar atualizada.
+- **Nunca copiar para o `perla-preview`**: `CLAUDE.md`, `PROGRESS.md`, `docs/`, `design-system/` — são arquivos internos de gestão do projeto, não fazem parte do site público.
+- Antes de sincronizar, revisar se o `index.html`/assets não contêm dado sensível ainda não autorizado (ver regra de Compliance acima) — a prévia é pública na internet (mitigado por `noindex`/`robots.txt`, mas não é privado).
+- A sincronização só acontece depois de commit/push aprovado neste repositório — nunca sincronizar working tree não commitado.
+
 ## Encerramento de tarefa / antes de `/clear`
 
 Ao concluir uma tarefa aprovada, ou ao final de cada conversa, atualizar o **PROGRESS.md** com:
